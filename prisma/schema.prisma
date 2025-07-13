@@ -67,6 +67,10 @@ model JobPosting {
   interviewProcess        String?                  @map("interview_process")
   departmentId            Int                      @map("department_id")
   disciplineId            Int                      @map("discipline_id")
+  status                  String                   @default("active")
+  lastSyncedAt            DateTime                 @default(now()) @map("last_synced_at")
+  expiresAt               DateTime?                @map("expires_at")
+  isActive                Boolean                  @default(true) @map("is_active")
   department              Department               @relation(fields: [departmentId], references: [id], onDelete: Cascade)
   discipline              Discipline               @relation(fields: [disciplineId], references: [id], onDelete: Cascade)
   applicationRequirements ApplicationRequirement[]
@@ -76,6 +80,10 @@ model JobPosting {
   geoLocation             GeoLocation?
   contact                 Contact?
 
+  @@index([status])
+  @@index([isActive])
+  @@index([lastSyncedAt])
+  @@index([expiresAt])
   @@map("job_postings")
 }
 
@@ -148,4 +156,20 @@ model Contact {
   jobPosting JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
 
   @@map("contacts")
+}
+
+model SyncLog {
+  id          Int       @id @default(autoincrement())
+  startedAt   DateTime  @default(now()) @map("started_at")
+  completedAt DateTime? @map("completed_at")
+  status      String // success, failed, partial
+  jobsFetched Int       @map("jobs_fetched")
+  jobsCreated Int       @map("jobs_created")
+  jobsUpdated Int       @map("jobs_updated")
+  jobsExpired Int       @map("jobs_expired")
+  jobsRemoved Int       @map("jobs_removed")
+  errors      String? // JSON array of errors
+  durationMs  Int?      @map("duration_ms")
+
+  @@map("sync_logs")
 }

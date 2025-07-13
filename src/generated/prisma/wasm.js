@@ -165,7 +165,11 @@ exports.Prisma.JobPostingScalarFieldEnum = {
   visaSponsorship: 'visaSponsorship',
   interviewProcess: 'interviewProcess',
   departmentId: 'departmentId',
-  disciplineId: 'disciplineId'
+  disciplineId: 'disciplineId',
+  status: 'status',
+  lastSyncedAt: 'lastSyncedAt',
+  expiresAt: 'expiresAt',
+  isActive: 'isActive'
 };
 
 exports.Prisma.ApplicationRequirementScalarFieldEnum = {
@@ -209,6 +213,20 @@ exports.Prisma.ContactScalarFieldEnum = {
   title: 'title'
 };
 
+exports.Prisma.SyncLogScalarFieldEnum = {
+  id: 'id',
+  startedAt: 'startedAt',
+  completedAt: 'completedAt',
+  status: 'status',
+  jobsFetched: 'jobsFetched',
+  jobsCreated: 'jobsCreated',
+  jobsUpdated: 'jobsUpdated',
+  jobsExpired: 'jobsExpired',
+  jobsRemoved: 'jobsRemoved',
+  errors: 'errors',
+  durationMs: 'durationMs'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -236,7 +254,8 @@ exports.Prisma.ModelName = {
   LanguageRequirement: 'LanguageRequirement',
   SuitableBackground: 'SuitableBackground',
   GeoLocation: 'GeoLocation',
-  Contact: 'Contact'
+  Contact: 'Contact',
+  SyncLog: 'SyncLog'
 };
 
 /**

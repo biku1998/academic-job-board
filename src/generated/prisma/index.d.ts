@@ -68,6 +68,11 @@ export type GeoLocation = $Result.DefaultSelection<Prisma.$GeoLocationPayload>
  * 
  */
 export type Contact = $Result.DefaultSelection<Prisma.$ContactPayload>
+/**
+ * Model SyncLog
+ * 
+ */
+export type SyncLog = $Result.DefaultSelection<Prisma.$SyncLogPayload>
 
 /**
  * ##  Prisma Client ʲˢ
@@ -303,6 +308,16 @@ export class PrismaClient<
     * ```
     */
   get contact(): Prisma.ContactDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.syncLog`: Exposes CRUD operations for the **SyncLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SyncLogs
+    * const syncLogs = await prisma.syncLog.findMany()
+    * ```
+    */
+  get syncLog(): Prisma.SyncLogDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -753,7 +768,8 @@ export namespace Prisma {
     LanguageRequirement: 'LanguageRequirement',
     SuitableBackground: 'SuitableBackground',
     GeoLocation: 'GeoLocation',
-    Contact: 'Contact'
+    Contact: 'Contact',
+    SyncLog: 'SyncLog'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -772,7 +788,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "institution" | "department" | "discipline" | "jobPosting" | "applicationRequirement" | "keyword" | "jobKeyword" | "languageRequirement" | "suitableBackground" | "geoLocation" | "contact"
+      modelProps: "institution" | "department" | "discipline" | "jobPosting" | "applicationRequirement" | "keyword" | "jobKeyword" | "languageRequirement" | "suitableBackground" | "geoLocation" | "contact" | "syncLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1590,6 +1606,80 @@ export namespace Prisma {
           }
         }
       }
+      SyncLog: {
+        payload: Prisma.$SyncLogPayload<ExtArgs>
+        fields: Prisma.SyncLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SyncLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SyncLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>
+          }
+          findFirst: {
+            args: Prisma.SyncLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SyncLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>
+          }
+          findMany: {
+            args: Prisma.SyncLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>[]
+          }
+          create: {
+            args: Prisma.SyncLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>
+          }
+          createMany: {
+            args: Prisma.SyncLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SyncLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>[]
+          }
+          delete: {
+            args: Prisma.SyncLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>
+          }
+          update: {
+            args: Prisma.SyncLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.SyncLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SyncLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SyncLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.SyncLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SyncLogPayload>
+          }
+          aggregate: {
+            args: Prisma.SyncLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSyncLog>
+          }
+          groupBy: {
+            args: Prisma.SyncLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SyncLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SyncLogCountArgs<ExtArgs>
+            result: $Utils.Optional<SyncLogCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1685,6 +1775,7 @@ export namespace Prisma {
     suitableBackground?: SuitableBackgroundOmit
     geoLocation?: GeoLocationOmit
     contact?: ContactOmit
+    syncLog?: SyncLogOmit
   }
 
   /* Types for Logging */
@@ -5396,6 +5487,10 @@ export namespace Prisma {
     interviewProcess: string | null
     departmentId: number | null
     disciplineId: number | null
+    status: string | null
+    lastSyncedAt: Date | null
+    expiresAt: Date | null
+    isActive: boolean | null
   }
 
   export type JobPostingMaxAggregateOutputType = {
@@ -5422,6 +5517,10 @@ export namespace Prisma {
     interviewProcess: string | null
     departmentId: number | null
     disciplineId: number | null
+    status: string | null
+    lastSyncedAt: Date | null
+    expiresAt: Date | null
+    isActive: boolean | null
   }
 
   export type JobPostingCountAggregateOutputType = {
@@ -5448,6 +5547,10 @@ export namespace Prisma {
     interviewProcess: number
     departmentId: number
     disciplineId: number
+    status: number
+    lastSyncedAt: number
+    expiresAt: number
+    isActive: number
     _all: number
   }
 
@@ -5490,6 +5593,10 @@ export namespace Prisma {
     interviewProcess?: true
     departmentId?: true
     disciplineId?: true
+    status?: true
+    lastSyncedAt?: true
+    expiresAt?: true
+    isActive?: true
   }
 
   export type JobPostingMaxAggregateInputType = {
@@ -5516,6 +5623,10 @@ export namespace Prisma {
     interviewProcess?: true
     departmentId?: true
     disciplineId?: true
+    status?: true
+    lastSyncedAt?: true
+    expiresAt?: true
+    isActive?: true
   }
 
   export type JobPostingCountAggregateInputType = {
@@ -5542,6 +5653,10 @@ export namespace Prisma {
     interviewProcess?: true
     departmentId?: true
     disciplineId?: true
+    status?: true
+    lastSyncedAt?: true
+    expiresAt?: true
+    isActive?: true
     _all?: true
   }
 
@@ -5655,6 +5770,10 @@ export namespace Prisma {
     interviewProcess: string | null
     departmentId: number
     disciplineId: number
+    status: string
+    lastSyncedAt: Date
+    expiresAt: Date | null
+    isActive: boolean
     _count: JobPostingCountAggregateOutputType | null
     _avg: JobPostingAvgAggregateOutputType | null
     _sum: JobPostingSumAggregateOutputType | null
@@ -5700,6 +5819,10 @@ export namespace Prisma {
     interviewProcess?: boolean
     departmentId?: boolean
     disciplineId?: boolean
+    status?: boolean
+    lastSyncedAt?: boolean
+    expiresAt?: boolean
+    isActive?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
     applicationRequirements?: boolean | JobPosting$applicationRequirementsArgs<ExtArgs>
@@ -5735,6 +5858,10 @@ export namespace Prisma {
     interviewProcess?: boolean
     departmentId?: boolean
     disciplineId?: boolean
+    status?: boolean
+    lastSyncedAt?: boolean
+    expiresAt?: boolean
+    isActive?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -5763,6 +5890,10 @@ export namespace Prisma {
     interviewProcess?: boolean
     departmentId?: boolean
     disciplineId?: boolean
+    status?: boolean
+    lastSyncedAt?: boolean
+    expiresAt?: boolean
+    isActive?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -5791,9 +5922,13 @@ export namespace Prisma {
     interviewProcess?: boolean
     departmentId?: boolean
     disciplineId?: boolean
+    status?: boolean
+    lastSyncedAt?: boolean
+    expiresAt?: boolean
+    isActive?: boolean
   }
 
-  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "descriptionHtml" | "descriptionText" | "category" | "seniorityLevel" | "jobType" | "workModality" | "salaryRange" | "contractType" | "durationMonths" | "renewable" | "openDate" | "closeDate" | "deadlineDate" | "applicationLink" | "sourceUrl" | "sourcePortal" | "fundingSource" | "visaSponsorship" | "interviewProcess" | "departmentId" | "disciplineId", ExtArgs["result"]["jobPosting"]>
+  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "descriptionHtml" | "descriptionText" | "category" | "seniorityLevel" | "jobType" | "workModality" | "salaryRange" | "contractType" | "durationMonths" | "renewable" | "openDate" | "closeDate" | "deadlineDate" | "applicationLink" | "sourceUrl" | "sourcePortal" | "fundingSource" | "visaSponsorship" | "interviewProcess" | "departmentId" | "disciplineId" | "status" | "lastSyncedAt" | "expiresAt" | "isActive", ExtArgs["result"]["jobPosting"]>
   export type JobPostingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
@@ -5850,6 +5985,10 @@ export namespace Prisma {
       interviewProcess: string | null
       departmentId: number
       disciplineId: number
+      status: string
+      lastSyncedAt: Date
+      expiresAt: Date | null
+      isActive: boolean
     }, ExtArgs["result"]["jobPosting"]>
     composites: {}
   }
@@ -6304,6 +6443,10 @@ export namespace Prisma {
     readonly interviewProcess: FieldRef<"JobPosting", 'String'>
     readonly departmentId: FieldRef<"JobPosting", 'Int'>
     readonly disciplineId: FieldRef<"JobPosting", 'Int'>
+    readonly status: FieldRef<"JobPosting", 'String'>
+    readonly lastSyncedAt: FieldRef<"JobPosting", 'DateTime'>
+    readonly expiresAt: FieldRef<"JobPosting", 'DateTime'>
+    readonly isActive: FieldRef<"JobPosting", 'Boolean'>
   }
     
 
@@ -14342,6 +14485,1137 @@ export namespace Prisma {
 
 
   /**
+   * Model SyncLog
+   */
+
+  export type AggregateSyncLog = {
+    _count: SyncLogCountAggregateOutputType | null
+    _avg: SyncLogAvgAggregateOutputType | null
+    _sum: SyncLogSumAggregateOutputType | null
+    _min: SyncLogMinAggregateOutputType | null
+    _max: SyncLogMaxAggregateOutputType | null
+  }
+
+  export type SyncLogAvgAggregateOutputType = {
+    id: number | null
+    jobsFetched: number | null
+    jobsCreated: number | null
+    jobsUpdated: number | null
+    jobsExpired: number | null
+    jobsRemoved: number | null
+    durationMs: number | null
+  }
+
+  export type SyncLogSumAggregateOutputType = {
+    id: number | null
+    jobsFetched: number | null
+    jobsCreated: number | null
+    jobsUpdated: number | null
+    jobsExpired: number | null
+    jobsRemoved: number | null
+    durationMs: number | null
+  }
+
+  export type SyncLogMinAggregateOutputType = {
+    id: number | null
+    startedAt: Date | null
+    completedAt: Date | null
+    status: string | null
+    jobsFetched: number | null
+    jobsCreated: number | null
+    jobsUpdated: number | null
+    jobsExpired: number | null
+    jobsRemoved: number | null
+    errors: string | null
+    durationMs: number | null
+  }
+
+  export type SyncLogMaxAggregateOutputType = {
+    id: number | null
+    startedAt: Date | null
+    completedAt: Date | null
+    status: string | null
+    jobsFetched: number | null
+    jobsCreated: number | null
+    jobsUpdated: number | null
+    jobsExpired: number | null
+    jobsRemoved: number | null
+    errors: string | null
+    durationMs: number | null
+  }
+
+  export type SyncLogCountAggregateOutputType = {
+    id: number
+    startedAt: number
+    completedAt: number
+    status: number
+    jobsFetched: number
+    jobsCreated: number
+    jobsUpdated: number
+    jobsExpired: number
+    jobsRemoved: number
+    errors: number
+    durationMs: number
+    _all: number
+  }
+
+
+  export type SyncLogAvgAggregateInputType = {
+    id?: true
+    jobsFetched?: true
+    jobsCreated?: true
+    jobsUpdated?: true
+    jobsExpired?: true
+    jobsRemoved?: true
+    durationMs?: true
+  }
+
+  export type SyncLogSumAggregateInputType = {
+    id?: true
+    jobsFetched?: true
+    jobsCreated?: true
+    jobsUpdated?: true
+    jobsExpired?: true
+    jobsRemoved?: true
+    durationMs?: true
+  }
+
+  export type SyncLogMinAggregateInputType = {
+    id?: true
+    startedAt?: true
+    completedAt?: true
+    status?: true
+    jobsFetched?: true
+    jobsCreated?: true
+    jobsUpdated?: true
+    jobsExpired?: true
+    jobsRemoved?: true
+    errors?: true
+    durationMs?: true
+  }
+
+  export type SyncLogMaxAggregateInputType = {
+    id?: true
+    startedAt?: true
+    completedAt?: true
+    status?: true
+    jobsFetched?: true
+    jobsCreated?: true
+    jobsUpdated?: true
+    jobsExpired?: true
+    jobsRemoved?: true
+    errors?: true
+    durationMs?: true
+  }
+
+  export type SyncLogCountAggregateInputType = {
+    id?: true
+    startedAt?: true
+    completedAt?: true
+    status?: true
+    jobsFetched?: true
+    jobsCreated?: true
+    jobsUpdated?: true
+    jobsExpired?: true
+    jobsRemoved?: true
+    errors?: true
+    durationMs?: true
+    _all?: true
+  }
+
+  export type SyncLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SyncLog to aggregate.
+     */
+    where?: SyncLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SyncLogs to fetch.
+     */
+    orderBy?: SyncLogOrderByWithRelationInput | SyncLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SyncLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SyncLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SyncLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SyncLogs
+    **/
+    _count?: true | SyncLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SyncLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SyncLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SyncLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SyncLogMaxAggregateInputType
+  }
+
+  export type GetSyncLogAggregateType<T extends SyncLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateSyncLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSyncLog[P]>
+      : GetScalarType<T[P], AggregateSyncLog[P]>
+  }
+
+
+
+
+  export type SyncLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SyncLogWhereInput
+    orderBy?: SyncLogOrderByWithAggregationInput | SyncLogOrderByWithAggregationInput[]
+    by: SyncLogScalarFieldEnum[] | SyncLogScalarFieldEnum
+    having?: SyncLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SyncLogCountAggregateInputType | true
+    _avg?: SyncLogAvgAggregateInputType
+    _sum?: SyncLogSumAggregateInputType
+    _min?: SyncLogMinAggregateInputType
+    _max?: SyncLogMaxAggregateInputType
+  }
+
+  export type SyncLogGroupByOutputType = {
+    id: number
+    startedAt: Date
+    completedAt: Date | null
+    status: string
+    jobsFetched: number
+    jobsCreated: number
+    jobsUpdated: number
+    jobsExpired: number
+    jobsRemoved: number
+    errors: string | null
+    durationMs: number | null
+    _count: SyncLogCountAggregateOutputType | null
+    _avg: SyncLogAvgAggregateOutputType | null
+    _sum: SyncLogSumAggregateOutputType | null
+    _min: SyncLogMinAggregateOutputType | null
+    _max: SyncLogMaxAggregateOutputType | null
+  }
+
+  type GetSyncLogGroupByPayload<T extends SyncLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SyncLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SyncLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SyncLogGroupByOutputType[P]>
+            : GetScalarType<T[P], SyncLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SyncLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    status?: boolean
+    jobsFetched?: boolean
+    jobsCreated?: boolean
+    jobsUpdated?: boolean
+    jobsExpired?: boolean
+    jobsRemoved?: boolean
+    errors?: boolean
+    durationMs?: boolean
+  }, ExtArgs["result"]["syncLog"]>
+
+  export type SyncLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    status?: boolean
+    jobsFetched?: boolean
+    jobsCreated?: boolean
+    jobsUpdated?: boolean
+    jobsExpired?: boolean
+    jobsRemoved?: boolean
+    errors?: boolean
+    durationMs?: boolean
+  }, ExtArgs["result"]["syncLog"]>
+
+  export type SyncLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    status?: boolean
+    jobsFetched?: boolean
+    jobsCreated?: boolean
+    jobsUpdated?: boolean
+    jobsExpired?: boolean
+    jobsRemoved?: boolean
+    errors?: boolean
+    durationMs?: boolean
+  }, ExtArgs["result"]["syncLog"]>
+
+  export type SyncLogSelectScalar = {
+    id?: boolean
+    startedAt?: boolean
+    completedAt?: boolean
+    status?: boolean
+    jobsFetched?: boolean
+    jobsCreated?: boolean
+    jobsUpdated?: boolean
+    jobsExpired?: boolean
+    jobsRemoved?: boolean
+    errors?: boolean
+    durationMs?: boolean
+  }
+
+  export type SyncLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "startedAt" | "completedAt" | "status" | "jobsFetched" | "jobsCreated" | "jobsUpdated" | "jobsExpired" | "jobsRemoved" | "errors" | "durationMs", ExtArgs["result"]["syncLog"]>
+
+  export type $SyncLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SyncLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      startedAt: Date
+      completedAt: Date | null
+      status: string
+      jobsFetched: number
+      jobsCreated: number
+      jobsUpdated: number
+      jobsExpired: number
+      jobsRemoved: number
+      errors: string | null
+      durationMs: number | null
+    }, ExtArgs["result"]["syncLog"]>
+    composites: {}
+  }
+
+  type SyncLogGetPayload<S extends boolean | null | undefined | SyncLogDefaultArgs> = $Result.GetResult<Prisma.$SyncLogPayload, S>
+
+  type SyncLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SyncLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SyncLogCountAggregateInputType | true
+    }
+
+  export interface SyncLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SyncLog'], meta: { name: 'SyncLog' } }
+    /**
+     * Find zero or one SyncLog that matches the filter.
+     * @param {SyncLogFindUniqueArgs} args - Arguments to find a SyncLog
+     * @example
+     * // Get one SyncLog
+     * const syncLog = await prisma.syncLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SyncLogFindUniqueArgs>(args: SelectSubset<T, SyncLogFindUniqueArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SyncLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SyncLogFindUniqueOrThrowArgs} args - Arguments to find a SyncLog
+     * @example
+     * // Get one SyncLog
+     * const syncLog = await prisma.syncLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SyncLogFindUniqueOrThrowArgs>(args: SelectSubset<T, SyncLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SyncLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogFindFirstArgs} args - Arguments to find a SyncLog
+     * @example
+     * // Get one SyncLog
+     * const syncLog = await prisma.syncLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SyncLogFindFirstArgs>(args?: SelectSubset<T, SyncLogFindFirstArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SyncLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogFindFirstOrThrowArgs} args - Arguments to find a SyncLog
+     * @example
+     * // Get one SyncLog
+     * const syncLog = await prisma.syncLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SyncLogFindFirstOrThrowArgs>(args?: SelectSubset<T, SyncLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SyncLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SyncLogs
+     * const syncLogs = await prisma.syncLog.findMany()
+     * 
+     * // Get first 10 SyncLogs
+     * const syncLogs = await prisma.syncLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const syncLogWithIdOnly = await prisma.syncLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SyncLogFindManyArgs>(args?: SelectSubset<T, SyncLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SyncLog.
+     * @param {SyncLogCreateArgs} args - Arguments to create a SyncLog.
+     * @example
+     * // Create one SyncLog
+     * const SyncLog = await prisma.syncLog.create({
+     *   data: {
+     *     // ... data to create a SyncLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends SyncLogCreateArgs>(args: SelectSubset<T, SyncLogCreateArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SyncLogs.
+     * @param {SyncLogCreateManyArgs} args - Arguments to create many SyncLogs.
+     * @example
+     * // Create many SyncLogs
+     * const syncLog = await prisma.syncLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SyncLogCreateManyArgs>(args?: SelectSubset<T, SyncLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SyncLogs and returns the data saved in the database.
+     * @param {SyncLogCreateManyAndReturnArgs} args - Arguments to create many SyncLogs.
+     * @example
+     * // Create many SyncLogs
+     * const syncLog = await prisma.syncLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SyncLogs and only return the `id`
+     * const syncLogWithIdOnly = await prisma.syncLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SyncLogCreateManyAndReturnArgs>(args?: SelectSubset<T, SyncLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SyncLog.
+     * @param {SyncLogDeleteArgs} args - Arguments to delete one SyncLog.
+     * @example
+     * // Delete one SyncLog
+     * const SyncLog = await prisma.syncLog.delete({
+     *   where: {
+     *     // ... filter to delete one SyncLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SyncLogDeleteArgs>(args: SelectSubset<T, SyncLogDeleteArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SyncLog.
+     * @param {SyncLogUpdateArgs} args - Arguments to update one SyncLog.
+     * @example
+     * // Update one SyncLog
+     * const syncLog = await prisma.syncLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SyncLogUpdateArgs>(args: SelectSubset<T, SyncLogUpdateArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SyncLogs.
+     * @param {SyncLogDeleteManyArgs} args - Arguments to filter SyncLogs to delete.
+     * @example
+     * // Delete a few SyncLogs
+     * const { count } = await prisma.syncLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SyncLogDeleteManyArgs>(args?: SelectSubset<T, SyncLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SyncLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SyncLogs
+     * const syncLog = await prisma.syncLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SyncLogUpdateManyArgs>(args: SelectSubset<T, SyncLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SyncLogs and returns the data updated in the database.
+     * @param {SyncLogUpdateManyAndReturnArgs} args - Arguments to update many SyncLogs.
+     * @example
+     * // Update many SyncLogs
+     * const syncLog = await prisma.syncLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SyncLogs and only return the `id`
+     * const syncLogWithIdOnly = await prisma.syncLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SyncLogUpdateManyAndReturnArgs>(args: SelectSubset<T, SyncLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SyncLog.
+     * @param {SyncLogUpsertArgs} args - Arguments to update or create a SyncLog.
+     * @example
+     * // Update or create a SyncLog
+     * const syncLog = await prisma.syncLog.upsert({
+     *   create: {
+     *     // ... data to create a SyncLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SyncLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SyncLogUpsertArgs>(args: SelectSubset<T, SyncLogUpsertArgs<ExtArgs>>): Prisma__SyncLogClient<$Result.GetResult<Prisma.$SyncLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SyncLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogCountArgs} args - Arguments to filter SyncLogs to count.
+     * @example
+     * // Count the number of SyncLogs
+     * const count = await prisma.syncLog.count({
+     *   where: {
+     *     // ... the filter for the SyncLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends SyncLogCountArgs>(
+      args?: Subset<T, SyncLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SyncLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SyncLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SyncLogAggregateArgs>(args: Subset<T, SyncLogAggregateArgs>): Prisma.PrismaPromise<GetSyncLogAggregateType<T>>
+
+    /**
+     * Group by SyncLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SyncLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SyncLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SyncLogGroupByArgs['orderBy'] }
+        : { orderBy?: SyncLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SyncLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSyncLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SyncLog model
+   */
+  readonly fields: SyncLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SyncLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SyncLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SyncLog model
+   */
+  interface SyncLogFieldRefs {
+    readonly id: FieldRef<"SyncLog", 'Int'>
+    readonly startedAt: FieldRef<"SyncLog", 'DateTime'>
+    readonly completedAt: FieldRef<"SyncLog", 'DateTime'>
+    readonly status: FieldRef<"SyncLog", 'String'>
+    readonly jobsFetched: FieldRef<"SyncLog", 'Int'>
+    readonly jobsCreated: FieldRef<"SyncLog", 'Int'>
+    readonly jobsUpdated: FieldRef<"SyncLog", 'Int'>
+    readonly jobsExpired: FieldRef<"SyncLog", 'Int'>
+    readonly jobsRemoved: FieldRef<"SyncLog", 'Int'>
+    readonly errors: FieldRef<"SyncLog", 'String'>
+    readonly durationMs: FieldRef<"SyncLog", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SyncLog findUnique
+   */
+  export type SyncLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * Filter, which SyncLog to fetch.
+     */
+    where: SyncLogWhereUniqueInput
+  }
+
+  /**
+   * SyncLog findUniqueOrThrow
+   */
+  export type SyncLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * Filter, which SyncLog to fetch.
+     */
+    where: SyncLogWhereUniqueInput
+  }
+
+  /**
+   * SyncLog findFirst
+   */
+  export type SyncLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * Filter, which SyncLog to fetch.
+     */
+    where?: SyncLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SyncLogs to fetch.
+     */
+    orderBy?: SyncLogOrderByWithRelationInput | SyncLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SyncLogs.
+     */
+    cursor?: SyncLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SyncLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SyncLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SyncLogs.
+     */
+    distinct?: SyncLogScalarFieldEnum | SyncLogScalarFieldEnum[]
+  }
+
+  /**
+   * SyncLog findFirstOrThrow
+   */
+  export type SyncLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * Filter, which SyncLog to fetch.
+     */
+    where?: SyncLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SyncLogs to fetch.
+     */
+    orderBy?: SyncLogOrderByWithRelationInput | SyncLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SyncLogs.
+     */
+    cursor?: SyncLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SyncLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SyncLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SyncLogs.
+     */
+    distinct?: SyncLogScalarFieldEnum | SyncLogScalarFieldEnum[]
+  }
+
+  /**
+   * SyncLog findMany
+   */
+  export type SyncLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * Filter, which SyncLogs to fetch.
+     */
+    where?: SyncLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SyncLogs to fetch.
+     */
+    orderBy?: SyncLogOrderByWithRelationInput | SyncLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SyncLogs.
+     */
+    cursor?: SyncLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SyncLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SyncLogs.
+     */
+    skip?: number
+    distinct?: SyncLogScalarFieldEnum | SyncLogScalarFieldEnum[]
+  }
+
+  /**
+   * SyncLog create
+   */
+  export type SyncLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SyncLog.
+     */
+    data: XOR<SyncLogCreateInput, SyncLogUncheckedCreateInput>
+  }
+
+  /**
+   * SyncLog createMany
+   */
+  export type SyncLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SyncLogs.
+     */
+    data: SyncLogCreateManyInput | SyncLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SyncLog createManyAndReturn
+   */
+  export type SyncLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many SyncLogs.
+     */
+    data: SyncLogCreateManyInput | SyncLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SyncLog update
+   */
+  export type SyncLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SyncLog.
+     */
+    data: XOR<SyncLogUpdateInput, SyncLogUncheckedUpdateInput>
+    /**
+     * Choose, which SyncLog to update.
+     */
+    where: SyncLogWhereUniqueInput
+  }
+
+  /**
+   * SyncLog updateMany
+   */
+  export type SyncLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SyncLogs.
+     */
+    data: XOR<SyncLogUpdateManyMutationInput, SyncLogUncheckedUpdateManyInput>
+    /**
+     * Filter which SyncLogs to update
+     */
+    where?: SyncLogWhereInput
+    /**
+     * Limit how many SyncLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SyncLog updateManyAndReturn
+   */
+  export type SyncLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * The data used to update SyncLogs.
+     */
+    data: XOR<SyncLogUpdateManyMutationInput, SyncLogUncheckedUpdateManyInput>
+    /**
+     * Filter which SyncLogs to update
+     */
+    where?: SyncLogWhereInput
+    /**
+     * Limit how many SyncLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SyncLog upsert
+   */
+  export type SyncLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SyncLog to update in case it exists.
+     */
+    where: SyncLogWhereUniqueInput
+    /**
+     * In case the SyncLog found by the `where` argument doesn't exist, create a new SyncLog with this data.
+     */
+    create: XOR<SyncLogCreateInput, SyncLogUncheckedCreateInput>
+    /**
+     * In case the SyncLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SyncLogUpdateInput, SyncLogUncheckedUpdateInput>
+  }
+
+  /**
+   * SyncLog delete
+   */
+  export type SyncLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+    /**
+     * Filter which SyncLog to delete.
+     */
+    where: SyncLogWhereUniqueInput
+  }
+
+  /**
+   * SyncLog deleteMany
+   */
+  export type SyncLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SyncLogs to delete
+     */
+    where?: SyncLogWhereInput
+    /**
+     * Limit how many SyncLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SyncLog without action
+   */
+  export type SyncLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SyncLog
+     */
+    select?: SyncLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SyncLog
+     */
+    omit?: SyncLogOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -14409,7 +15683,11 @@ export namespace Prisma {
     visaSponsorship: 'visaSponsorship',
     interviewProcess: 'interviewProcess',
     departmentId: 'departmentId',
-    disciplineId: 'disciplineId'
+    disciplineId: 'disciplineId',
+    status: 'status',
+    lastSyncedAt: 'lastSyncedAt',
+    expiresAt: 'expiresAt',
+    isActive: 'isActive'
   };
 
   export type JobPostingScalarFieldEnum = (typeof JobPostingScalarFieldEnum)[keyof typeof JobPostingScalarFieldEnum]
@@ -14475,6 +15753,23 @@ export namespace Prisma {
   };
 
   export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+  export const SyncLogScalarFieldEnum: {
+    id: 'id',
+    startedAt: 'startedAt',
+    completedAt: 'completedAt',
+    status: 'status',
+    jobsFetched: 'jobsFetched',
+    jobsCreated: 'jobsCreated',
+    jobsUpdated: 'jobsUpdated',
+    jobsExpired: 'jobsExpired',
+    jobsRemoved: 'jobsRemoved',
+    errors: 'errors',
+    durationMs: 'durationMs'
+  };
+
+  export type SyncLogScalarFieldEnum = (typeof SyncLogScalarFieldEnum)[keyof typeof SyncLogScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -14769,6 +16064,10 @@ export namespace Prisma {
     interviewProcess?: StringNullableFilter<"JobPosting"> | string | null
     departmentId?: IntFilter<"JobPosting"> | number
     disciplineId?: IntFilter<"JobPosting"> | number
+    status?: StringFilter<"JobPosting"> | string
+    lastSyncedAt?: DateTimeFilter<"JobPosting"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    isActive?: BoolFilter<"JobPosting"> | boolean
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
     applicationRequirements?: ApplicationRequirementListRelationFilter
@@ -14803,6 +16102,10 @@ export namespace Prisma {
     interviewProcess?: SortOrderInput | SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    status?: SortOrder
+    lastSyncedAt?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     department?: DepartmentOrderByWithRelationInput
     discipline?: DisciplineOrderByWithRelationInput
     applicationRequirements?: ApplicationRequirementOrderByRelationAggregateInput
@@ -14840,6 +16143,10 @@ export namespace Prisma {
     interviewProcess?: StringNullableFilter<"JobPosting"> | string | null
     departmentId?: IntFilter<"JobPosting"> | number
     disciplineId?: IntFilter<"JobPosting"> | number
+    status?: StringFilter<"JobPosting"> | string
+    lastSyncedAt?: DateTimeFilter<"JobPosting"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    isActive?: BoolFilter<"JobPosting"> | boolean
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
     applicationRequirements?: ApplicationRequirementListRelationFilter
@@ -14874,6 +16181,10 @@ export namespace Prisma {
     interviewProcess?: SortOrderInput | SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    status?: SortOrder
+    lastSyncedAt?: SortOrder
+    expiresAt?: SortOrderInput | SortOrder
+    isActive?: SortOrder
     _count?: JobPostingCountOrderByAggregateInput
     _avg?: JobPostingAvgOrderByAggregateInput
     _max?: JobPostingMaxOrderByAggregateInput
@@ -14908,6 +16219,10 @@ export namespace Prisma {
     interviewProcess?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
     departmentId?: IntWithAggregatesFilter<"JobPosting"> | number
     disciplineId?: IntWithAggregatesFilter<"JobPosting"> | number
+    status?: StringWithAggregatesFilter<"JobPosting"> | string
+    lastSyncedAt?: DateTimeWithAggregatesFilter<"JobPosting"> | Date | string
+    expiresAt?: DateTimeNullableWithAggregatesFilter<"JobPosting"> | Date | string | null
+    isActive?: BoolWithAggregatesFilter<"JobPosting"> | boolean
   }
 
   export type ApplicationRequirementWhereInput = {
@@ -15240,6 +16555,90 @@ export namespace Prisma {
     title?: StringNullableWithAggregatesFilter<"Contact"> | string | null
   }
 
+  export type SyncLogWhereInput = {
+    AND?: SyncLogWhereInput | SyncLogWhereInput[]
+    OR?: SyncLogWhereInput[]
+    NOT?: SyncLogWhereInput | SyncLogWhereInput[]
+    id?: IntFilter<"SyncLog"> | number
+    startedAt?: DateTimeFilter<"SyncLog"> | Date | string
+    completedAt?: DateTimeNullableFilter<"SyncLog"> | Date | string | null
+    status?: StringFilter<"SyncLog"> | string
+    jobsFetched?: IntFilter<"SyncLog"> | number
+    jobsCreated?: IntFilter<"SyncLog"> | number
+    jobsUpdated?: IntFilter<"SyncLog"> | number
+    jobsExpired?: IntFilter<"SyncLog"> | number
+    jobsRemoved?: IntFilter<"SyncLog"> | number
+    errors?: StringNullableFilter<"SyncLog"> | string | null
+    durationMs?: IntNullableFilter<"SyncLog"> | number | null
+  }
+
+  export type SyncLogOrderByWithRelationInput = {
+    id?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    status?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    errors?: SortOrderInput | SortOrder
+    durationMs?: SortOrderInput | SortOrder
+  }
+
+  export type SyncLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: SyncLogWhereInput | SyncLogWhereInput[]
+    OR?: SyncLogWhereInput[]
+    NOT?: SyncLogWhereInput | SyncLogWhereInput[]
+    startedAt?: DateTimeFilter<"SyncLog"> | Date | string
+    completedAt?: DateTimeNullableFilter<"SyncLog"> | Date | string | null
+    status?: StringFilter<"SyncLog"> | string
+    jobsFetched?: IntFilter<"SyncLog"> | number
+    jobsCreated?: IntFilter<"SyncLog"> | number
+    jobsUpdated?: IntFilter<"SyncLog"> | number
+    jobsExpired?: IntFilter<"SyncLog"> | number
+    jobsRemoved?: IntFilter<"SyncLog"> | number
+    errors?: StringNullableFilter<"SyncLog"> | string | null
+    durationMs?: IntNullableFilter<"SyncLog"> | number | null
+  }, "id">
+
+  export type SyncLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    status?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    errors?: SortOrderInput | SortOrder
+    durationMs?: SortOrderInput | SortOrder
+    _count?: SyncLogCountOrderByAggregateInput
+    _avg?: SyncLogAvgOrderByAggregateInput
+    _max?: SyncLogMaxOrderByAggregateInput
+    _min?: SyncLogMinOrderByAggregateInput
+    _sum?: SyncLogSumOrderByAggregateInput
+  }
+
+  export type SyncLogScalarWhereWithAggregatesInput = {
+    AND?: SyncLogScalarWhereWithAggregatesInput | SyncLogScalarWhereWithAggregatesInput[]
+    OR?: SyncLogScalarWhereWithAggregatesInput[]
+    NOT?: SyncLogScalarWhereWithAggregatesInput | SyncLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"SyncLog"> | number
+    startedAt?: DateTimeWithAggregatesFilter<"SyncLog"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"SyncLog"> | Date | string | null
+    status?: StringWithAggregatesFilter<"SyncLog"> | string
+    jobsFetched?: IntWithAggregatesFilter<"SyncLog"> | number
+    jobsCreated?: IntWithAggregatesFilter<"SyncLog"> | number
+    jobsUpdated?: IntWithAggregatesFilter<"SyncLog"> | number
+    jobsExpired?: IntWithAggregatesFilter<"SyncLog"> | number
+    jobsRemoved?: IntWithAggregatesFilter<"SyncLog"> | number
+    errors?: StringNullableWithAggregatesFilter<"SyncLog"> | string | null
+    durationMs?: IntNullableWithAggregatesFilter<"SyncLog"> | number | null
+  }
+
   export type InstitutionCreateInput = {
     name: string
     location?: string | null
@@ -15420,6 +16819,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -15454,6 +16857,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -15483,6 +16890,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -15517,6 +16928,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -15549,6 +16964,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
   }
 
   export type JobPostingUpdateManyMutationInput = {
@@ -15572,6 +16991,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type JobPostingUncheckedUpdateManyInput = {
@@ -15598,6 +17021,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ApplicationRequirementCreateInput = {
@@ -15879,6 +17306,101 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type SyncLogCreateInput = {
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    status: string
+    jobsFetched: number
+    jobsCreated: number
+    jobsUpdated: number
+    jobsExpired: number
+    jobsRemoved: number
+    errors?: string | null
+    durationMs?: number | null
+  }
+
+  export type SyncLogUncheckedCreateInput = {
+    id?: number
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    status: string
+    jobsFetched: number
+    jobsCreated: number
+    jobsUpdated: number
+    jobsExpired: number
+    jobsRemoved: number
+    errors?: string | null
+    durationMs?: number | null
+  }
+
+  export type SyncLogUpdateInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    jobsFetched?: IntFieldUpdateOperationsInput | number
+    jobsCreated?: IntFieldUpdateOperationsInput | number
+    jobsUpdated?: IntFieldUpdateOperationsInput | number
+    jobsExpired?: IntFieldUpdateOperationsInput | number
+    jobsRemoved?: IntFieldUpdateOperationsInput | number
+    errors?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type SyncLogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    jobsFetched?: IntFieldUpdateOperationsInput | number
+    jobsCreated?: IntFieldUpdateOperationsInput | number
+    jobsUpdated?: IntFieldUpdateOperationsInput | number
+    jobsExpired?: IntFieldUpdateOperationsInput | number
+    jobsRemoved?: IntFieldUpdateOperationsInput | number
+    errors?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type SyncLogCreateManyInput = {
+    id?: number
+    startedAt?: Date | string
+    completedAt?: Date | string | null
+    status: string
+    jobsFetched: number
+    jobsCreated: number
+    jobsUpdated: number
+    jobsExpired: number
+    jobsRemoved: number
+    errors?: string | null
+    durationMs?: number | null
+  }
+
+  export type SyncLogUpdateManyMutationInput = {
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    jobsFetched?: IntFieldUpdateOperationsInput | number
+    jobsCreated?: IntFieldUpdateOperationsInput | number
+    jobsUpdated?: IntFieldUpdateOperationsInput | number
+    jobsExpired?: IntFieldUpdateOperationsInput | number
+    jobsRemoved?: IntFieldUpdateOperationsInput | number
+    errors?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
+  export type SyncLogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    jobsFetched?: IntFieldUpdateOperationsInput | number
+    jobsCreated?: IntFieldUpdateOperationsInput | number
+    jobsUpdated?: IntFieldUpdateOperationsInput | number
+    jobsExpired?: IntFieldUpdateOperationsInput | number
+    jobsRemoved?: IntFieldUpdateOperationsInput | number
+    errors?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMs?: NullableIntFieldUpdateOperationsInput | number | null
+  }
+
   export type IntFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -16154,6 +17676,22 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type DateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type BoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type DepartmentScalarRelationFilter = {
     is?: DepartmentWhereInput
     isNot?: DepartmentWhereInput
@@ -16238,6 +17776,10 @@ export namespace Prisma {
     interviewProcess?: SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    status?: SortOrder
+    lastSyncedAt?: SortOrder
+    expiresAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type JobPostingAvgOrderByAggregateInput = {
@@ -16271,6 +17813,10 @@ export namespace Prisma {
     interviewProcess?: SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    status?: SortOrder
+    lastSyncedAt?: SortOrder
+    expiresAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type JobPostingMinOrderByAggregateInput = {
@@ -16297,6 +17843,10 @@ export namespace Prisma {
     interviewProcess?: SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    status?: SortOrder
+    lastSyncedAt?: SortOrder
+    expiresAt?: SortOrder
+    isActive?: SortOrder
   }
 
   export type JobPostingSumOrderByAggregateInput = {
@@ -16326,6 +17876,28 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type JobPostingScalarRelationFilter = {
@@ -16567,6 +18139,68 @@ export namespace Prisma {
 
   export type ContactSumOrderByAggregateInput = {
     jobPostingId?: SortOrder
+  }
+
+  export type SyncLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    status?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    errors?: SortOrder
+    durationMs?: SortOrder
+  }
+
+  export type SyncLogAvgOrderByAggregateInput = {
+    id?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    durationMs?: SortOrder
+  }
+
+  export type SyncLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    status?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    errors?: SortOrder
+    durationMs?: SortOrder
+  }
+
+  export type SyncLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    startedAt?: SortOrder
+    completedAt?: SortOrder
+    status?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    errors?: SortOrder
+    durationMs?: SortOrder
+  }
+
+  export type SyncLogSumOrderByAggregateInput = {
+    id?: SortOrder
+    jobsFetched?: SortOrder
+    jobsCreated?: SortOrder
+    jobsUpdated?: SortOrder
+    jobsExpired?: SortOrder
+    jobsRemoved?: SortOrder
+    durationMs?: SortOrder
   }
 
   export type DepartmentCreateNestedManyWithoutInstitutionInput = {
@@ -16889,6 +18523,14 @@ export namespace Prisma {
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
     set?: Date | string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
+  }
+
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
   }
 
   export type DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput = {
@@ -17361,6 +19003,22 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedDateTimeFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeFilter<$PrismaModel> | Date | string
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
+  }
+
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
@@ -17381,6 +19039,28 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17492,6 +19172,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -17524,6 +19208,10 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -17611,6 +19299,10 @@ export namespace Prisma {
     interviewProcess?: StringNullableFilter<"JobPosting"> | string | null
     departmentId?: IntFilter<"JobPosting"> | number
     disciplineId?: IntFilter<"JobPosting"> | number
+    status?: StringFilter<"JobPosting"> | string
+    lastSyncedAt?: DateTimeFilter<"JobPosting"> | Date | string
+    expiresAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    isActive?: BoolFilter<"JobPosting"> | boolean
   }
 
   export type DisciplineCreateWithoutChildrenInput = {
@@ -17675,6 +19367,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -17707,6 +19403,10 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     departmentId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18151,6 +19851,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -18184,6 +19888,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18228,6 +19936,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -18261,6 +19973,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -18323,6 +20039,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -18356,6 +20076,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18414,6 +20138,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -18447,6 +20175,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -18495,6 +20227,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -18528,6 +20264,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18572,6 +20312,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -18605,6 +20349,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -18633,6 +20381,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -18666,6 +20418,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18710,6 +20466,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -18743,6 +20503,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -18771,6 +20535,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -18804,6 +20572,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18848,6 +20620,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -18881,6 +20657,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -18909,6 +20689,10 @@ export namespace Prisma {
     fundingSource?: string | null
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -18942,6 +20726,10 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -18986,6 +20774,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -19019,6 +20811,10 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -19078,6 +20874,10 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     disciplineId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
   }
 
   export type JobPostingUpdateWithoutDepartmentInput = {
@@ -19101,6 +20901,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -19133,6 +20937,10 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -19164,6 +20972,10 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type DisciplineCreateManyParentInput = {
@@ -19194,6 +21006,10 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     departmentId: number
+    status?: string
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
   }
 
   export type DisciplineUpdateWithoutParentInput = {
@@ -19235,6 +21051,10 @@ export namespace Prisma {
     fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -19267,6 +21087,10 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -19298,6 +21122,10 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type ApplicationRequirementCreateManyJobPostingInput = {

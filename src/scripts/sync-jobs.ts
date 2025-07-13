@@ -3,15 +3,30 @@ import { z } from "zod";
 import axios from "axios";
 import { config } from "@/config";
 import { htmlToText } from "html-to-text";
+import { JobEnrichmentService } from "../services/jobEnrichment";
 import type {
   Institution,
   Department,
   Discipline,
   JobPosting,
   Keyword,
+  SyncLog,
 } from "../generated/prisma";
 
 const prisma = new PrismaClient();
+
+// Initialize enrichment service if API key is available
+let enrichmentService: JobEnrichmentService | null = null;
+try {
+  if (config.cohereApiKey) {
+    enrichmentService = new JobEnrichmentService();
+    console.log("✅ LLM enrichment service initialized with Cohere");
+  } else {
+    console.log("⚠️  No COHERE_API_KEY found, skipping LLM enrichment");
+  }
+} catch (error) {
+  console.log("⚠️  Failed to initialize LLM enrichment service:", error);
+}
 
 const JobPostingSchema = z.object({
   id: z.number(),
@@ -65,6 +80,13 @@ const extractJobs = async () => {
         },
       });
 
+      // Log response for debugging
+      console.log(`API Response for page ${page}:`, {
+        status: response.status,
+        dataKeys: Object.keys(response.data),
+        resultsCount: response.data?.results?.length || 0,
+      });
+
       const validatedResponse = JobListingResponseSchema.parse(response.data);
 
       if (page === 1) {
@@ -98,7 +120,7 @@ const extractJobs = async () => {
   }
 };
 
-const transformJobs = (jobs: ApiJobPosting[]) => {
+const transformJobs = async (jobs: ApiJobPosting[]) => {
   const transformedData = {
     institutions: new Map<string, Omit<Institution, "id">>(),
     departments: new Map<
@@ -107,19 +129,47 @@ const transformJobs = (jobs: ApiJobPosting[]) => {
     >(),
     disciplines: new Map<string, Omit<Discipline, "id">>(),
     jobPostings: [] as Array<
-      Omit<JobPosting, "id" | "departmentId" | "disciplineId"> & {
+      Omit<
+        JobPosting,
+        | "id"
+        | "departmentId"
+        | "disciplineId"
+        | "status"
+        | "lastSyncedAt"
+        | "expiresAt"
+        | "isActive"
+      > & {
         departmentKey: string;
         disciplineKey: string;
         keywords: string[];
         instructions: string;
         qualifications: string;
         legacyPositionId: number;
+        category?: string | null;
+        workModality?: string | null;
+        contractType?: string | null;
+        durationMonths?: number | null;
+        renewable?: boolean | null;
+        fundingSource?: string | null;
+        visaSponsorship?: boolean | null;
+        interviewProcess?: string | null;
       }
     >,
     keywords: new Map<string, Omit<Keyword, "id">>(),
   };
 
-  jobs.forEach((job) => {
+  for (const job of jobs) {
+    // Validate required fields
+    if (!job.univ || !job.name || !job.url) {
+      console.warn(`Skipping job with missing required fields:`, {
+        id: job.id,
+        univ: job.univ,
+        name: job.name,
+        url: job.url,
+      });
+      return;
+    }
+
     // Extract and normalize institution data
     const institutionKey = job.univ.toLowerCase().trim();
     if (!transformedData.institutions.has(institutionKey)) {
@@ -133,7 +183,7 @@ const transformJobs = (jobs: ApiJobPosting[]) => {
 
     // Extract and normalize department data
     // Handle empty unit_name by using a default or extracting from institution name
-    const unitName = job.unit_name.trim() || "General";
+    const unitName = job.unit_name.trim() || "General Department";
     const departmentKey = `${institutionKey}-${unitName.toLowerCase().trim()}`;
     if (!transformedData.departments.has(departmentKey)) {
       transformedData.departments.set(departmentKey, {
@@ -157,8 +207,19 @@ const transformJobs = (jobs: ApiJobPosting[]) => {
     // Parse dates - handle invalid dates like '0000-00-00 00:00:00'
     const parseDate = (dateStr: string) => {
       if (!dateStr || dateStr === "0000-00-00 00:00:00") return null;
-      const date = new Date(dateStr);
-      return isNaN(date.getTime()) ? null : date;
+
+      // Handle different date formats from the API
+      let parsedDate: Date;
+
+      // Try parsing as ISO date first
+      if (dateStr.includes("T") || dateStr.includes(" ")) {
+        parsedDate = new Date(dateStr);
+      } else {
+        // Handle YYYY-MM-DD format
+        parsedDate = new Date(dateStr + "T00:00:00");
+      }
+
+      return isNaN(parsedDate.getTime()) ? null : parsedDate;
     };
 
     // Clean HTML content and extract plain text
@@ -174,8 +235,13 @@ const transformJobs = (jobs: ApiJobPosting[]) => {
             // Handle lists properly
             { selector: "ul", format: "unorderedList" },
             { selector: "ol", format: "orderedList" },
-            // Handle headings
-            { selector: "h1, h2, h3, h4, h5, h6", format: "heading" },
+            // Handle headings individually
+            { selector: "h1", format: "heading" },
+            { selector: "h2", format: "heading" },
+            { selector: "h3", format: "heading" },
+            { selector: "h4", format: "heading" },
+            { selector: "h5", format: "heading" },
+            { selector: "h6", format: "heading" },
             // Handle paragraphs
             { selector: "p", format: "paragraph" },
             // Handle links but keep the text
@@ -312,73 +378,100 @@ const transformJobs = (jobs: ApiJobPosting[]) => {
       }
     });
 
-    // Determine job type and seniority level from title
+    // Determine job type and seniority level from title and tag
     const determineJobType = (
-      title: string
+      title: string,
+      tag: string
     ): { jobType: string | null; seniorityLevel: string | null } => {
       const lowerTitle = title.toLowerCase();
+      const lowerTag = tag.toLowerCase();
 
       let jobType: string | null = null;
       let seniorityLevel: string | null = null;
 
-      if (
-        lowerTitle.includes("postdoctoral") ||
-        lowerTitle.includes("postdoc") ||
-        lowerTitle.includes("fellow")
-      ) {
+      // Check tag first as it's more reliable
+      if (lowerTag.includes("postdoc") || lowerTag.includes("fellow")) {
         jobType = "Postdoctoral";
         seniorityLevel = "Postdoctoral";
-      } else if (lowerTitle.includes("assistant professor")) {
+      } else if (lowerTag.includes("assistantprofessor")) {
         jobType = "Faculty";
         seniorityLevel = "Assistant Professor";
-      } else if (lowerTitle.includes("associate professor")) {
+      } else if (lowerTag.includes("associateprofessor")) {
         jobType = "Faculty";
         seniorityLevel = "Associate Professor";
-      } else if (
-        lowerTitle.includes("professor") &&
-        !lowerTitle.includes("assistant") &&
-        !lowerTitle.includes("associate")
-      ) {
+      } else if (lowerTag.includes("professor")) {
         jobType = "Faculty";
         seniorityLevel = "Professor";
       } else if (
-        lowerTitle.includes("lecturer") ||
-        lowerTitle.includes("instructor")
+        lowerTag.includes("lecturer") ||
+        lowerTag.includes("instructor")
       ) {
         jobType = "Faculty";
         seniorityLevel = "Lecturer";
-      } else if (lowerTitle.includes("research")) {
+      } else if (lowerTag.includes("research")) {
         jobType = "Research";
         seniorityLevel = "Research Staff";
+      } else {
+        // Fallback to title analysis
+        if (
+          lowerTitle.includes("postdoctoral") ||
+          lowerTitle.includes("postdoc") ||
+          lowerTitle.includes("fellow")
+        ) {
+          jobType = "Postdoctoral";
+          seniorityLevel = "Postdoctoral";
+        } else if (lowerTitle.includes("assistant professor")) {
+          jobType = "Faculty";
+          seniorityLevel = "Assistant Professor";
+        } else if (lowerTitle.includes("associate professor")) {
+          jobType = "Faculty";
+          seniorityLevel = "Associate Professor";
+        } else if (
+          lowerTitle.includes("professor") &&
+          !lowerTitle.includes("assistant") &&
+          !lowerTitle.includes("associate")
+        ) {
+          jobType = "Faculty";
+          seniorityLevel = "Professor";
+        } else if (
+          lowerTitle.includes("lecturer") ||
+          lowerTitle.includes("instructor")
+        ) {
+          jobType = "Faculty";
+          seniorityLevel = "Lecturer";
+        } else if (lowerTitle.includes("research")) {
+          jobType = "Research";
+          seniorityLevel = "Research Staff";
+        }
       }
 
       return { jobType, seniorityLevel };
     };
 
-    const { jobType, seniorityLevel } = determineJobType(job.name);
+    const { jobType, seniorityLevel } = determineJobType(job.name, job.tag);
 
     // Transform job posting using Prisma types with camelCase field names
-    const transformedJob = {
+    const baseJob = {
       title: job.name,
       descriptionHtml: job.description || null, // Keep HTML for rich display
       descriptionText: cleanHtml(job.description) || null, // Clean text version
-      category: null, // Not available in API
+      category: null, // Will be enriched by LLM
       seniorityLevel: seniorityLevel,
       jobType: jobType,
-      workModality: null, // Not available in API
+      workModality: null, // Will be enriched by LLM
       salaryRange: job.salary || null,
-      contractType: null, // Not available in API
-      durationMonths: null, // Not available in API
-      renewable: null, // Not available in API
+      contractType: null, // Will be enriched by LLM
+      durationMonths: null, // Will be enriched by LLM
+      renewable: null, // Will be enriched by LLM
       openDate: parseDate(job.open_date_raw),
       closeDate: parseDate(job.close_date_raw),
       deadlineDate: parseDate(job.deadline_raw),
       applicationLink: job.apply,
       sourceUrl: job.url,
       sourcePortal: "academic_jobs", // Assuming this is the source
-      fundingSource: null, // Not available in API
-      visaSponsorship: null, // Not available in API
-      interviewProcess: null, // Not available in API
+      fundingSource: null, // Will be enriched by LLM
+      visaSponsorship: null, // Will be enriched by LLM
+      interviewProcess: null, // Will be enriched by LLM
       departmentKey: departmentKey,
       disciplineKey: disciplineKey,
       keywords: keywords,
@@ -387,25 +480,183 @@ const transformJobs = (jobs: ApiJobPosting[]) => {
       legacyPositionId: job.legacy_position_id,
     };
 
+    // Enrich job data with LLM if available
+    let enrichedData = {
+      category: null as string | null,
+      workModality: null as string | null,
+      contractType: null as string | null,
+      durationMonths: null as number | null,
+      renewable: null as boolean | null,
+      fundingSource: null as string | null,
+      visaSponsorship: null as boolean | null,
+      interviewProcess: null as string | null,
+    };
+
+    if (enrichmentService && job.description) {
+      try {
+        console.log(`🤖 Enriching job: ${job.name}`);
+
+        // Extract job attributes
+        const enrichedAttributes = await enrichmentService.extractJobAttributes(
+          job.name,
+          job.description,
+          job.salary || ""
+        );
+
+        // Update job data with enriched attributes
+        if (enrichedAttributes.confidence > 0.5) {
+          // Only use if confident
+          enrichedData = {
+            category: enrichedAttributes.category || null,
+            workModality: enrichedAttributes.workModality || null,
+            contractType: enrichedAttributes.contractType || null,
+            durationMonths: enrichedAttributes.durationMonths || null,
+            renewable: enrichedAttributes.renewable || null,
+            fundingSource: enrichedAttributes.fundingSource || null,
+            visaSponsorship: enrichedAttributes.visaSponsorship || null,
+            interviewProcess: enrichedAttributes.interviewProcess || null,
+          };
+
+          console.log(
+            `✅ Enriched job with confidence: ${enrichedAttributes.confidence}`
+          );
+        } else {
+          console.log(
+            `⚠️  Low confidence enrichment (${enrichedAttributes.confidence}), skipping`
+          );
+        }
+      } catch (error) {
+        console.warn(`❌ Failed to enrich job ${job.name}:`, error);
+      }
+    }
+
+    // Create final transformed job with enrichment data
+    const transformedJob: Omit<
+      JobPosting,
+      | "id"
+      | "departmentId"
+      | "disciplineId"
+      | "status"
+      | "lastSyncedAt"
+      | "expiresAt"
+      | "isActive"
+    > & {
+      departmentKey: string;
+      disciplineKey: string;
+      keywords: string[];
+      instructions: string;
+      qualifications: string;
+      legacyPositionId: number;
+      category?: string | null;
+      workModality?: string | null;
+      contractType?: string | null;
+      durationMonths?: number | null;
+      renewable?: boolean | null;
+      fundingSource?: string | null;
+      visaSponsorship?: boolean | null;
+      interviewProcess?: string | null;
+    } = {
+      ...baseJob,
+      ...enrichedData,
+    };
+
     transformedData.jobPostings.push(transformedJob);
-  });
+  }
 
   return transformedData;
 };
 
-const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
+// New utility functions for status management
+const calculateExpiresAt = (
+  closeDate: Date | null,
+  deadlineDate: Date | null
+): Date | null => {
+  if (deadlineDate) return deadlineDate;
+  if (closeDate) return closeDate;
+  return null;
+};
+
+const markExpiredJobs = async (): Promise<number> => {
+  const now = new Date();
+
+  const result = await prisma.jobPosting.updateMany({
+    where: {
+      OR: [
+        { closeDate: { lt: now } },
+        { deadlineDate: { lt: now } },
+        { expiresAt: { lt: now } },
+      ],
+      status: "active",
+    },
+    data: {
+      status: "expired",
+      isActive: false,
+    },
+  });
+
+  return result.count;
+};
+
+const markRemovedJobs = async (
+  currentJobUrls: Set<string>
+): Promise<number> => {
+  const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+
+  const result = await prisma.jobPosting.updateMany({
+    where: {
+      sourceUrl: { notIn: Array.from(currentJobUrls) },
+      status: "active",
+      lastSyncedAt: { lt: oneDayAgo },
+    },
+    data: {
+      status: "removed",
+      isActive: false,
+    },
+  });
+
+  return result.count;
+};
+
+const archiveOldJobs = async (): Promise<number> => {
+  const sixMonthsAgo = new Date(Date.now() - 6 * 30 * 24 * 60 * 60 * 1000);
+
+  const result = await prisma.jobPosting.updateMany({
+    where: {
+      status: { in: ["expired", "removed"] },
+      lastSyncedAt: { lt: sixMonthsAgo },
+    },
+    data: {
+      isActive: false,
+    },
+  });
+
+  return result.count;
+};
+
+// Enhanced loadJobs function with status management and sync logging
+const loadJobs = async (
+  transformedData: Awaited<ReturnType<typeof transformJobs>>
+) => {
   console.log("Starting to load data to database...");
 
-  try {
-    const stats = {
-      institutions: 0,
-      departments: 0,
-      disciplines: 0,
-      keywords: 0,
-      jobPostings: 0,
-      jobKeywords: 0,
-    };
+  // Type guard to ensure transformedData is defined
+  if (!transformedData) {
+    throw new Error("Transformed data is undefined");
+  }
 
+  const stats = {
+    institutions: 0,
+    departments: 0,
+    disciplines: 0,
+    keywords: 0,
+    jobPostings: 0,
+    jobKeywords: 0,
+    jobsCreated: 0,
+    jobsUpdated: 0,
+    errors: [] as string[],
+  };
+
+  try {
     // 1. Load institutions
     console.log("Loading institutions...");
     const institutionMap = new Map<string, number>();
@@ -437,10 +688,9 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
         institutionMap.set(key, institution.id);
         stats.institutions++;
       } catch (error) {
-        console.error(
-          `Error processing institution ${institutionData.name}:`,
-          error
-        );
+        const errorMsg = `Error processing institution ${institutionData.name}: ${error}`;
+        console.error(errorMsg);
+        stats.errors.push(errorMsg);
       }
     }
 
@@ -490,10 +740,9 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
         departmentMap.set(key, department.id);
         stats.departments++;
       } catch (error) {
-        console.error(
-          `Error processing department ${departmentData.name}:`,
-          error
-        );
+        const errorMsg = `Error processing department ${departmentData.name}: ${error}`;
+        console.error(errorMsg);
+        stats.errors.push(errorMsg);
       }
     }
 
@@ -526,10 +775,9 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
         disciplineMap.set(key, discipline.id);
         stats.disciplines++;
       } catch (error) {
-        console.error(
-          `Error processing discipline ${disciplineData.name}:`,
-          error
-        );
+        const errorMsg = `Error processing discipline ${disciplineData.name}: ${error}`;
+        console.error(errorMsg);
+        stats.errors.push(errorMsg);
       }
     }
 
@@ -554,7 +802,9 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
         keywordMap.set(key, keyword.id);
         stats.keywords++;
       } catch (error) {
-        console.error(`Error processing keyword ${keywordData.name}:`, error);
+        const errorMsg = `Error processing keyword ${keywordData.name}: ${error}`;
+        console.error(errorMsg);
+        stats.errors.push(errorMsg);
       }
     }
 
@@ -572,6 +822,12 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
           );
           continue;
         }
+
+        // Calculate expiresAt
+        const expiresAt = calculateExpiresAt(
+          jobData.closeDate,
+          jobData.deadlineDate
+        );
 
         // Check if job already exists by source URL
         const existingJob = await prisma.jobPosting.findFirst({
@@ -608,8 +864,13 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
               interviewProcess: jobData.interviewProcess,
               departmentId: departmentId,
               disciplineId: disciplineId,
+              status: "active",
+              isActive: true,
+              lastSyncedAt: new Date(),
+              expiresAt: expiresAt,
             },
           });
+          stats.jobsUpdated++;
         } else {
           console.log(`Creating new job: ${jobData.title}`);
           // Create new job
@@ -637,6 +898,10 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
               interviewProcess: jobData.interviewProcess,
               departmentId: departmentId,
               disciplineId: disciplineId,
+              status: "active",
+              isActive: true,
+              lastSyncedAt: new Date(),
+              expiresAt: expiresAt,
             },
           });
 
@@ -666,17 +931,19 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
                 }
               }
             } catch (error) {
-              console.error(
-                `Error creating job-keyword relationship for ${keywordName}:`,
-                error
-              );
+              const errorMsg = `Error creating job-keyword relationship for ${keywordName}: ${error}`;
+              console.error(errorMsg);
+              stats.errors.push(errorMsg);
             }
           }
 
-          stats.jobPostings++;
+          stats.jobsCreated++;
         }
+        stats.jobPostings++;
       } catch (error) {
-        console.error(`Error processing job ${jobData.title}:`, error);
+        const errorMsg = `Error processing job ${jobData.title}: ${error}`;
+        console.error(errorMsg);
+        stats.errors.push(errorMsg);
       }
     }
 
@@ -690,14 +957,42 @@ const loadJobs = async (transformedData: ReturnType<typeof transformJobs>) => {
   }
 };
 
+// Enhanced main function with sync logging and status management
 const main = async () => {
+  const syncStartTime = Date.now();
+  let syncLog: SyncLog | null = null;
+
   try {
     console.log("Starting job sync...");
+
+    // Create sync log entry
+    syncLog = await prisma.syncLog.create({
+      data: {
+        status: "running",
+        jobsFetched: 0,
+        jobsCreated: 0,
+        jobsUpdated: 0,
+        jobsExpired: 0,
+        jobsRemoved: 0,
+      },
+    });
+
+    // Extract jobs
     const jobs = await extractJobs();
     console.log(`Fetched ${jobs.length} jobs from API`);
 
+    // Update sync log with fetched count
+    await prisma.syncLog.update({
+      where: { id: syncLog.id },
+      data: { jobsFetched: jobs.length },
+    });
+
     // Transform the jobs to match database schema
-    const transformedData = transformJobs(jobs);
+    const transformedData = await transformJobs(jobs);
+    if (!transformedData) {
+      throw new Error("Failed to transform job data");
+    }
+
     console.log(`Transformed data:`, {
       institutions: transformedData.institutions.size,
       departments: transformedData.departments.size,
@@ -706,16 +1001,66 @@ const main = async () => {
       keywords: transformedData.keywords.size,
     });
 
-    // For now, just log the first few transformed jobs to verify the data
-    console.log(
-      "Sample transformed jobs:",
-      transformedData.jobPostings.slice(0, 2)
-    );
-
     // Load the data to the database
-    await loadJobs(transformedData);
+    const loadStats = await loadJobs(transformedData);
+
+    // Handle job status management
+    console.log("Managing job status...");
+    const expiredCount = await markExpiredJobs();
+    console.log(`Marked ${expiredCount} jobs as expired`);
+
+    // Mark jobs as removed if they're not in current sync
+    const currentJobUrls = new Set(jobs.map((job) => job.url));
+    const removedCount = await markRemovedJobs(currentJobUrls);
+    console.log(`Marked ${removedCount} jobs as removed`);
+
+    // Archive old jobs (optional - run less frequently)
+    const archivedCount = await archiveOldJobs();
+    console.log(`Archived ${archivedCount} old jobs`);
+
+    // Update sync log with final stats
+    const syncEndTime = Date.now();
+    const durationMs = syncEndTime - syncStartTime;
+
+    await prisma.syncLog.update({
+      where: { id: syncLog.id },
+      data: {
+        status: loadStats.errors.length > 0 ? "partial" : "success",
+        jobsCreated: loadStats.jobsCreated,
+        jobsUpdated: loadStats.jobsUpdated,
+        jobsExpired: expiredCount,
+        jobsRemoved: removedCount,
+        errors:
+          loadStats.errors.length > 0 ? JSON.stringify(loadStats.errors) : null,
+        completedAt: new Date(),
+        durationMs: durationMs,
+      },
+    });
+
+    console.log(`✅ Sync completed in ${durationMs}ms`);
+    console.log(
+      `📊 Final stats: Created ${loadStats.jobsCreated}, Updated ${loadStats.jobsUpdated}, Expired ${expiredCount}, Removed ${removedCount}`
+    );
   } catch (error) {
     console.error("Failed to sync jobs:", error);
+
+    // Update sync log with error
+    if (syncLog) {
+      const syncEndTime = Date.now();
+      const durationMs = syncEndTime - syncStartTime;
+
+      await prisma.syncLog.update({
+        where: { id: syncLog.id },
+        data: {
+          status: "failed",
+          errors: JSON.stringify([
+            error instanceof Error ? error.message : String(error),
+          ]),
+          completedAt: new Date(),
+          durationMs: durationMs,
+        },
+      });
+    }
   }
 };
 
