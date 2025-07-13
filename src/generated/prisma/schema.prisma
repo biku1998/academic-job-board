@@ -1,0 +1,151 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Institution {
+  id          Int          @id @default(autoincrement())
+  name        String
+  location    String?
+  website     String?
+  type        String?
+  departments Department[]
+
+  @@map("institutions")
+}
+
+model Department {
+  id            Int          @id @default(autoincrement())
+  name          String
+  location      String?
+  contactInfo   String?      @map("contact_info")
+  institutionId Int          @map("institution_id")
+  institution   Institution  @relation(fields: [institutionId], references: [id], onDelete: Cascade)
+  jobPostings   JobPosting[]
+
+  @@map("departments")
+}
+
+model Discipline {
+  id          Int          @id @default(autoincrement())
+  name        String
+  parentId    Int?         @map("parent_id")
+  parent      Discipline?  @relation("DisciplineHierarchy", fields: [parentId], references: [id], onDelete: SetNull)
+  children    Discipline[] @relation("DisciplineHierarchy")
+  jobPostings JobPosting[]
+
+  @@map("disciplines")
+}
+
+model JobPosting {
+  id                      Int                      @id @default(autoincrement())
+  title                   String
+  descriptionHtml         String?                  @map("description_html")
+  descriptionText         String?                  @map("description_text")
+  category                String?
+  seniorityLevel          String?                  @map("seniority_level")
+  jobType                 String?                  @map("job_type")
+  workModality            String?                  @map("work_modality")
+  salaryRange             String?                  @map("salary_range")
+  contractType            String?                  @map("contract_type")
+  durationMonths          Int?                     @map("duration_months")
+  renewable               Boolean?
+  openDate                DateTime?                @map("open_date")
+  closeDate               DateTime?                @map("close_date")
+  deadlineDate            DateTime?                @map("deadline_date")
+  applicationLink         String?                  @map("application_link")
+  sourceUrl               String?                  @map("source_url")
+  sourcePortal            String?                  @map("source_portal")
+  fundingSource           String?                  @map("funding_source")
+  visaSponsorship         Boolean?                 @map("visa_sponsorship")
+  interviewProcess        String?                  @map("interview_process")
+  departmentId            Int                      @map("department_id")
+  disciplineId            Int                      @map("discipline_id")
+  department              Department               @relation(fields: [departmentId], references: [id], onDelete: Cascade)
+  discipline              Discipline               @relation(fields: [disciplineId], references: [id], onDelete: Cascade)
+  applicationRequirements ApplicationRequirement[]
+  jobKeywords             JobKeyword[]
+  languageRequirements    LanguageRequirement[]
+  suitableBackgrounds     SuitableBackground[]
+  geoLocation             GeoLocation?
+  contact                 Contact?
+
+  @@map("job_postings")
+}
+
+model ApplicationRequirement {
+  id                       Int        @id @default(autoincrement())
+  jobPostingId             Int        @map("job_posting_id")
+  documentType             String?    @map("document_type")
+  referenceLettersRequired Int?       @map("reference_letters_required")
+  platform                 String?
+  jobPosting               JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+
+  @@map("application_requirements")
+}
+
+model Keyword {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  jobKeywords JobKeyword[]
+
+  @@map("keywords")
+}
+
+model JobKeyword {
+  jobPostingId Int @map("job_posting_id")
+  keywordId    Int @map("keyword_id")
+
+  jobPosting JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  keyword    Keyword    @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+
+  @@id([jobPostingId, keywordId])
+  @@map("job_keywords")
+}
+
+model LanguageRequirement {
+  jobPostingId Int    @map("job_posting_id")
+  language     String
+
+  jobPosting JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+
+  @@id([jobPostingId, language])
+  @@map("language_requirements")
+}
+
+model SuitableBackground {
+  jobPostingId Int    @map("job_posting_id")
+  background   String
+
+  jobPosting JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+
+  @@id([jobPostingId, background])
+  @@map("suitable_backgrounds")
+}
+
+model GeoLocation {
+  jobPostingId Int    @id @map("job_posting_id")
+  lat          Float?
+  lon          Float?
+
+  jobPosting JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+
+  @@map("geo_locations")
+}
+
+model Contact {
+  jobPostingId Int     @id @map("job_posting_id")
+  name         String?
+  email        String?
+  title        String?
+
+  jobPosting JobPosting @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+
+  @@map("contacts")
+}
