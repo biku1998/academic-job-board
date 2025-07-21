@@ -69,6 +69,16 @@ export type GeoLocation = $Result.DefaultSelection<Prisma.$GeoLocationPayload>
  */
 export type Contact = $Result.DefaultSelection<Prisma.$ContactPayload>
 /**
+ * Model JobView
+ * 
+ */
+export type JobView = $Result.DefaultSelection<Prisma.$JobViewPayload>
+/**
+ * Model ResearchArea
+ * 
+ */
+export type ResearchArea = $Result.DefaultSelection<Prisma.$ResearchAreaPayload>
+/**
  * Model SyncLog
  * 
  */
@@ -310,6 +320,26 @@ export class PrismaClient<
   get contact(): Prisma.ContactDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.jobView`: Exposes CRUD operations for the **JobView** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JobViews
+    * const jobViews = await prisma.jobView.findMany()
+    * ```
+    */
+  get jobView(): Prisma.JobViewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.researchArea`: Exposes CRUD operations for the **ResearchArea** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ResearchAreas
+    * const researchAreas = await prisma.researchArea.findMany()
+    * ```
+    */
+  get researchArea(): Prisma.ResearchAreaDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.syncLog`: Exposes CRUD operations for the **SyncLog** model.
     * Example usage:
     * ```ts
@@ -376,8 +406,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.11.1
-   * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
+   * Prisma Client JS version: 6.12.0
+   * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
    */
   export type PrismaVersion = {
     client: string
@@ -769,6 +799,8 @@ export namespace Prisma {
     SuitableBackground: 'SuitableBackground',
     GeoLocation: 'GeoLocation',
     Contact: 'Contact',
+    JobView: 'JobView',
+    ResearchArea: 'ResearchArea',
     SyncLog: 'SyncLog'
   };
 
@@ -788,7 +820,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "institution" | "department" | "discipline" | "jobPosting" | "applicationRequirement" | "keyword" | "jobKeyword" | "languageRequirement" | "suitableBackground" | "geoLocation" | "contact" | "syncLog"
+      modelProps: "institution" | "department" | "discipline" | "jobPosting" | "applicationRequirement" | "keyword" | "jobKeyword" | "languageRequirement" | "suitableBackground" | "geoLocation" | "contact" | "jobView" | "researchArea" | "syncLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1606,6 +1638,154 @@ export namespace Prisma {
           }
         }
       }
+      JobView: {
+        payload: Prisma.$JobViewPayload<ExtArgs>
+        fields: Prisma.JobViewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JobViewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JobViewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>
+          }
+          findFirst: {
+            args: Prisma.JobViewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JobViewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>
+          }
+          findMany: {
+            args: Prisma.JobViewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>[]
+          }
+          create: {
+            args: Prisma.JobViewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>
+          }
+          createMany: {
+            args: Prisma.JobViewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JobViewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>[]
+          }
+          delete: {
+            args: Prisma.JobViewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>
+          }
+          update: {
+            args: Prisma.JobViewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>
+          }
+          deleteMany: {
+            args: Prisma.JobViewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JobViewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.JobViewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>[]
+          }
+          upsert: {
+            args: Prisma.JobViewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobViewPayload>
+          }
+          aggregate: {
+            args: Prisma.JobViewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJobView>
+          }
+          groupBy: {
+            args: Prisma.JobViewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JobViewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JobViewCountArgs<ExtArgs>
+            result: $Utils.Optional<JobViewCountAggregateOutputType> | number
+          }
+        }
+      }
+      ResearchArea: {
+        payload: Prisma.$ResearchAreaPayload<ExtArgs>
+        fields: Prisma.ResearchAreaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ResearchAreaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ResearchAreaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>
+          }
+          findFirst: {
+            args: Prisma.ResearchAreaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ResearchAreaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>
+          }
+          findMany: {
+            args: Prisma.ResearchAreaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>[]
+          }
+          create: {
+            args: Prisma.ResearchAreaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>
+          }
+          createMany: {
+            args: Prisma.ResearchAreaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ResearchAreaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>[]
+          }
+          delete: {
+            args: Prisma.ResearchAreaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>
+          }
+          update: {
+            args: Prisma.ResearchAreaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>
+          }
+          deleteMany: {
+            args: Prisma.ResearchAreaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ResearchAreaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ResearchAreaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>[]
+          }
+          upsert: {
+            args: Prisma.ResearchAreaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ResearchAreaPayload>
+          }
+          aggregate: {
+            args: Prisma.ResearchAreaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateResearchArea>
+          }
+          groupBy: {
+            args: Prisma.ResearchAreaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ResearchAreaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ResearchAreaCountArgs<ExtArgs>
+            result: $Utils.Optional<ResearchAreaCountAggregateOutputType> | number
+          }
+        }
+      }
       SyncLog: {
         payload: Prisma.$SyncLogPayload<ExtArgs>
         fields: Prisma.SyncLogFieldRefs
@@ -1775,6 +1955,8 @@ export namespace Prisma {
     suitableBackground?: SuitableBackgroundOmit
     geoLocation?: GeoLocationOmit
     contact?: ContactOmit
+    jobView?: JobViewOmit
+    researchArea?: ResearchAreaOmit
     syncLog?: SyncLogOmit
   }
 
@@ -1976,6 +2158,8 @@ export namespace Prisma {
     jobKeywords: number
     languageRequirements: number
     suitableBackgrounds: number
+    jobViews: number
+    researchAreas: number
   }
 
   export type JobPostingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1983,6 +2167,8 @@ export namespace Prisma {
     jobKeywords?: boolean | JobPostingCountOutputTypeCountJobKeywordsArgs
     languageRequirements?: boolean | JobPostingCountOutputTypeCountLanguageRequirementsArgs
     suitableBackgrounds?: boolean | JobPostingCountOutputTypeCountSuitableBackgroundsArgs
+    jobViews?: boolean | JobPostingCountOutputTypeCountJobViewsArgs
+    researchAreas?: boolean | JobPostingCountOutputTypeCountResearchAreasArgs
   }
 
   // Custom InputTypes
@@ -2024,6 +2210,20 @@ export namespace Prisma {
     where?: SuitableBackgroundWhereInput
   }
 
+  /**
+   * JobPostingCountOutputType without action
+   */
+  export type JobPostingCountOutputTypeCountJobViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobViewWhereInput
+  }
+
+  /**
+   * JobPostingCountOutputType without action
+   */
+  export type JobPostingCountOutputTypeCountResearchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResearchAreaWhereInput
+  }
+
 
   /**
    * Count Type KeywordCountOutputType
@@ -2057,6 +2257,37 @@ export namespace Prisma {
 
 
   /**
+   * Count Type ResearchAreaCountOutputType
+   */
+
+  export type ResearchAreaCountOutputType = {
+    jobPostings: number
+  }
+
+  export type ResearchAreaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPostings?: boolean | ResearchAreaCountOutputTypeCountJobPostingsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * ResearchAreaCountOutputType without action
+   */
+  export type ResearchAreaCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchAreaCountOutputType
+     */
+    select?: ResearchAreaCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * ResearchAreaCountOutputType without action
+   */
+  export type ResearchAreaCountOutputTypeCountJobPostingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobPostingWhereInput
+  }
+
+
+  /**
    * Models
    */
 
@@ -2086,6 +2317,7 @@ export namespace Prisma {
     location: string | null
     website: string | null
     type: string | null
+    description: string | null
   }
 
   export type InstitutionMaxAggregateOutputType = {
@@ -2094,6 +2326,7 @@ export namespace Prisma {
     location: string | null
     website: string | null
     type: string | null
+    description: string | null
   }
 
   export type InstitutionCountAggregateOutputType = {
@@ -2102,6 +2335,7 @@ export namespace Prisma {
     location: number
     website: number
     type: number
+    description: number
     _all: number
   }
 
@@ -2120,6 +2354,7 @@ export namespace Prisma {
     location?: true
     website?: true
     type?: true
+    description?: true
   }
 
   export type InstitutionMaxAggregateInputType = {
@@ -2128,6 +2363,7 @@ export namespace Prisma {
     location?: true
     website?: true
     type?: true
+    description?: true
   }
 
   export type InstitutionCountAggregateInputType = {
@@ -2136,6 +2372,7 @@ export namespace Prisma {
     location?: true
     website?: true
     type?: true
+    description?: true
     _all?: true
   }
 
@@ -2231,6 +2468,7 @@ export namespace Prisma {
     location: string | null
     website: string | null
     type: string | null
+    description: string | null
     _count: InstitutionCountAggregateOutputType | null
     _avg: InstitutionAvgAggregateOutputType | null
     _sum: InstitutionSumAggregateOutputType | null
@@ -2258,6 +2496,7 @@ export namespace Prisma {
     location?: boolean
     website?: boolean
     type?: boolean
+    description?: boolean
     departments?: boolean | Institution$departmentsArgs<ExtArgs>
     _count?: boolean | InstitutionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["institution"]>
@@ -2268,6 +2507,7 @@ export namespace Prisma {
     location?: boolean
     website?: boolean
     type?: boolean
+    description?: boolean
   }, ExtArgs["result"]["institution"]>
 
   export type InstitutionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -2276,6 +2516,7 @@ export namespace Prisma {
     location?: boolean
     website?: boolean
     type?: boolean
+    description?: boolean
   }, ExtArgs["result"]["institution"]>
 
   export type InstitutionSelectScalar = {
@@ -2284,9 +2525,10 @@ export namespace Prisma {
     location?: boolean
     website?: boolean
     type?: boolean
+    description?: boolean
   }
 
-  export type InstitutionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "location" | "website" | "type", ExtArgs["result"]["institution"]>
+  export type InstitutionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "location" | "website" | "type" | "description", ExtArgs["result"]["institution"]>
   export type InstitutionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     departments?: boolean | Institution$departmentsArgs<ExtArgs>
     _count?: boolean | InstitutionCountOutputTypeDefaultArgs<ExtArgs>
@@ -2305,6 +2547,7 @@ export namespace Prisma {
       location: string | null
       website: string | null
       type: string | null
+      description: string | null
     }, ExtArgs["result"]["institution"]>
     composites: {}
   }
@@ -2734,6 +2977,7 @@ export namespace Prisma {
     readonly location: FieldRef<"Institution", 'String'>
     readonly website: FieldRef<"Institution", 'String'>
     readonly type: FieldRef<"Institution", 'String'>
+    readonly description: FieldRef<"Institution", 'String'>
   }
     
 
@@ -3192,6 +3436,8 @@ export namespace Prisma {
     location: string | null
     contactInfo: string | null
     institutionId: number | null
+    description: string | null
+    website: string | null
   }
 
   export type DepartmentMaxAggregateOutputType = {
@@ -3200,6 +3446,8 @@ export namespace Prisma {
     location: string | null
     contactInfo: string | null
     institutionId: number | null
+    description: string | null
+    website: string | null
   }
 
   export type DepartmentCountAggregateOutputType = {
@@ -3208,6 +3456,8 @@ export namespace Prisma {
     location: number
     contactInfo: number
     institutionId: number
+    description: number
+    website: number
     _all: number
   }
 
@@ -3228,6 +3478,8 @@ export namespace Prisma {
     location?: true
     contactInfo?: true
     institutionId?: true
+    description?: true
+    website?: true
   }
 
   export type DepartmentMaxAggregateInputType = {
@@ -3236,6 +3488,8 @@ export namespace Prisma {
     location?: true
     contactInfo?: true
     institutionId?: true
+    description?: true
+    website?: true
   }
 
   export type DepartmentCountAggregateInputType = {
@@ -3244,6 +3498,8 @@ export namespace Prisma {
     location?: true
     contactInfo?: true
     institutionId?: true
+    description?: true
+    website?: true
     _all?: true
   }
 
@@ -3339,6 +3595,8 @@ export namespace Prisma {
     location: string | null
     contactInfo: string | null
     institutionId: number
+    description: string | null
+    website: string | null
     _count: DepartmentCountAggregateOutputType | null
     _avg: DepartmentAvgAggregateOutputType | null
     _sum: DepartmentSumAggregateOutputType | null
@@ -3366,6 +3624,8 @@ export namespace Prisma {
     location?: boolean
     contactInfo?: boolean
     institutionId?: boolean
+    description?: boolean
+    website?: boolean
     institution?: boolean | InstitutionDefaultArgs<ExtArgs>
     jobPostings?: boolean | Department$jobPostingsArgs<ExtArgs>
     _count?: boolean | DepartmentCountOutputTypeDefaultArgs<ExtArgs>
@@ -3377,6 +3637,8 @@ export namespace Prisma {
     location?: boolean
     contactInfo?: boolean
     institutionId?: boolean
+    description?: boolean
+    website?: boolean
     institution?: boolean | InstitutionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["department"]>
 
@@ -3386,6 +3648,8 @@ export namespace Prisma {
     location?: boolean
     contactInfo?: boolean
     institutionId?: boolean
+    description?: boolean
+    website?: boolean
     institution?: boolean | InstitutionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["department"]>
 
@@ -3395,9 +3659,11 @@ export namespace Prisma {
     location?: boolean
     contactInfo?: boolean
     institutionId?: boolean
+    description?: boolean
+    website?: boolean
   }
 
-  export type DepartmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "location" | "contactInfo" | "institutionId", ExtArgs["result"]["department"]>
+  export type DepartmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "location" | "contactInfo" | "institutionId" | "description" | "website", ExtArgs["result"]["department"]>
   export type DepartmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     institution?: boolean | InstitutionDefaultArgs<ExtArgs>
     jobPostings?: boolean | Department$jobPostingsArgs<ExtArgs>
@@ -3422,6 +3688,8 @@ export namespace Prisma {
       location: string | null
       contactInfo: string | null
       institutionId: number
+      description: string | null
+      website: string | null
     }, ExtArgs["result"]["department"]>
     composites: {}
   }
@@ -3852,6 +4120,8 @@ export namespace Prisma {
     readonly location: FieldRef<"Department", 'String'>
     readonly contactInfo: FieldRef<"Department", 'String'>
     readonly institutionId: FieldRef<"Department", 'Int'>
+    readonly description: FieldRef<"Department", 'String'>
+    readonly website: FieldRef<"Department", 'String'>
   }
     
 
@@ -5454,6 +5724,7 @@ export namespace Prisma {
     durationMonths: number | null
     departmentId: number | null
     disciplineId: number | null
+    workHoursPerWeek: number | null
   }
 
   export type JobPostingSumAggregateOutputType = {
@@ -5461,6 +5732,7 @@ export namespace Prisma {
     durationMonths: number | null
     departmentId: number | null
     disciplineId: number | null
+    workHoursPerWeek: number | null
   }
 
   export type JobPostingMinAggregateOutputType = {
@@ -5488,9 +5760,15 @@ export namespace Prisma {
     departmentId: number | null
     disciplineId: number | null
     status: string | null
+    isSelfFinanced: boolean | null
+    isPartTime: boolean | null
+    workHoursPerWeek: number | null
+    compensationType: string | null
     lastSyncedAt: Date | null
     expiresAt: Date | null
     isActive: boolean | null
+    instructions: string | null
+    qualifications: string | null
   }
 
   export type JobPostingMaxAggregateOutputType = {
@@ -5518,9 +5796,15 @@ export namespace Prisma {
     departmentId: number | null
     disciplineId: number | null
     status: string | null
+    isSelfFinanced: boolean | null
+    isPartTime: boolean | null
+    workHoursPerWeek: number | null
+    compensationType: string | null
     lastSyncedAt: Date | null
     expiresAt: Date | null
     isActive: boolean | null
+    instructions: string | null
+    qualifications: string | null
   }
 
   export type JobPostingCountAggregateOutputType = {
@@ -5548,9 +5832,15 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status: number
+    isSelfFinanced: number
+    isPartTime: number
+    workHoursPerWeek: number
+    compensationType: number
     lastSyncedAt: number
     expiresAt: number
     isActive: number
+    instructions: number
+    qualifications: number
     _all: number
   }
 
@@ -5560,6 +5850,7 @@ export namespace Prisma {
     durationMonths?: true
     departmentId?: true
     disciplineId?: true
+    workHoursPerWeek?: true
   }
 
   export type JobPostingSumAggregateInputType = {
@@ -5567,6 +5858,7 @@ export namespace Prisma {
     durationMonths?: true
     departmentId?: true
     disciplineId?: true
+    workHoursPerWeek?: true
   }
 
   export type JobPostingMinAggregateInputType = {
@@ -5594,9 +5886,15 @@ export namespace Prisma {
     departmentId?: true
     disciplineId?: true
     status?: true
+    isSelfFinanced?: true
+    isPartTime?: true
+    workHoursPerWeek?: true
+    compensationType?: true
     lastSyncedAt?: true
     expiresAt?: true
     isActive?: true
+    instructions?: true
+    qualifications?: true
   }
 
   export type JobPostingMaxAggregateInputType = {
@@ -5624,9 +5922,15 @@ export namespace Prisma {
     departmentId?: true
     disciplineId?: true
     status?: true
+    isSelfFinanced?: true
+    isPartTime?: true
+    workHoursPerWeek?: true
+    compensationType?: true
     lastSyncedAt?: true
     expiresAt?: true
     isActive?: true
+    instructions?: true
+    qualifications?: true
   }
 
   export type JobPostingCountAggregateInputType = {
@@ -5654,9 +5958,15 @@ export namespace Prisma {
     departmentId?: true
     disciplineId?: true
     status?: true
+    isSelfFinanced?: true
+    isPartTime?: true
+    workHoursPerWeek?: true
+    compensationType?: true
     lastSyncedAt?: true
     expiresAt?: true
     isActive?: true
+    instructions?: true
+    qualifications?: true
     _all?: true
   }
 
@@ -5771,9 +6081,15 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status: string
+    isSelfFinanced: boolean | null
+    isPartTime: boolean | null
+    workHoursPerWeek: number | null
+    compensationType: string | null
     lastSyncedAt: Date
     expiresAt: Date | null
     isActive: boolean
+    instructions: string | null
+    qualifications: string | null
     _count: JobPostingCountAggregateOutputType | null
     _avg: JobPostingAvgAggregateOutputType | null
     _sum: JobPostingSumAggregateOutputType | null
@@ -5820,9 +6136,15 @@ export namespace Prisma {
     departmentId?: boolean
     disciplineId?: boolean
     status?: boolean
+    isSelfFinanced?: boolean
+    isPartTime?: boolean
+    workHoursPerWeek?: boolean
+    compensationType?: boolean
     lastSyncedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
+    instructions?: boolean
+    qualifications?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
     applicationRequirements?: boolean | JobPosting$applicationRequirementsArgs<ExtArgs>
@@ -5831,6 +6153,8 @@ export namespace Prisma {
     suitableBackgrounds?: boolean | JobPosting$suitableBackgroundsArgs<ExtArgs>
     geoLocation?: boolean | JobPosting$geoLocationArgs<ExtArgs>
     contact?: boolean | JobPosting$contactArgs<ExtArgs>
+    jobViews?: boolean | JobPosting$jobViewsArgs<ExtArgs>
+    researchAreas?: boolean | JobPosting$researchAreasArgs<ExtArgs>
     _count?: boolean | JobPostingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
 
@@ -5859,9 +6183,15 @@ export namespace Prisma {
     departmentId?: boolean
     disciplineId?: boolean
     status?: boolean
+    isSelfFinanced?: boolean
+    isPartTime?: boolean
+    workHoursPerWeek?: boolean
+    compensationType?: boolean
     lastSyncedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
+    instructions?: boolean
+    qualifications?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -5891,9 +6221,15 @@ export namespace Prisma {
     departmentId?: boolean
     disciplineId?: boolean
     status?: boolean
+    isSelfFinanced?: boolean
+    isPartTime?: boolean
+    workHoursPerWeek?: boolean
+    compensationType?: boolean
     lastSyncedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
+    instructions?: boolean
+    qualifications?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -5923,12 +6259,18 @@ export namespace Prisma {
     departmentId?: boolean
     disciplineId?: boolean
     status?: boolean
+    isSelfFinanced?: boolean
+    isPartTime?: boolean
+    workHoursPerWeek?: boolean
+    compensationType?: boolean
     lastSyncedAt?: boolean
     expiresAt?: boolean
     isActive?: boolean
+    instructions?: boolean
+    qualifications?: boolean
   }
 
-  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "descriptionHtml" | "descriptionText" | "category" | "seniorityLevel" | "jobType" | "workModality" | "salaryRange" | "contractType" | "durationMonths" | "renewable" | "openDate" | "closeDate" | "deadlineDate" | "applicationLink" | "sourceUrl" | "sourcePortal" | "fundingSource" | "visaSponsorship" | "interviewProcess" | "departmentId" | "disciplineId" | "status" | "lastSyncedAt" | "expiresAt" | "isActive", ExtArgs["result"]["jobPosting"]>
+  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "descriptionHtml" | "descriptionText" | "category" | "seniorityLevel" | "jobType" | "workModality" | "salaryRange" | "contractType" | "durationMonths" | "renewable" | "openDate" | "closeDate" | "deadlineDate" | "applicationLink" | "sourceUrl" | "sourcePortal" | "fundingSource" | "visaSponsorship" | "interviewProcess" | "departmentId" | "disciplineId" | "status" | "isSelfFinanced" | "isPartTime" | "workHoursPerWeek" | "compensationType" | "lastSyncedAt" | "expiresAt" | "isActive" | "instructions" | "qualifications", ExtArgs["result"]["jobPosting"]>
   export type JobPostingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
@@ -5938,6 +6280,8 @@ export namespace Prisma {
     suitableBackgrounds?: boolean | JobPosting$suitableBackgroundsArgs<ExtArgs>
     geoLocation?: boolean | JobPosting$geoLocationArgs<ExtArgs>
     contact?: boolean | JobPosting$contactArgs<ExtArgs>
+    jobViews?: boolean | JobPosting$jobViewsArgs<ExtArgs>
+    researchAreas?: boolean | JobPosting$researchAreasArgs<ExtArgs>
     _count?: boolean | JobPostingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type JobPostingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5960,6 +6304,8 @@ export namespace Prisma {
       suitableBackgrounds: Prisma.$SuitableBackgroundPayload<ExtArgs>[]
       geoLocation: Prisma.$GeoLocationPayload<ExtArgs> | null
       contact: Prisma.$ContactPayload<ExtArgs> | null
+      jobViews: Prisma.$JobViewPayload<ExtArgs>[]
+      researchAreas: Prisma.$ResearchAreaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -5986,9 +6332,15 @@ export namespace Prisma {
       departmentId: number
       disciplineId: number
       status: string
+      isSelfFinanced: boolean | null
+      isPartTime: boolean | null
+      workHoursPerWeek: number | null
+      compensationType: string | null
       lastSyncedAt: Date
       expiresAt: Date | null
       isActive: boolean
+      instructions: string | null
+      qualifications: string | null
     }, ExtArgs["result"]["jobPosting"]>
     composites: {}
   }
@@ -6391,6 +6743,8 @@ export namespace Prisma {
     suitableBackgrounds<T extends JobPosting$suitableBackgroundsArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$suitableBackgroundsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SuitableBackgroundPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     geoLocation<T extends JobPosting$geoLocationArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$geoLocationArgs<ExtArgs>>): Prisma__GeoLocationClient<$Result.GetResult<Prisma.$GeoLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     contact<T extends JobPosting$contactArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$contactArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    jobViews<T extends JobPosting$jobViewsArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$jobViewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    researchAreas<T extends JobPosting$researchAreasArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$researchAreasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6444,9 +6798,15 @@ export namespace Prisma {
     readonly departmentId: FieldRef<"JobPosting", 'Int'>
     readonly disciplineId: FieldRef<"JobPosting", 'Int'>
     readonly status: FieldRef<"JobPosting", 'String'>
+    readonly isSelfFinanced: FieldRef<"JobPosting", 'Boolean'>
+    readonly isPartTime: FieldRef<"JobPosting", 'Boolean'>
+    readonly workHoursPerWeek: FieldRef<"JobPosting", 'Int'>
+    readonly compensationType: FieldRef<"JobPosting", 'String'>
     readonly lastSyncedAt: FieldRef<"JobPosting", 'DateTime'>
     readonly expiresAt: FieldRef<"JobPosting", 'DateTime'>
     readonly isActive: FieldRef<"JobPosting", 'Boolean'>
+    readonly instructions: FieldRef<"JobPosting", 'String'>
+    readonly qualifications: FieldRef<"JobPosting", 'String'>
   }
     
 
@@ -6977,6 +7337,54 @@ export namespace Prisma {
   }
 
   /**
+   * JobPosting.jobViews
+   */
+  export type JobPosting$jobViewsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    where?: JobViewWhereInput
+    orderBy?: JobViewOrderByWithRelationInput | JobViewOrderByWithRelationInput[]
+    cursor?: JobViewWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JobViewScalarFieldEnum | JobViewScalarFieldEnum[]
+  }
+
+  /**
+   * JobPosting.researchAreas
+   */
+  export type JobPosting$researchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    where?: ResearchAreaWhereInput
+    orderBy?: ResearchAreaOrderByWithRelationInput | ResearchAreaOrderByWithRelationInput[]
+    cursor?: ResearchAreaWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ResearchAreaScalarFieldEnum | ResearchAreaScalarFieldEnum[]
+  }
+
+  /**
    * JobPosting without action
    */
   export type JobPostingDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -7024,6 +7432,7 @@ export namespace Prisma {
     jobPostingId: number | null
     documentType: string | null
     referenceLettersRequired: number | null
+    description: string | null
     platform: string | null
   }
 
@@ -7032,6 +7441,7 @@ export namespace Prisma {
     jobPostingId: number | null
     documentType: string | null
     referenceLettersRequired: number | null
+    description: string | null
     platform: string | null
   }
 
@@ -7040,6 +7450,7 @@ export namespace Prisma {
     jobPostingId: number
     documentType: number
     referenceLettersRequired: number
+    description: number
     platform: number
     _all: number
   }
@@ -7062,6 +7473,7 @@ export namespace Prisma {
     jobPostingId?: true
     documentType?: true
     referenceLettersRequired?: true
+    description?: true
     platform?: true
   }
 
@@ -7070,6 +7482,7 @@ export namespace Prisma {
     jobPostingId?: true
     documentType?: true
     referenceLettersRequired?: true
+    description?: true
     platform?: true
   }
 
@@ -7078,6 +7491,7 @@ export namespace Prisma {
     jobPostingId?: true
     documentType?: true
     referenceLettersRequired?: true
+    description?: true
     platform?: true
     _all?: true
   }
@@ -7173,6 +7587,7 @@ export namespace Prisma {
     jobPostingId: number
     documentType: string | null
     referenceLettersRequired: number | null
+    description: string | null
     platform: string | null
     _count: ApplicationRequirementCountAggregateOutputType | null
     _avg: ApplicationRequirementAvgAggregateOutputType | null
@@ -7200,6 +7615,7 @@ export namespace Prisma {
     jobPostingId?: boolean
     documentType?: boolean
     referenceLettersRequired?: boolean
+    description?: boolean
     platform?: boolean
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applicationRequirement"]>
@@ -7209,6 +7625,7 @@ export namespace Prisma {
     jobPostingId?: boolean
     documentType?: boolean
     referenceLettersRequired?: boolean
+    description?: boolean
     platform?: boolean
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applicationRequirement"]>
@@ -7218,6 +7635,7 @@ export namespace Prisma {
     jobPostingId?: boolean
     documentType?: boolean
     referenceLettersRequired?: boolean
+    description?: boolean
     platform?: boolean
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["applicationRequirement"]>
@@ -7227,10 +7645,11 @@ export namespace Prisma {
     jobPostingId?: boolean
     documentType?: boolean
     referenceLettersRequired?: boolean
+    description?: boolean
     platform?: boolean
   }
 
-  export type ApplicationRequirementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobPostingId" | "documentType" | "referenceLettersRequired" | "platform", ExtArgs["result"]["applicationRequirement"]>
+  export type ApplicationRequirementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobPostingId" | "documentType" | "referenceLettersRequired" | "description" | "platform", ExtArgs["result"]["applicationRequirement"]>
   export type ApplicationRequirementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
   }
@@ -7251,6 +7670,7 @@ export namespace Prisma {
       jobPostingId: number
       documentType: string | null
       referenceLettersRequired: number | null
+      description: string | null
       platform: string | null
     }, ExtArgs["result"]["applicationRequirement"]>
     composites: {}
@@ -7680,6 +8100,7 @@ export namespace Prisma {
     readonly jobPostingId: FieldRef<"ApplicationRequirement", 'Int'>
     readonly documentType: FieldRef<"ApplicationRequirement", 'String'>
     readonly referenceLettersRequired: FieldRef<"ApplicationRequirement", 'Int'>
+    readonly description: FieldRef<"ApplicationRequirement", 'String'>
     readonly platform: FieldRef<"ApplicationRequirement", 'String'>
   }
     
@@ -14485,6 +14906,2193 @@ export namespace Prisma {
 
 
   /**
+   * Model JobView
+   */
+
+  export type AggregateJobView = {
+    _count: JobViewCountAggregateOutputType | null
+    _avg: JobViewAvgAggregateOutputType | null
+    _sum: JobViewSumAggregateOutputType | null
+    _min: JobViewMinAggregateOutputType | null
+    _max: JobViewMaxAggregateOutputType | null
+  }
+
+  export type JobViewAvgAggregateOutputType = {
+    id: number | null
+    jobPostingId: number | null
+  }
+
+  export type JobViewSumAggregateOutputType = {
+    id: number | null
+    jobPostingId: number | null
+  }
+
+  export type JobViewMinAggregateOutputType = {
+    id: number | null
+    jobPostingId: number | null
+    viewedAt: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+    referrer: string | null
+  }
+
+  export type JobViewMaxAggregateOutputType = {
+    id: number | null
+    jobPostingId: number | null
+    viewedAt: Date | null
+    ipAddress: string | null
+    userAgent: string | null
+    referrer: string | null
+  }
+
+  export type JobViewCountAggregateOutputType = {
+    id: number
+    jobPostingId: number
+    viewedAt: number
+    ipAddress: number
+    userAgent: number
+    referrer: number
+    _all: number
+  }
+
+
+  export type JobViewAvgAggregateInputType = {
+    id?: true
+    jobPostingId?: true
+  }
+
+  export type JobViewSumAggregateInputType = {
+    id?: true
+    jobPostingId?: true
+  }
+
+  export type JobViewMinAggregateInputType = {
+    id?: true
+    jobPostingId?: true
+    viewedAt?: true
+    ipAddress?: true
+    userAgent?: true
+    referrer?: true
+  }
+
+  export type JobViewMaxAggregateInputType = {
+    id?: true
+    jobPostingId?: true
+    viewedAt?: true
+    ipAddress?: true
+    userAgent?: true
+    referrer?: true
+  }
+
+  export type JobViewCountAggregateInputType = {
+    id?: true
+    jobPostingId?: true
+    viewedAt?: true
+    ipAddress?: true
+    userAgent?: true
+    referrer?: true
+    _all?: true
+  }
+
+  export type JobViewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobView to aggregate.
+     */
+    where?: JobViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobViews to fetch.
+     */
+    orderBy?: JobViewOrderByWithRelationInput | JobViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JobViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JobViews
+    **/
+    _count?: true | JobViewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: JobViewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: JobViewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JobViewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JobViewMaxAggregateInputType
+  }
+
+  export type GetJobViewAggregateType<T extends JobViewAggregateArgs> = {
+        [P in keyof T & keyof AggregateJobView]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJobView[P]>
+      : GetScalarType<T[P], AggregateJobView[P]>
+  }
+
+
+
+
+  export type JobViewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobViewWhereInput
+    orderBy?: JobViewOrderByWithAggregationInput | JobViewOrderByWithAggregationInput[]
+    by: JobViewScalarFieldEnum[] | JobViewScalarFieldEnum
+    having?: JobViewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JobViewCountAggregateInputType | true
+    _avg?: JobViewAvgAggregateInputType
+    _sum?: JobViewSumAggregateInputType
+    _min?: JobViewMinAggregateInputType
+    _max?: JobViewMaxAggregateInputType
+  }
+
+  export type JobViewGroupByOutputType = {
+    id: number
+    jobPostingId: number
+    viewedAt: Date
+    ipAddress: string | null
+    userAgent: string | null
+    referrer: string | null
+    _count: JobViewCountAggregateOutputType | null
+    _avg: JobViewAvgAggregateOutputType | null
+    _sum: JobViewSumAggregateOutputType | null
+    _min: JobViewMinAggregateOutputType | null
+    _max: JobViewMaxAggregateOutputType | null
+  }
+
+  type GetJobViewGroupByPayload<T extends JobViewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JobViewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JobViewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JobViewGroupByOutputType[P]>
+            : GetScalarType<T[P], JobViewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JobViewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobPostingId?: boolean
+    viewedAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    referrer?: boolean
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobView"]>
+
+  export type JobViewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobPostingId?: boolean
+    viewedAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    referrer?: boolean
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobView"]>
+
+  export type JobViewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobPostingId?: boolean
+    viewedAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    referrer?: boolean
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobView"]>
+
+  export type JobViewSelectScalar = {
+    id?: boolean
+    jobPostingId?: boolean
+    viewedAt?: boolean
+    ipAddress?: boolean
+    userAgent?: boolean
+    referrer?: boolean
+  }
+
+  export type JobViewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobPostingId" | "viewedAt" | "ipAddress" | "userAgent" | "referrer", ExtArgs["result"]["jobView"]>
+  export type JobViewInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+  }
+  export type JobViewIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+  }
+  export type JobViewIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+  }
+
+  export type $JobViewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JobView"
+    objects: {
+      jobPosting: Prisma.$JobPostingPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      jobPostingId: number
+      viewedAt: Date
+      ipAddress: string | null
+      userAgent: string | null
+      referrer: string | null
+    }, ExtArgs["result"]["jobView"]>
+    composites: {}
+  }
+
+  type JobViewGetPayload<S extends boolean | null | undefined | JobViewDefaultArgs> = $Result.GetResult<Prisma.$JobViewPayload, S>
+
+  type JobViewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JobViewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: JobViewCountAggregateInputType | true
+    }
+
+  export interface JobViewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JobView'], meta: { name: 'JobView' } }
+    /**
+     * Find zero or one JobView that matches the filter.
+     * @param {JobViewFindUniqueArgs} args - Arguments to find a JobView
+     * @example
+     * // Get one JobView
+     * const jobView = await prisma.jobView.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JobViewFindUniqueArgs>(args: SelectSubset<T, JobViewFindUniqueArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one JobView that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {JobViewFindUniqueOrThrowArgs} args - Arguments to find a JobView
+     * @example
+     * // Get one JobView
+     * const jobView = await prisma.jobView.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JobViewFindUniqueOrThrowArgs>(args: SelectSubset<T, JobViewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobView that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewFindFirstArgs} args - Arguments to find a JobView
+     * @example
+     * // Get one JobView
+     * const jobView = await prisma.jobView.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JobViewFindFirstArgs>(args?: SelectSubset<T, JobViewFindFirstArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobView that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewFindFirstOrThrowArgs} args - Arguments to find a JobView
+     * @example
+     * // Get one JobView
+     * const jobView = await prisma.jobView.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JobViewFindFirstOrThrowArgs>(args?: SelectSubset<T, JobViewFindFirstOrThrowArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more JobViews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JobViews
+     * const jobViews = await prisma.jobView.findMany()
+     * 
+     * // Get first 10 JobViews
+     * const jobViews = await prisma.jobView.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const jobViewWithIdOnly = await prisma.jobView.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends JobViewFindManyArgs>(args?: SelectSubset<T, JobViewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a JobView.
+     * @param {JobViewCreateArgs} args - Arguments to create a JobView.
+     * @example
+     * // Create one JobView
+     * const JobView = await prisma.jobView.create({
+     *   data: {
+     *     // ... data to create a JobView
+     *   }
+     * })
+     * 
+     */
+    create<T extends JobViewCreateArgs>(args: SelectSubset<T, JobViewCreateArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many JobViews.
+     * @param {JobViewCreateManyArgs} args - Arguments to create many JobViews.
+     * @example
+     * // Create many JobViews
+     * const jobView = await prisma.jobView.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JobViewCreateManyArgs>(args?: SelectSubset<T, JobViewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JobViews and returns the data saved in the database.
+     * @param {JobViewCreateManyAndReturnArgs} args - Arguments to create many JobViews.
+     * @example
+     * // Create many JobViews
+     * const jobView = await prisma.jobView.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JobViews and only return the `id`
+     * const jobViewWithIdOnly = await prisma.jobView.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JobViewCreateManyAndReturnArgs>(args?: SelectSubset<T, JobViewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a JobView.
+     * @param {JobViewDeleteArgs} args - Arguments to delete one JobView.
+     * @example
+     * // Delete one JobView
+     * const JobView = await prisma.jobView.delete({
+     *   where: {
+     *     // ... filter to delete one JobView
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JobViewDeleteArgs>(args: SelectSubset<T, JobViewDeleteArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one JobView.
+     * @param {JobViewUpdateArgs} args - Arguments to update one JobView.
+     * @example
+     * // Update one JobView
+     * const jobView = await prisma.jobView.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JobViewUpdateArgs>(args: SelectSubset<T, JobViewUpdateArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more JobViews.
+     * @param {JobViewDeleteManyArgs} args - Arguments to filter JobViews to delete.
+     * @example
+     * // Delete a few JobViews
+     * const { count } = await prisma.jobView.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JobViewDeleteManyArgs>(args?: SelectSubset<T, JobViewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobViews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JobViews
+     * const jobView = await prisma.jobView.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JobViewUpdateManyArgs>(args: SelectSubset<T, JobViewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobViews and returns the data updated in the database.
+     * @param {JobViewUpdateManyAndReturnArgs} args - Arguments to update many JobViews.
+     * @example
+     * // Update many JobViews
+     * const jobView = await prisma.jobView.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more JobViews and only return the `id`
+     * const jobViewWithIdOnly = await prisma.jobView.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends JobViewUpdateManyAndReturnArgs>(args: SelectSubset<T, JobViewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one JobView.
+     * @param {JobViewUpsertArgs} args - Arguments to update or create a JobView.
+     * @example
+     * // Update or create a JobView
+     * const jobView = await prisma.jobView.upsert({
+     *   create: {
+     *     // ... data to create a JobView
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JobView we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JobViewUpsertArgs>(args: SelectSubset<T, JobViewUpsertArgs<ExtArgs>>): Prisma__JobViewClient<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of JobViews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewCountArgs} args - Arguments to filter JobViews to count.
+     * @example
+     * // Count the number of JobViews
+     * const count = await prisma.jobView.count({
+     *   where: {
+     *     // ... the filter for the JobViews we want to count
+     *   }
+     * })
+    **/
+    count<T extends JobViewCountArgs>(
+      args?: Subset<T, JobViewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JobViewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JobView.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JobViewAggregateArgs>(args: Subset<T, JobViewAggregateArgs>): Prisma.PrismaPromise<GetJobViewAggregateType<T>>
+
+    /**
+     * Group by JobView.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobViewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JobViewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JobViewGroupByArgs['orderBy'] }
+        : { orderBy?: JobViewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JobViewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJobViewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JobView model
+   */
+  readonly fields: JobViewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JobView.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JobViewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    jobPosting<T extends JobPostingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobPostingDefaultArgs<ExtArgs>>): Prisma__JobPostingClient<$Result.GetResult<Prisma.$JobPostingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JobView model
+   */
+  interface JobViewFieldRefs {
+    readonly id: FieldRef<"JobView", 'Int'>
+    readonly jobPostingId: FieldRef<"JobView", 'Int'>
+    readonly viewedAt: FieldRef<"JobView", 'DateTime'>
+    readonly ipAddress: FieldRef<"JobView", 'String'>
+    readonly userAgent: FieldRef<"JobView", 'String'>
+    readonly referrer: FieldRef<"JobView", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JobView findUnique
+   */
+  export type JobViewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * Filter, which JobView to fetch.
+     */
+    where: JobViewWhereUniqueInput
+  }
+
+  /**
+   * JobView findUniqueOrThrow
+   */
+  export type JobViewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * Filter, which JobView to fetch.
+     */
+    where: JobViewWhereUniqueInput
+  }
+
+  /**
+   * JobView findFirst
+   */
+  export type JobViewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * Filter, which JobView to fetch.
+     */
+    where?: JobViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobViews to fetch.
+     */
+    orderBy?: JobViewOrderByWithRelationInput | JobViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobViews.
+     */
+    cursor?: JobViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobViews.
+     */
+    distinct?: JobViewScalarFieldEnum | JobViewScalarFieldEnum[]
+  }
+
+  /**
+   * JobView findFirstOrThrow
+   */
+  export type JobViewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * Filter, which JobView to fetch.
+     */
+    where?: JobViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobViews to fetch.
+     */
+    orderBy?: JobViewOrderByWithRelationInput | JobViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobViews.
+     */
+    cursor?: JobViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobViews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobViews.
+     */
+    distinct?: JobViewScalarFieldEnum | JobViewScalarFieldEnum[]
+  }
+
+  /**
+   * JobView findMany
+   */
+  export type JobViewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * Filter, which JobViews to fetch.
+     */
+    where?: JobViewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobViews to fetch.
+     */
+    orderBy?: JobViewOrderByWithRelationInput | JobViewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JobViews.
+     */
+    cursor?: JobViewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobViews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobViews.
+     */
+    skip?: number
+    distinct?: JobViewScalarFieldEnum | JobViewScalarFieldEnum[]
+  }
+
+  /**
+   * JobView create
+   */
+  export type JobViewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JobView.
+     */
+    data: XOR<JobViewCreateInput, JobViewUncheckedCreateInput>
+  }
+
+  /**
+   * JobView createMany
+   */
+  export type JobViewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JobViews.
+     */
+    data: JobViewCreateManyInput | JobViewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JobView createManyAndReturn
+   */
+  export type JobViewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * The data used to create many JobViews.
+     */
+    data: JobViewCreateManyInput | JobViewCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JobView update
+   */
+  export type JobViewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JobView.
+     */
+    data: XOR<JobViewUpdateInput, JobViewUncheckedUpdateInput>
+    /**
+     * Choose, which JobView to update.
+     */
+    where: JobViewWhereUniqueInput
+  }
+
+  /**
+   * JobView updateMany
+   */
+  export type JobViewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JobViews.
+     */
+    data: XOR<JobViewUpdateManyMutationInput, JobViewUncheckedUpdateManyInput>
+    /**
+     * Filter which JobViews to update
+     */
+    where?: JobViewWhereInput
+    /**
+     * Limit how many JobViews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobView updateManyAndReturn
+   */
+  export type JobViewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * The data used to update JobViews.
+     */
+    data: XOR<JobViewUpdateManyMutationInput, JobViewUncheckedUpdateManyInput>
+    /**
+     * Filter which JobViews to update
+     */
+    where?: JobViewWhereInput
+    /**
+     * Limit how many JobViews to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JobView upsert
+   */
+  export type JobViewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JobView to update in case it exists.
+     */
+    where: JobViewWhereUniqueInput
+    /**
+     * In case the JobView found by the `where` argument doesn't exist, create a new JobView with this data.
+     */
+    create: XOR<JobViewCreateInput, JobViewUncheckedCreateInput>
+    /**
+     * In case the JobView was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JobViewUpdateInput, JobViewUncheckedUpdateInput>
+  }
+
+  /**
+   * JobView delete
+   */
+  export type JobViewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+    /**
+     * Filter which JobView to delete.
+     */
+    where: JobViewWhereUniqueInput
+  }
+
+  /**
+   * JobView deleteMany
+   */
+  export type JobViewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobViews to delete
+     */
+    where?: JobViewWhereInput
+    /**
+     * Limit how many JobViews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobView without action
+   */
+  export type JobViewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobView
+     */
+    select?: JobViewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobView
+     */
+    omit?: JobViewOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobViewInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ResearchArea
+   */
+
+  export type AggregateResearchArea = {
+    _count: ResearchAreaCountAggregateOutputType | null
+    _avg: ResearchAreaAvgAggregateOutputType | null
+    _sum: ResearchAreaSumAggregateOutputType | null
+    _min: ResearchAreaMinAggregateOutputType | null
+    _max: ResearchAreaMaxAggregateOutputType | null
+  }
+
+  export type ResearchAreaAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ResearchAreaSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type ResearchAreaMinAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+  }
+
+  export type ResearchAreaMaxAggregateOutputType = {
+    id: number | null
+    name: string | null
+    description: string | null
+  }
+
+  export type ResearchAreaCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    _all: number
+  }
+
+
+  export type ResearchAreaAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type ResearchAreaSumAggregateInputType = {
+    id?: true
+  }
+
+  export type ResearchAreaMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+  }
+
+  export type ResearchAreaMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+  }
+
+  export type ResearchAreaCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    _all?: true
+  }
+
+  export type ResearchAreaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResearchArea to aggregate.
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResearchAreas to fetch.
+     */
+    orderBy?: ResearchAreaOrderByWithRelationInput | ResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResearchAreas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ResearchAreas
+    **/
+    _count?: true | ResearchAreaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ResearchAreaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ResearchAreaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ResearchAreaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ResearchAreaMaxAggregateInputType
+  }
+
+  export type GetResearchAreaAggregateType<T extends ResearchAreaAggregateArgs> = {
+        [P in keyof T & keyof AggregateResearchArea]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateResearchArea[P]>
+      : GetScalarType<T[P], AggregateResearchArea[P]>
+  }
+
+
+
+
+  export type ResearchAreaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ResearchAreaWhereInput
+    orderBy?: ResearchAreaOrderByWithAggregationInput | ResearchAreaOrderByWithAggregationInput[]
+    by: ResearchAreaScalarFieldEnum[] | ResearchAreaScalarFieldEnum
+    having?: ResearchAreaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ResearchAreaCountAggregateInputType | true
+    _avg?: ResearchAreaAvgAggregateInputType
+    _sum?: ResearchAreaSumAggregateInputType
+    _min?: ResearchAreaMinAggregateInputType
+    _max?: ResearchAreaMaxAggregateInputType
+  }
+
+  export type ResearchAreaGroupByOutputType = {
+    id: number
+    name: string
+    description: string | null
+    _count: ResearchAreaCountAggregateOutputType | null
+    _avg: ResearchAreaAvgAggregateOutputType | null
+    _sum: ResearchAreaSumAggregateOutputType | null
+    _min: ResearchAreaMinAggregateOutputType | null
+    _max: ResearchAreaMaxAggregateOutputType | null
+  }
+
+  type GetResearchAreaGroupByPayload<T extends ResearchAreaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ResearchAreaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ResearchAreaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ResearchAreaGroupByOutputType[P]>
+            : GetScalarType<T[P], ResearchAreaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ResearchAreaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    jobPostings?: boolean | ResearchArea$jobPostingsArgs<ExtArgs>
+    _count?: boolean | ResearchAreaCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["researchArea"]>
+
+  export type ResearchAreaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["researchArea"]>
+
+  export type ResearchAreaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+  }, ExtArgs["result"]["researchArea"]>
+
+  export type ResearchAreaSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+  }
+
+  export type ResearchAreaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description", ExtArgs["result"]["researchArea"]>
+  export type ResearchAreaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPostings?: boolean | ResearchArea$jobPostingsArgs<ExtArgs>
+    _count?: boolean | ResearchAreaCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type ResearchAreaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type ResearchAreaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $ResearchAreaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ResearchArea"
+    objects: {
+      jobPostings: Prisma.$JobPostingPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      name: string
+      description: string | null
+    }, ExtArgs["result"]["researchArea"]>
+    composites: {}
+  }
+
+  type ResearchAreaGetPayload<S extends boolean | null | undefined | ResearchAreaDefaultArgs> = $Result.GetResult<Prisma.$ResearchAreaPayload, S>
+
+  type ResearchAreaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ResearchAreaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ResearchAreaCountAggregateInputType | true
+    }
+
+  export interface ResearchAreaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ResearchArea'], meta: { name: 'ResearchArea' } }
+    /**
+     * Find zero or one ResearchArea that matches the filter.
+     * @param {ResearchAreaFindUniqueArgs} args - Arguments to find a ResearchArea
+     * @example
+     * // Get one ResearchArea
+     * const researchArea = await prisma.researchArea.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ResearchAreaFindUniqueArgs>(args: SelectSubset<T, ResearchAreaFindUniqueArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ResearchArea that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ResearchAreaFindUniqueOrThrowArgs} args - Arguments to find a ResearchArea
+     * @example
+     * // Get one ResearchArea
+     * const researchArea = await prisma.researchArea.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ResearchAreaFindUniqueOrThrowArgs>(args: SelectSubset<T, ResearchAreaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResearchArea that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaFindFirstArgs} args - Arguments to find a ResearchArea
+     * @example
+     * // Get one ResearchArea
+     * const researchArea = await prisma.researchArea.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ResearchAreaFindFirstArgs>(args?: SelectSubset<T, ResearchAreaFindFirstArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ResearchArea that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaFindFirstOrThrowArgs} args - Arguments to find a ResearchArea
+     * @example
+     * // Get one ResearchArea
+     * const researchArea = await prisma.researchArea.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ResearchAreaFindFirstOrThrowArgs>(args?: SelectSubset<T, ResearchAreaFindFirstOrThrowArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ResearchAreas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ResearchAreas
+     * const researchAreas = await prisma.researchArea.findMany()
+     * 
+     * // Get first 10 ResearchAreas
+     * const researchAreas = await prisma.researchArea.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const researchAreaWithIdOnly = await prisma.researchArea.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ResearchAreaFindManyArgs>(args?: SelectSubset<T, ResearchAreaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ResearchArea.
+     * @param {ResearchAreaCreateArgs} args - Arguments to create a ResearchArea.
+     * @example
+     * // Create one ResearchArea
+     * const ResearchArea = await prisma.researchArea.create({
+     *   data: {
+     *     // ... data to create a ResearchArea
+     *   }
+     * })
+     * 
+     */
+    create<T extends ResearchAreaCreateArgs>(args: SelectSubset<T, ResearchAreaCreateArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ResearchAreas.
+     * @param {ResearchAreaCreateManyArgs} args - Arguments to create many ResearchAreas.
+     * @example
+     * // Create many ResearchAreas
+     * const researchArea = await prisma.researchArea.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ResearchAreaCreateManyArgs>(args?: SelectSubset<T, ResearchAreaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ResearchAreas and returns the data saved in the database.
+     * @param {ResearchAreaCreateManyAndReturnArgs} args - Arguments to create many ResearchAreas.
+     * @example
+     * // Create many ResearchAreas
+     * const researchArea = await prisma.researchArea.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ResearchAreas and only return the `id`
+     * const researchAreaWithIdOnly = await prisma.researchArea.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ResearchAreaCreateManyAndReturnArgs>(args?: SelectSubset<T, ResearchAreaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ResearchArea.
+     * @param {ResearchAreaDeleteArgs} args - Arguments to delete one ResearchArea.
+     * @example
+     * // Delete one ResearchArea
+     * const ResearchArea = await prisma.researchArea.delete({
+     *   where: {
+     *     // ... filter to delete one ResearchArea
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ResearchAreaDeleteArgs>(args: SelectSubset<T, ResearchAreaDeleteArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ResearchArea.
+     * @param {ResearchAreaUpdateArgs} args - Arguments to update one ResearchArea.
+     * @example
+     * // Update one ResearchArea
+     * const researchArea = await prisma.researchArea.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ResearchAreaUpdateArgs>(args: SelectSubset<T, ResearchAreaUpdateArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ResearchAreas.
+     * @param {ResearchAreaDeleteManyArgs} args - Arguments to filter ResearchAreas to delete.
+     * @example
+     * // Delete a few ResearchAreas
+     * const { count } = await prisma.researchArea.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ResearchAreaDeleteManyArgs>(args?: SelectSubset<T, ResearchAreaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResearchAreas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ResearchAreas
+     * const researchArea = await prisma.researchArea.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ResearchAreaUpdateManyArgs>(args: SelectSubset<T, ResearchAreaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ResearchAreas and returns the data updated in the database.
+     * @param {ResearchAreaUpdateManyAndReturnArgs} args - Arguments to update many ResearchAreas.
+     * @example
+     * // Update many ResearchAreas
+     * const researchArea = await prisma.researchArea.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ResearchAreas and only return the `id`
+     * const researchAreaWithIdOnly = await prisma.researchArea.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ResearchAreaUpdateManyAndReturnArgs>(args: SelectSubset<T, ResearchAreaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ResearchArea.
+     * @param {ResearchAreaUpsertArgs} args - Arguments to update or create a ResearchArea.
+     * @example
+     * // Update or create a ResearchArea
+     * const researchArea = await prisma.researchArea.upsert({
+     *   create: {
+     *     // ... data to create a ResearchArea
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ResearchArea we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ResearchAreaUpsertArgs>(args: SelectSubset<T, ResearchAreaUpsertArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ResearchAreas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaCountArgs} args - Arguments to filter ResearchAreas to count.
+     * @example
+     * // Count the number of ResearchAreas
+     * const count = await prisma.researchArea.count({
+     *   where: {
+     *     // ... the filter for the ResearchAreas we want to count
+     *   }
+     * })
+    **/
+    count<T extends ResearchAreaCountArgs>(
+      args?: Subset<T, ResearchAreaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ResearchAreaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ResearchArea.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ResearchAreaAggregateArgs>(args: Subset<T, ResearchAreaAggregateArgs>): Prisma.PrismaPromise<GetResearchAreaAggregateType<T>>
+
+    /**
+     * Group by ResearchArea.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ResearchAreaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ResearchAreaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ResearchAreaGroupByArgs['orderBy'] }
+        : { orderBy?: ResearchAreaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ResearchAreaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetResearchAreaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ResearchArea model
+   */
+  readonly fields: ResearchAreaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ResearchArea.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ResearchAreaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    jobPostings<T extends ResearchArea$jobPostingsArgs<ExtArgs> = {}>(args?: Subset<T, ResearchArea$jobPostingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPostingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ResearchArea model
+   */
+  interface ResearchAreaFieldRefs {
+    readonly id: FieldRef<"ResearchArea", 'Int'>
+    readonly name: FieldRef<"ResearchArea", 'String'>
+    readonly description: FieldRef<"ResearchArea", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ResearchArea findUnique
+   */
+  export type ResearchAreaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which ResearchArea to fetch.
+     */
+    where: ResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * ResearchArea findUniqueOrThrow
+   */
+  export type ResearchAreaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which ResearchArea to fetch.
+     */
+    where: ResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * ResearchArea findFirst
+   */
+  export type ResearchAreaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which ResearchArea to fetch.
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResearchAreas to fetch.
+     */
+    orderBy?: ResearchAreaOrderByWithRelationInput | ResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResearchAreas.
+     */
+    cursor?: ResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResearchAreas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResearchAreas.
+     */
+    distinct?: ResearchAreaScalarFieldEnum | ResearchAreaScalarFieldEnum[]
+  }
+
+  /**
+   * ResearchArea findFirstOrThrow
+   */
+  export type ResearchAreaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which ResearchArea to fetch.
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResearchAreas to fetch.
+     */
+    orderBy?: ResearchAreaOrderByWithRelationInput | ResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ResearchAreas.
+     */
+    cursor?: ResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResearchAreas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ResearchAreas.
+     */
+    distinct?: ResearchAreaScalarFieldEnum | ResearchAreaScalarFieldEnum[]
+  }
+
+  /**
+   * ResearchArea findMany
+   */
+  export type ResearchAreaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which ResearchAreas to fetch.
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ResearchAreas to fetch.
+     */
+    orderBy?: ResearchAreaOrderByWithRelationInput | ResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ResearchAreas.
+     */
+    cursor?: ResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ResearchAreas.
+     */
+    skip?: number
+    distinct?: ResearchAreaScalarFieldEnum | ResearchAreaScalarFieldEnum[]
+  }
+
+  /**
+   * ResearchArea create
+   */
+  export type ResearchAreaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ResearchArea.
+     */
+    data: XOR<ResearchAreaCreateInput, ResearchAreaUncheckedCreateInput>
+  }
+
+  /**
+   * ResearchArea createMany
+   */
+  export type ResearchAreaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ResearchAreas.
+     */
+    data: ResearchAreaCreateManyInput | ResearchAreaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ResearchArea createManyAndReturn
+   */
+  export type ResearchAreaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * The data used to create many ResearchAreas.
+     */
+    data: ResearchAreaCreateManyInput | ResearchAreaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ResearchArea update
+   */
+  export type ResearchAreaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ResearchArea.
+     */
+    data: XOR<ResearchAreaUpdateInput, ResearchAreaUncheckedUpdateInput>
+    /**
+     * Choose, which ResearchArea to update.
+     */
+    where: ResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * ResearchArea updateMany
+   */
+  export type ResearchAreaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ResearchAreas.
+     */
+    data: XOR<ResearchAreaUpdateManyMutationInput, ResearchAreaUncheckedUpdateManyInput>
+    /**
+     * Filter which ResearchAreas to update
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * Limit how many ResearchAreas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResearchArea updateManyAndReturn
+   */
+  export type ResearchAreaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * The data used to update ResearchAreas.
+     */
+    data: XOR<ResearchAreaUpdateManyMutationInput, ResearchAreaUncheckedUpdateManyInput>
+    /**
+     * Filter which ResearchAreas to update
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * Limit how many ResearchAreas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResearchArea upsert
+   */
+  export type ResearchAreaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ResearchArea to update in case it exists.
+     */
+    where: ResearchAreaWhereUniqueInput
+    /**
+     * In case the ResearchArea found by the `where` argument doesn't exist, create a new ResearchArea with this data.
+     */
+    create: XOR<ResearchAreaCreateInput, ResearchAreaUncheckedCreateInput>
+    /**
+     * In case the ResearchArea was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ResearchAreaUpdateInput, ResearchAreaUncheckedUpdateInput>
+  }
+
+  /**
+   * ResearchArea delete
+   */
+  export type ResearchAreaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter which ResearchArea to delete.
+     */
+    where: ResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * ResearchArea deleteMany
+   */
+  export type ResearchAreaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ResearchAreas to delete
+     */
+    where?: ResearchAreaWhereInput
+    /**
+     * Limit how many ResearchAreas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ResearchArea.jobPostings
+   */
+  export type ResearchArea$jobPostingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobPosting
+     */
+    select?: JobPostingSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobPosting
+     */
+    omit?: JobPostingOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobPostingInclude<ExtArgs> | null
+    where?: JobPostingWhereInput
+    orderBy?: JobPostingOrderByWithRelationInput | JobPostingOrderByWithRelationInput[]
+    cursor?: JobPostingWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: JobPostingScalarFieldEnum | JobPostingScalarFieldEnum[]
+  }
+
+  /**
+   * ResearchArea without action
+   */
+  export type ResearchAreaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ResearchArea
+     */
+    select?: ResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ResearchArea
+     */
+    omit?: ResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ResearchAreaInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model SyncLog
    */
 
@@ -15634,7 +18242,8 @@ export namespace Prisma {
     name: 'name',
     location: 'location',
     website: 'website',
-    type: 'type'
+    type: 'type',
+    description: 'description'
   };
 
   export type InstitutionScalarFieldEnum = (typeof InstitutionScalarFieldEnum)[keyof typeof InstitutionScalarFieldEnum]
@@ -15645,7 +18254,9 @@ export namespace Prisma {
     name: 'name',
     location: 'location',
     contactInfo: 'contactInfo',
-    institutionId: 'institutionId'
+    institutionId: 'institutionId',
+    description: 'description',
+    website: 'website'
   };
 
   export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
@@ -15685,9 +18296,15 @@ export namespace Prisma {
     departmentId: 'departmentId',
     disciplineId: 'disciplineId',
     status: 'status',
+    isSelfFinanced: 'isSelfFinanced',
+    isPartTime: 'isPartTime',
+    workHoursPerWeek: 'workHoursPerWeek',
+    compensationType: 'compensationType',
     lastSyncedAt: 'lastSyncedAt',
     expiresAt: 'expiresAt',
-    isActive: 'isActive'
+    isActive: 'isActive',
+    instructions: 'instructions',
+    qualifications: 'qualifications'
   };
 
   export type JobPostingScalarFieldEnum = (typeof JobPostingScalarFieldEnum)[keyof typeof JobPostingScalarFieldEnum]
@@ -15698,6 +18315,7 @@ export namespace Prisma {
     jobPostingId: 'jobPostingId',
     documentType: 'documentType',
     referenceLettersRequired: 'referenceLettersRequired',
+    description: 'description',
     platform: 'platform'
   };
 
@@ -15753,6 +18371,27 @@ export namespace Prisma {
   };
 
   export type ContactScalarFieldEnum = (typeof ContactScalarFieldEnum)[keyof typeof ContactScalarFieldEnum]
+
+
+  export const JobViewScalarFieldEnum: {
+    id: 'id',
+    jobPostingId: 'jobPostingId',
+    viewedAt: 'viewedAt',
+    ipAddress: 'ipAddress',
+    userAgent: 'userAgent',
+    referrer: 'referrer'
+  };
+
+  export type JobViewScalarFieldEnum = (typeof JobViewScalarFieldEnum)[keyof typeof JobViewScalarFieldEnum]
+
+
+  export const ResearchAreaScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description'
+  };
+
+  export type ResearchAreaScalarFieldEnum = (typeof ResearchAreaScalarFieldEnum)[keyof typeof ResearchAreaScalarFieldEnum]
 
 
   export const SyncLogScalarFieldEnum: {
@@ -15876,6 +18515,7 @@ export namespace Prisma {
     location?: StringNullableFilter<"Institution"> | string | null
     website?: StringNullableFilter<"Institution"> | string | null
     type?: StringNullableFilter<"Institution"> | string | null
+    description?: StringNullableFilter<"Institution"> | string | null
     departments?: DepartmentListRelationFilter
   }
 
@@ -15885,6 +18525,7 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     type?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     departments?: DepartmentOrderByRelationAggregateInput
   }
 
@@ -15897,6 +18538,7 @@ export namespace Prisma {
     location?: StringNullableFilter<"Institution"> | string | null
     website?: StringNullableFilter<"Institution"> | string | null
     type?: StringNullableFilter<"Institution"> | string | null
+    description?: StringNullableFilter<"Institution"> | string | null
     departments?: DepartmentListRelationFilter
   }, "id">
 
@@ -15906,6 +18548,7 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     website?: SortOrderInput | SortOrder
     type?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     _count?: InstitutionCountOrderByAggregateInput
     _avg?: InstitutionAvgOrderByAggregateInput
     _max?: InstitutionMaxOrderByAggregateInput
@@ -15922,6 +18565,7 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Institution"> | string | null
     website?: StringNullableWithAggregatesFilter<"Institution"> | string | null
     type?: StringNullableWithAggregatesFilter<"Institution"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Institution"> | string | null
   }
 
   export type DepartmentWhereInput = {
@@ -15933,6 +18577,8 @@ export namespace Prisma {
     location?: StringNullableFilter<"Department"> | string | null
     contactInfo?: StringNullableFilter<"Department"> | string | null
     institutionId?: IntFilter<"Department"> | number
+    description?: StringNullableFilter<"Department"> | string | null
+    website?: StringNullableFilter<"Department"> | string | null
     institution?: XOR<InstitutionScalarRelationFilter, InstitutionWhereInput>
     jobPostings?: JobPostingListRelationFilter
   }
@@ -15943,6 +18589,8 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     contactInfo?: SortOrderInput | SortOrder
     institutionId?: SortOrder
+    description?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
     institution?: InstitutionOrderByWithRelationInput
     jobPostings?: JobPostingOrderByRelationAggregateInput
   }
@@ -15956,6 +18604,8 @@ export namespace Prisma {
     location?: StringNullableFilter<"Department"> | string | null
     contactInfo?: StringNullableFilter<"Department"> | string | null
     institutionId?: IntFilter<"Department"> | number
+    description?: StringNullableFilter<"Department"> | string | null
+    website?: StringNullableFilter<"Department"> | string | null
     institution?: XOR<InstitutionScalarRelationFilter, InstitutionWhereInput>
     jobPostings?: JobPostingListRelationFilter
   }, "id">
@@ -15966,6 +18616,8 @@ export namespace Prisma {
     location?: SortOrderInput | SortOrder
     contactInfo?: SortOrderInput | SortOrder
     institutionId?: SortOrder
+    description?: SortOrderInput | SortOrder
+    website?: SortOrderInput | SortOrder
     _count?: DepartmentCountOrderByAggregateInput
     _avg?: DepartmentAvgOrderByAggregateInput
     _max?: DepartmentMaxOrderByAggregateInput
@@ -15982,6 +18634,8 @@ export namespace Prisma {
     location?: StringNullableWithAggregatesFilter<"Department"> | string | null
     contactInfo?: StringNullableWithAggregatesFilter<"Department"> | string | null
     institutionId?: IntWithAggregatesFilter<"Department"> | number
+    description?: StringNullableWithAggregatesFilter<"Department"> | string | null
+    website?: StringNullableWithAggregatesFilter<"Department"> | string | null
   }
 
   export type DisciplineWhereInput = {
@@ -16065,9 +18719,15 @@ export namespace Prisma {
     departmentId?: IntFilter<"JobPosting"> | number
     disciplineId?: IntFilter<"JobPosting"> | number
     status?: StringFilter<"JobPosting"> | string
+    isSelfFinanced?: BoolNullableFilter<"JobPosting"> | boolean | null
+    isPartTime?: BoolNullableFilter<"JobPosting"> | boolean | null
+    workHoursPerWeek?: IntNullableFilter<"JobPosting"> | number | null
+    compensationType?: StringNullableFilter<"JobPosting"> | string | null
     lastSyncedAt?: DateTimeFilter<"JobPosting"> | Date | string
     expiresAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
     isActive?: BoolFilter<"JobPosting"> | boolean
+    instructions?: StringNullableFilter<"JobPosting"> | string | null
+    qualifications?: StringNullableFilter<"JobPosting"> | string | null
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
     applicationRequirements?: ApplicationRequirementListRelationFilter
@@ -16076,6 +18736,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundListRelationFilter
     geoLocation?: XOR<GeoLocationNullableScalarRelationFilter, GeoLocationWhereInput> | null
     contact?: XOR<ContactNullableScalarRelationFilter, ContactWhereInput> | null
+    jobViews?: JobViewListRelationFilter
+    researchAreas?: ResearchAreaListRelationFilter
   }
 
   export type JobPostingOrderByWithRelationInput = {
@@ -16103,9 +18765,15 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     status?: SortOrder
+    isSelfFinanced?: SortOrderInput | SortOrder
+    isPartTime?: SortOrderInput | SortOrder
+    workHoursPerWeek?: SortOrderInput | SortOrder
+    compensationType?: SortOrderInput | SortOrder
     lastSyncedAt?: SortOrder
     expiresAt?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    instructions?: SortOrderInput | SortOrder
+    qualifications?: SortOrderInput | SortOrder
     department?: DepartmentOrderByWithRelationInput
     discipline?: DisciplineOrderByWithRelationInput
     applicationRequirements?: ApplicationRequirementOrderByRelationAggregateInput
@@ -16114,6 +18782,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundOrderByRelationAggregateInput
     geoLocation?: GeoLocationOrderByWithRelationInput
     contact?: ContactOrderByWithRelationInput
+    jobViews?: JobViewOrderByRelationAggregateInput
+    researchAreas?: ResearchAreaOrderByRelationAggregateInput
   }
 
   export type JobPostingWhereUniqueInput = Prisma.AtLeast<{
@@ -16144,9 +18814,15 @@ export namespace Prisma {
     departmentId?: IntFilter<"JobPosting"> | number
     disciplineId?: IntFilter<"JobPosting"> | number
     status?: StringFilter<"JobPosting"> | string
+    isSelfFinanced?: BoolNullableFilter<"JobPosting"> | boolean | null
+    isPartTime?: BoolNullableFilter<"JobPosting"> | boolean | null
+    workHoursPerWeek?: IntNullableFilter<"JobPosting"> | number | null
+    compensationType?: StringNullableFilter<"JobPosting"> | string | null
     lastSyncedAt?: DateTimeFilter<"JobPosting"> | Date | string
     expiresAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
     isActive?: BoolFilter<"JobPosting"> | boolean
+    instructions?: StringNullableFilter<"JobPosting"> | string | null
+    qualifications?: StringNullableFilter<"JobPosting"> | string | null
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
     applicationRequirements?: ApplicationRequirementListRelationFilter
@@ -16155,6 +18831,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundListRelationFilter
     geoLocation?: XOR<GeoLocationNullableScalarRelationFilter, GeoLocationWhereInput> | null
     contact?: XOR<ContactNullableScalarRelationFilter, ContactWhereInput> | null
+    jobViews?: JobViewListRelationFilter
+    researchAreas?: ResearchAreaListRelationFilter
   }, "id">
 
   export type JobPostingOrderByWithAggregationInput = {
@@ -16182,9 +18860,15 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     status?: SortOrder
+    isSelfFinanced?: SortOrderInput | SortOrder
+    isPartTime?: SortOrderInput | SortOrder
+    workHoursPerWeek?: SortOrderInput | SortOrder
+    compensationType?: SortOrderInput | SortOrder
     lastSyncedAt?: SortOrder
     expiresAt?: SortOrderInput | SortOrder
     isActive?: SortOrder
+    instructions?: SortOrderInput | SortOrder
+    qualifications?: SortOrderInput | SortOrder
     _count?: JobPostingCountOrderByAggregateInput
     _avg?: JobPostingAvgOrderByAggregateInput
     _max?: JobPostingMaxOrderByAggregateInput
@@ -16220,9 +18904,15 @@ export namespace Prisma {
     departmentId?: IntWithAggregatesFilter<"JobPosting"> | number
     disciplineId?: IntWithAggregatesFilter<"JobPosting"> | number
     status?: StringWithAggregatesFilter<"JobPosting"> | string
+    isSelfFinanced?: BoolNullableWithAggregatesFilter<"JobPosting"> | boolean | null
+    isPartTime?: BoolNullableWithAggregatesFilter<"JobPosting"> | boolean | null
+    workHoursPerWeek?: IntNullableWithAggregatesFilter<"JobPosting"> | number | null
+    compensationType?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
     lastSyncedAt?: DateTimeWithAggregatesFilter<"JobPosting"> | Date | string
     expiresAt?: DateTimeNullableWithAggregatesFilter<"JobPosting"> | Date | string | null
     isActive?: BoolWithAggregatesFilter<"JobPosting"> | boolean
+    instructions?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
+    qualifications?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
   }
 
   export type ApplicationRequirementWhereInput = {
@@ -16233,6 +18923,7 @@ export namespace Prisma {
     jobPostingId?: IntFilter<"ApplicationRequirement"> | number
     documentType?: StringNullableFilter<"ApplicationRequirement"> | string | null
     referenceLettersRequired?: IntNullableFilter<"ApplicationRequirement"> | number | null
+    description?: StringNullableFilter<"ApplicationRequirement"> | string | null
     platform?: StringNullableFilter<"ApplicationRequirement"> | string | null
     jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
   }
@@ -16242,6 +18933,7 @@ export namespace Prisma {
     jobPostingId?: SortOrder
     documentType?: SortOrderInput | SortOrder
     referenceLettersRequired?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     platform?: SortOrderInput | SortOrder
     jobPosting?: JobPostingOrderByWithRelationInput
   }
@@ -16254,6 +18946,7 @@ export namespace Prisma {
     jobPostingId?: IntFilter<"ApplicationRequirement"> | number
     documentType?: StringNullableFilter<"ApplicationRequirement"> | string | null
     referenceLettersRequired?: IntNullableFilter<"ApplicationRequirement"> | number | null
+    description?: StringNullableFilter<"ApplicationRequirement"> | string | null
     platform?: StringNullableFilter<"ApplicationRequirement"> | string | null
     jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
   }, "id">
@@ -16263,6 +18956,7 @@ export namespace Prisma {
     jobPostingId?: SortOrder
     documentType?: SortOrderInput | SortOrder
     referenceLettersRequired?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
     platform?: SortOrderInput | SortOrder
     _count?: ApplicationRequirementCountOrderByAggregateInput
     _avg?: ApplicationRequirementAvgOrderByAggregateInput
@@ -16279,6 +18973,7 @@ export namespace Prisma {
     jobPostingId?: IntWithAggregatesFilter<"ApplicationRequirement"> | number
     documentType?: StringNullableWithAggregatesFilter<"ApplicationRequirement"> | string | null
     referenceLettersRequired?: IntNullableWithAggregatesFilter<"ApplicationRequirement"> | number | null
+    description?: StringNullableWithAggregatesFilter<"ApplicationRequirement"> | string | null
     platform?: StringNullableWithAggregatesFilter<"ApplicationRequirement"> | string | null
   }
 
@@ -16555,6 +19250,115 @@ export namespace Prisma {
     title?: StringNullableWithAggregatesFilter<"Contact"> | string | null
   }
 
+  export type JobViewWhereInput = {
+    AND?: JobViewWhereInput | JobViewWhereInput[]
+    OR?: JobViewWhereInput[]
+    NOT?: JobViewWhereInput | JobViewWhereInput[]
+    id?: IntFilter<"JobView"> | number
+    jobPostingId?: IntFilter<"JobView"> | number
+    viewedAt?: DateTimeFilter<"JobView"> | Date | string
+    ipAddress?: StringNullableFilter<"JobView"> | string | null
+    userAgent?: StringNullableFilter<"JobView"> | string | null
+    referrer?: StringNullableFilter<"JobView"> | string | null
+    jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
+  }
+
+  export type JobViewOrderByWithRelationInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+    viewedAt?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    referrer?: SortOrderInput | SortOrder
+    jobPosting?: JobPostingOrderByWithRelationInput
+  }
+
+  export type JobViewWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: JobViewWhereInput | JobViewWhereInput[]
+    OR?: JobViewWhereInput[]
+    NOT?: JobViewWhereInput | JobViewWhereInput[]
+    jobPostingId?: IntFilter<"JobView"> | number
+    viewedAt?: DateTimeFilter<"JobView"> | Date | string
+    ipAddress?: StringNullableFilter<"JobView"> | string | null
+    userAgent?: StringNullableFilter<"JobView"> | string | null
+    referrer?: StringNullableFilter<"JobView"> | string | null
+    jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
+  }, "id">
+
+  export type JobViewOrderByWithAggregationInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+    viewedAt?: SortOrder
+    ipAddress?: SortOrderInput | SortOrder
+    userAgent?: SortOrderInput | SortOrder
+    referrer?: SortOrderInput | SortOrder
+    _count?: JobViewCountOrderByAggregateInput
+    _avg?: JobViewAvgOrderByAggregateInput
+    _max?: JobViewMaxOrderByAggregateInput
+    _min?: JobViewMinOrderByAggregateInput
+    _sum?: JobViewSumOrderByAggregateInput
+  }
+
+  export type JobViewScalarWhereWithAggregatesInput = {
+    AND?: JobViewScalarWhereWithAggregatesInput | JobViewScalarWhereWithAggregatesInput[]
+    OR?: JobViewScalarWhereWithAggregatesInput[]
+    NOT?: JobViewScalarWhereWithAggregatesInput | JobViewScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"JobView"> | number
+    jobPostingId?: IntWithAggregatesFilter<"JobView"> | number
+    viewedAt?: DateTimeWithAggregatesFilter<"JobView"> | Date | string
+    ipAddress?: StringNullableWithAggregatesFilter<"JobView"> | string | null
+    userAgent?: StringNullableWithAggregatesFilter<"JobView"> | string | null
+    referrer?: StringNullableWithAggregatesFilter<"JobView"> | string | null
+  }
+
+  export type ResearchAreaWhereInput = {
+    AND?: ResearchAreaWhereInput | ResearchAreaWhereInput[]
+    OR?: ResearchAreaWhereInput[]
+    NOT?: ResearchAreaWhereInput | ResearchAreaWhereInput[]
+    id?: IntFilter<"ResearchArea"> | number
+    name?: StringFilter<"ResearchArea"> | string
+    description?: StringNullableFilter<"ResearchArea"> | string | null
+    jobPostings?: JobPostingListRelationFilter
+  }
+
+  export type ResearchAreaOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    jobPostings?: JobPostingOrderByRelationAggregateInput
+  }
+
+  export type ResearchAreaWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    name?: string
+    AND?: ResearchAreaWhereInput | ResearchAreaWhereInput[]
+    OR?: ResearchAreaWhereInput[]
+    NOT?: ResearchAreaWhereInput | ResearchAreaWhereInput[]
+    description?: StringNullableFilter<"ResearchArea"> | string | null
+    jobPostings?: JobPostingListRelationFilter
+  }, "id" | "name">
+
+  export type ResearchAreaOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    _count?: ResearchAreaCountOrderByAggregateInput
+    _avg?: ResearchAreaAvgOrderByAggregateInput
+    _max?: ResearchAreaMaxOrderByAggregateInput
+    _min?: ResearchAreaMinOrderByAggregateInput
+    _sum?: ResearchAreaSumOrderByAggregateInput
+  }
+
+  export type ResearchAreaScalarWhereWithAggregatesInput = {
+    AND?: ResearchAreaScalarWhereWithAggregatesInput | ResearchAreaScalarWhereWithAggregatesInput[]
+    OR?: ResearchAreaScalarWhereWithAggregatesInput[]
+    NOT?: ResearchAreaScalarWhereWithAggregatesInput | ResearchAreaScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"ResearchArea"> | number
+    name?: StringWithAggregatesFilter<"ResearchArea"> | string
+    description?: StringNullableWithAggregatesFilter<"ResearchArea"> | string | null
+  }
+
   export type SyncLogWhereInput = {
     AND?: SyncLogWhereInput | SyncLogWhereInput[]
     OR?: SyncLogWhereInput[]
@@ -16644,6 +19448,7 @@ export namespace Prisma {
     location?: string | null
     website?: string | null
     type?: string | null
+    description?: string | null
     departments?: DepartmentCreateNestedManyWithoutInstitutionInput
   }
 
@@ -16653,6 +19458,7 @@ export namespace Prisma {
     location?: string | null
     website?: string | null
     type?: string | null
+    description?: string | null
     departments?: DepartmentUncheckedCreateNestedManyWithoutInstitutionInput
   }
 
@@ -16661,6 +19467,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     departments?: DepartmentUpdateManyWithoutInstitutionNestedInput
   }
 
@@ -16670,6 +19477,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     departments?: DepartmentUncheckedUpdateManyWithoutInstitutionNestedInput
   }
 
@@ -16679,6 +19487,7 @@ export namespace Prisma {
     location?: string | null
     website?: string | null
     type?: string | null
+    description?: string | null
   }
 
   export type InstitutionUpdateManyMutationInput = {
@@ -16686,6 +19495,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type InstitutionUncheckedUpdateManyInput = {
@@ -16694,12 +19504,15 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DepartmentCreateInput = {
     name: string
     location?: string | null
     contactInfo?: string | null
+    description?: string | null
+    website?: string | null
     institution: InstitutionCreateNestedOneWithoutDepartmentsInput
     jobPostings?: JobPostingCreateNestedManyWithoutDepartmentInput
   }
@@ -16710,6 +19523,8 @@ export namespace Prisma {
     location?: string | null
     contactInfo?: string | null
     institutionId: number
+    description?: string | null
+    website?: string | null
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutDepartmentInput
   }
 
@@ -16717,6 +19532,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: InstitutionUpdateOneRequiredWithoutDepartmentsNestedInput
     jobPostings?: JobPostingUpdateManyWithoutDepartmentNestedInput
   }
@@ -16727,6 +19544,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
     institutionId?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
@@ -16736,12 +19555,16 @@ export namespace Prisma {
     location?: string | null
     contactInfo?: string | null
     institutionId: number
+    description?: string | null
+    website?: string | null
   }
 
   export type DepartmentUpdateManyMutationInput = {
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DepartmentUncheckedUpdateManyInput = {
@@ -16750,6 +19573,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
     institutionId?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DisciplineCreateInput = {
@@ -16820,9 +19645,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -16831,6 +19662,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateInput = {
@@ -16858,15 +19691,23 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUpdateInput = {
@@ -16891,9 +19732,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -16902,6 +19749,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateInput = {
@@ -16929,15 +19778,23 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingCreateManyInput = {
@@ -16965,9 +19822,15 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
   }
 
   export type JobPostingUpdateManyMutationInput = {
@@ -16992,9 +19855,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type JobPostingUncheckedUpdateManyInput = {
@@ -17022,14 +19891,21 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationRequirementCreateInput = {
     documentType?: string | null
     referenceLettersRequired?: number | null
+    description?: string | null
     platform?: string | null
     jobPosting: JobPostingCreateNestedOneWithoutApplicationRequirementsInput
   }
@@ -17039,12 +19915,14 @@ export namespace Prisma {
     jobPostingId: number
     documentType?: string | null
     referenceLettersRequired?: number | null
+    description?: string | null
     platform?: string | null
   }
 
   export type ApplicationRequirementUpdateInput = {
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
     jobPosting?: JobPostingUpdateOneRequiredWithoutApplicationRequirementsNestedInput
   }
@@ -17054,6 +19932,7 @@ export namespace Prisma {
     jobPostingId?: IntFieldUpdateOperationsInput | number
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -17062,12 +19941,14 @@ export namespace Prisma {
     jobPostingId: number
     documentType?: string | null
     referenceLettersRequired?: number | null
+    description?: string | null
     platform?: string | null
   }
 
   export type ApplicationRequirementUpdateManyMutationInput = {
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -17076,6 +19957,7 @@ export namespace Prisma {
     jobPostingId?: IntFieldUpdateOperationsInput | number
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -17306,6 +20188,108 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type JobViewCreateInput = {
+    viewedAt?: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    referrer?: string | null
+    jobPosting: JobPostingCreateNestedOneWithoutJobViewsInput
+  }
+
+  export type JobViewUncheckedCreateInput = {
+    id?: number
+    jobPostingId: number
+    viewedAt?: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    referrer?: string | null
+  }
+
+  export type JobViewUpdateInput = {
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+    jobPosting?: JobPostingUpdateOneRequiredWithoutJobViewsNestedInput
+  }
+
+  export type JobViewUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobPostingId?: IntFieldUpdateOperationsInput | number
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobViewCreateManyInput = {
+    id?: number
+    jobPostingId: number
+    viewedAt?: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    referrer?: string | null
+  }
+
+  export type JobViewUpdateManyMutationInput = {
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobViewUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobPostingId?: IntFieldUpdateOperationsInput | number
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResearchAreaCreateInput = {
+    name: string
+    description?: string | null
+    jobPostings?: JobPostingCreateNestedManyWithoutResearchAreasInput
+  }
+
+  export type ResearchAreaUncheckedCreateInput = {
+    id?: number
+    name: string
+    description?: string | null
+    jobPostings?: JobPostingUncheckedCreateNestedManyWithoutResearchAreasInput
+  }
+
+  export type ResearchAreaUpdateInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    jobPostings?: JobPostingUpdateManyWithoutResearchAreasNestedInput
+  }
+
+  export type ResearchAreaUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    jobPostings?: JobPostingUncheckedUpdateManyWithoutResearchAreasNestedInput
+  }
+
+  export type ResearchAreaCreateManyInput = {
+    id?: number
+    name: string
+    description?: string | null
+  }
+
+  export type ResearchAreaUpdateManyMutationInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResearchAreaUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type SyncLogCreateInput = {
     startedAt?: Date | string
     completedAt?: Date | string | null
@@ -17463,6 +20447,7 @@ export namespace Prisma {
     location?: SortOrder
     website?: SortOrder
     type?: SortOrder
+    description?: SortOrder
   }
 
   export type InstitutionAvgOrderByAggregateInput = {
@@ -17475,6 +20460,7 @@ export namespace Prisma {
     location?: SortOrder
     website?: SortOrder
     type?: SortOrder
+    description?: SortOrder
   }
 
   export type InstitutionMinOrderByAggregateInput = {
@@ -17483,6 +20469,7 @@ export namespace Prisma {
     location?: SortOrder
     website?: SortOrder
     type?: SortOrder
+    description?: SortOrder
   }
 
   export type InstitutionSumOrderByAggregateInput = {
@@ -17562,6 +20549,8 @@ export namespace Prisma {
     location?: SortOrder
     contactInfo?: SortOrder
     institutionId?: SortOrder
+    description?: SortOrder
+    website?: SortOrder
   }
 
   export type DepartmentAvgOrderByAggregateInput = {
@@ -17575,6 +20564,8 @@ export namespace Prisma {
     location?: SortOrder
     contactInfo?: SortOrder
     institutionId?: SortOrder
+    description?: SortOrder
+    website?: SortOrder
   }
 
   export type DepartmentMinOrderByAggregateInput = {
@@ -17583,6 +20574,8 @@ export namespace Prisma {
     location?: SortOrder
     contactInfo?: SortOrder
     institutionId?: SortOrder
+    description?: SortOrder
+    website?: SortOrder
   }
 
   export type DepartmentSumOrderByAggregateInput = {
@@ -17736,6 +20729,18 @@ export namespace Prisma {
     isNot?: ContactWhereInput | null
   }
 
+  export type JobViewListRelationFilter = {
+    every?: JobViewWhereInput
+    some?: JobViewWhereInput
+    none?: JobViewWhereInput
+  }
+
+  export type ResearchAreaListRelationFilter = {
+    every?: ResearchAreaWhereInput
+    some?: ResearchAreaWhereInput
+    none?: ResearchAreaWhereInput
+  }
+
   export type ApplicationRequirementOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -17749,6 +20754,14 @@ export namespace Prisma {
   }
 
   export type SuitableBackgroundOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type JobViewOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ResearchAreaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -17777,9 +20790,15 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     status?: SortOrder
+    isSelfFinanced?: SortOrder
+    isPartTime?: SortOrder
+    workHoursPerWeek?: SortOrder
+    compensationType?: SortOrder
     lastSyncedAt?: SortOrder
     expiresAt?: SortOrder
     isActive?: SortOrder
+    instructions?: SortOrder
+    qualifications?: SortOrder
   }
 
   export type JobPostingAvgOrderByAggregateInput = {
@@ -17787,6 +20806,7 @@ export namespace Prisma {
     durationMonths?: SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    workHoursPerWeek?: SortOrder
   }
 
   export type JobPostingMaxOrderByAggregateInput = {
@@ -17814,9 +20834,15 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     status?: SortOrder
+    isSelfFinanced?: SortOrder
+    isPartTime?: SortOrder
+    workHoursPerWeek?: SortOrder
+    compensationType?: SortOrder
     lastSyncedAt?: SortOrder
     expiresAt?: SortOrder
     isActive?: SortOrder
+    instructions?: SortOrder
+    qualifications?: SortOrder
   }
 
   export type JobPostingMinOrderByAggregateInput = {
@@ -17844,9 +20870,15 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     status?: SortOrder
+    isSelfFinanced?: SortOrder
+    isPartTime?: SortOrder
+    workHoursPerWeek?: SortOrder
+    compensationType?: SortOrder
     lastSyncedAt?: SortOrder
     expiresAt?: SortOrder
     isActive?: SortOrder
+    instructions?: SortOrder
+    qualifications?: SortOrder
   }
 
   export type JobPostingSumOrderByAggregateInput = {
@@ -17854,6 +20886,7 @@ export namespace Prisma {
     durationMonths?: SortOrder
     departmentId?: SortOrder
     disciplineId?: SortOrder
+    workHoursPerWeek?: SortOrder
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -17910,6 +20943,7 @@ export namespace Prisma {
     jobPostingId?: SortOrder
     documentType?: SortOrder
     referenceLettersRequired?: SortOrder
+    description?: SortOrder
     platform?: SortOrder
   }
 
@@ -17924,6 +20958,7 @@ export namespace Prisma {
     jobPostingId?: SortOrder
     documentType?: SortOrder
     referenceLettersRequired?: SortOrder
+    description?: SortOrder
     platform?: SortOrder
   }
 
@@ -17932,6 +20967,7 @@ export namespace Prisma {
     jobPostingId?: SortOrder
     documentType?: SortOrder
     referenceLettersRequired?: SortOrder
+    description?: SortOrder
     platform?: SortOrder
   }
 
@@ -18139,6 +21175,69 @@ export namespace Prisma {
 
   export type ContactSumOrderByAggregateInput = {
     jobPostingId?: SortOrder
+  }
+
+  export type JobViewCountOrderByAggregateInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+    viewedAt?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    referrer?: SortOrder
+  }
+
+  export type JobViewAvgOrderByAggregateInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+  }
+
+  export type JobViewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+    viewedAt?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    referrer?: SortOrder
+  }
+
+  export type JobViewMinOrderByAggregateInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+    viewedAt?: SortOrder
+    ipAddress?: SortOrder
+    userAgent?: SortOrder
+    referrer?: SortOrder
+  }
+
+  export type JobViewSumOrderByAggregateInput = {
+    id?: SortOrder
+    jobPostingId?: SortOrder
+  }
+
+  export type ResearchAreaCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+  }
+
+  export type ResearchAreaAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type ResearchAreaMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+  }
+
+  export type ResearchAreaMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+  }
+
+  export type ResearchAreaSumOrderByAggregateInput = {
+    id?: SortOrder
   }
 
   export type SyncLogCountOrderByAggregateInput = {
@@ -18477,6 +21576,19 @@ export namespace Prisma {
     connect?: ContactWhereUniqueInput
   }
 
+  export type JobViewCreateNestedManyWithoutJobPostingInput = {
+    create?: XOR<JobViewCreateWithoutJobPostingInput, JobViewUncheckedCreateWithoutJobPostingInput> | JobViewCreateWithoutJobPostingInput[] | JobViewUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobViewCreateOrConnectWithoutJobPostingInput | JobViewCreateOrConnectWithoutJobPostingInput[]
+    createMany?: JobViewCreateManyJobPostingInputEnvelope
+    connect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+  }
+
+  export type ResearchAreaCreateNestedManyWithoutJobPostingsInput = {
+    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
+    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
+    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+  }
+
   export type ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput = {
     create?: XOR<ApplicationRequirementCreateWithoutJobPostingInput, ApplicationRequirementUncheckedCreateWithoutJobPostingInput> | ApplicationRequirementCreateWithoutJobPostingInput[] | ApplicationRequirementUncheckedCreateWithoutJobPostingInput[]
     connectOrCreate?: ApplicationRequirementCreateOrConnectWithoutJobPostingInput | ApplicationRequirementCreateOrConnectWithoutJobPostingInput[]
@@ -18515,6 +21627,19 @@ export namespace Prisma {
     create?: XOR<ContactCreateWithoutJobPostingInput, ContactUncheckedCreateWithoutJobPostingInput>
     connectOrCreate?: ContactCreateOrConnectWithoutJobPostingInput
     connect?: ContactWhereUniqueInput
+  }
+
+  export type JobViewUncheckedCreateNestedManyWithoutJobPostingInput = {
+    create?: XOR<JobViewCreateWithoutJobPostingInput, JobViewUncheckedCreateWithoutJobPostingInput> | JobViewCreateWithoutJobPostingInput[] | JobViewUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobViewCreateOrConnectWithoutJobPostingInput | JobViewCreateOrConnectWithoutJobPostingInput[]
+    createMany?: JobViewCreateManyJobPostingInputEnvelope
+    connect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+  }
+
+  export type ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput = {
+    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
+    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
+    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -18625,6 +21750,33 @@ export namespace Prisma {
     update?: XOR<XOR<ContactUpdateToOneWithWhereWithoutJobPostingInput, ContactUpdateWithoutJobPostingInput>, ContactUncheckedUpdateWithoutJobPostingInput>
   }
 
+  export type JobViewUpdateManyWithoutJobPostingNestedInput = {
+    create?: XOR<JobViewCreateWithoutJobPostingInput, JobViewUncheckedCreateWithoutJobPostingInput> | JobViewCreateWithoutJobPostingInput[] | JobViewUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobViewCreateOrConnectWithoutJobPostingInput | JobViewCreateOrConnectWithoutJobPostingInput[]
+    upsert?: JobViewUpsertWithWhereUniqueWithoutJobPostingInput | JobViewUpsertWithWhereUniqueWithoutJobPostingInput[]
+    createMany?: JobViewCreateManyJobPostingInputEnvelope
+    set?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    disconnect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    delete?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    connect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    update?: JobViewUpdateWithWhereUniqueWithoutJobPostingInput | JobViewUpdateWithWhereUniqueWithoutJobPostingInput[]
+    updateMany?: JobViewUpdateManyWithWhereWithoutJobPostingInput | JobViewUpdateManyWithWhereWithoutJobPostingInput[]
+    deleteMany?: JobViewScalarWhereInput | JobViewScalarWhereInput[]
+  }
+
+  export type ResearchAreaUpdateManyWithoutJobPostingsNestedInput = {
+    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
+    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
+    upsert?: ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput[]
+    set?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    disconnect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    delete?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    update?: ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput[]
+    updateMany?: ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput | ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput[]
+    deleteMany?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
+  }
+
   export type ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput = {
     create?: XOR<ApplicationRequirementCreateWithoutJobPostingInput, ApplicationRequirementUncheckedCreateWithoutJobPostingInput> | ApplicationRequirementCreateWithoutJobPostingInput[] | ApplicationRequirementUncheckedCreateWithoutJobPostingInput[]
     connectOrCreate?: ApplicationRequirementCreateOrConnectWithoutJobPostingInput | ApplicationRequirementCreateOrConnectWithoutJobPostingInput[]
@@ -18699,6 +21851,33 @@ export namespace Prisma {
     delete?: ContactWhereInput | boolean
     connect?: ContactWhereUniqueInput
     update?: XOR<XOR<ContactUpdateToOneWithWhereWithoutJobPostingInput, ContactUpdateWithoutJobPostingInput>, ContactUncheckedUpdateWithoutJobPostingInput>
+  }
+
+  export type JobViewUncheckedUpdateManyWithoutJobPostingNestedInput = {
+    create?: XOR<JobViewCreateWithoutJobPostingInput, JobViewUncheckedCreateWithoutJobPostingInput> | JobViewCreateWithoutJobPostingInput[] | JobViewUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobViewCreateOrConnectWithoutJobPostingInput | JobViewCreateOrConnectWithoutJobPostingInput[]
+    upsert?: JobViewUpsertWithWhereUniqueWithoutJobPostingInput | JobViewUpsertWithWhereUniqueWithoutJobPostingInput[]
+    createMany?: JobViewCreateManyJobPostingInputEnvelope
+    set?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    disconnect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    delete?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    connect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
+    update?: JobViewUpdateWithWhereUniqueWithoutJobPostingInput | JobViewUpdateWithWhereUniqueWithoutJobPostingInput[]
+    updateMany?: JobViewUpdateManyWithWhereWithoutJobPostingInput | JobViewUpdateManyWithWhereWithoutJobPostingInput[]
+    deleteMany?: JobViewScalarWhereInput | JobViewScalarWhereInput[]
+  }
+
+  export type ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput = {
+    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
+    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
+    upsert?: ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput[]
+    set?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    disconnect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    delete?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+    update?: ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput[]
+    updateMany?: ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput | ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput[]
+    deleteMany?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
   }
 
   export type JobPostingCreateNestedOneWithoutApplicationRequirementsInput = {
@@ -18847,6 +22026,58 @@ export namespace Prisma {
     upsert?: JobPostingUpsertWithoutContactInput
     connect?: JobPostingWhereUniqueInput
     update?: XOR<XOR<JobPostingUpdateToOneWithWhereWithoutContactInput, JobPostingUpdateWithoutContactInput>, JobPostingUncheckedUpdateWithoutContactInput>
+  }
+
+  export type JobPostingCreateNestedOneWithoutJobViewsInput = {
+    create?: XOR<JobPostingCreateWithoutJobViewsInput, JobPostingUncheckedCreateWithoutJobViewsInput>
+    connectOrCreate?: JobPostingCreateOrConnectWithoutJobViewsInput
+    connect?: JobPostingWhereUniqueInput
+  }
+
+  export type JobPostingUpdateOneRequiredWithoutJobViewsNestedInput = {
+    create?: XOR<JobPostingCreateWithoutJobViewsInput, JobPostingUncheckedCreateWithoutJobViewsInput>
+    connectOrCreate?: JobPostingCreateOrConnectWithoutJobViewsInput
+    upsert?: JobPostingUpsertWithoutJobViewsInput
+    connect?: JobPostingWhereUniqueInput
+    update?: XOR<XOR<JobPostingUpdateToOneWithWhereWithoutJobViewsInput, JobPostingUpdateWithoutJobViewsInput>, JobPostingUncheckedUpdateWithoutJobViewsInput>
+  }
+
+  export type JobPostingCreateNestedManyWithoutResearchAreasInput = {
+    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
+    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
+    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+  }
+
+  export type JobPostingUncheckedCreateNestedManyWithoutResearchAreasInput = {
+    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
+    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
+    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+  }
+
+  export type JobPostingUpdateManyWithoutResearchAreasNestedInput = {
+    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
+    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
+    upsert?: JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput | JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput[]
+    set?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    disconnect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    delete?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    update?: JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput | JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput[]
+    updateMany?: JobPostingUpdateManyWithWhereWithoutResearchAreasInput | JobPostingUpdateManyWithWhereWithoutResearchAreasInput[]
+    deleteMany?: JobPostingScalarWhereInput | JobPostingScalarWhereInput[]
+  }
+
+  export type JobPostingUncheckedUpdateManyWithoutResearchAreasNestedInput = {
+    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
+    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
+    upsert?: JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput | JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput[]
+    set?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    disconnect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    delete?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+    update?: JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput | JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput[]
+    updateMany?: JobPostingUpdateManyWithWhereWithoutResearchAreasInput | JobPostingUpdateManyWithWhereWithoutResearchAreasInput[]
+    deleteMany?: JobPostingScalarWhereInput | JobPostingScalarWhereInput[]
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -19083,6 +22314,8 @@ export namespace Prisma {
     name: string
     location?: string | null
     contactInfo?: string | null
+    description?: string | null
+    website?: string | null
     jobPostings?: JobPostingCreateNestedManyWithoutDepartmentInput
   }
 
@@ -19091,6 +22324,8 @@ export namespace Prisma {
     name: string
     location?: string | null
     contactInfo?: string | null
+    description?: string | null
+    website?: string | null
     jobPostings?: JobPostingUncheckedCreateNestedManyWithoutDepartmentInput
   }
 
@@ -19129,6 +22364,8 @@ export namespace Prisma {
     location?: StringNullableFilter<"Department"> | string | null
     contactInfo?: StringNullableFilter<"Department"> | string | null
     institutionId?: IntFilter<"Department"> | number
+    description?: StringNullableFilter<"Department"> | string | null
+    website?: StringNullableFilter<"Department"> | string | null
   }
 
   export type InstitutionCreateWithoutDepartmentsInput = {
@@ -19136,6 +22373,7 @@ export namespace Prisma {
     location?: string | null
     website?: string | null
     type?: string | null
+    description?: string | null
   }
 
   export type InstitutionUncheckedCreateWithoutDepartmentsInput = {
@@ -19144,6 +22382,7 @@ export namespace Prisma {
     location?: string | null
     website?: string | null
     type?: string | null
+    description?: string | null
   }
 
   export type InstitutionCreateOrConnectWithoutDepartmentsInput = {
@@ -19173,9 +22412,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -19183,6 +22428,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutDepartmentInput = {
@@ -19209,15 +22456,23 @@ export namespace Prisma {
     interviewProcess?: string | null
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutDepartmentInput = {
@@ -19246,6 +22501,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type InstitutionUncheckedUpdateWithoutDepartmentsInput = {
@@ -19254,6 +22510,7 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     website?: NullableStringFieldUpdateOperationsInput | string | null
     type?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type JobPostingUpsertWithWhereUniqueWithoutDepartmentInput = {
@@ -19300,9 +22557,15 @@ export namespace Prisma {
     departmentId?: IntFilter<"JobPosting"> | number
     disciplineId?: IntFilter<"JobPosting"> | number
     status?: StringFilter<"JobPosting"> | string
+    isSelfFinanced?: BoolNullableFilter<"JobPosting"> | boolean | null
+    isPartTime?: BoolNullableFilter<"JobPosting"> | boolean | null
+    workHoursPerWeek?: IntNullableFilter<"JobPosting"> | number | null
+    compensationType?: StringNullableFilter<"JobPosting"> | string | null
     lastSyncedAt?: DateTimeFilter<"JobPosting"> | Date | string
     expiresAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
     isActive?: BoolFilter<"JobPosting"> | boolean
+    instructions?: StringNullableFilter<"JobPosting"> | string | null
+    qualifications?: StringNullableFilter<"JobPosting"> | string | null
   }
 
   export type DisciplineCreateWithoutChildrenInput = {
@@ -19368,9 +22631,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -19378,6 +22647,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutDisciplineInput = {
@@ -19404,15 +22675,23 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutDisciplineInput = {
@@ -19494,6 +22773,8 @@ export namespace Prisma {
     name: string
     location?: string | null
     contactInfo?: string | null
+    description?: string | null
+    website?: string | null
     institution: InstitutionCreateNestedOneWithoutDepartmentsInput
   }
 
@@ -19503,6 +22784,8 @@ export namespace Prisma {
     location?: string | null
     contactInfo?: string | null
     institutionId: number
+    description?: string | null
+    website?: string | null
   }
 
   export type DepartmentCreateOrConnectWithoutJobPostingsInput = {
@@ -19531,6 +22814,7 @@ export namespace Prisma {
   export type ApplicationRequirementCreateWithoutJobPostingInput = {
     documentType?: string | null
     referenceLettersRequired?: number | null
+    description?: string | null
     platform?: string | null
   }
 
@@ -19538,6 +22822,7 @@ export namespace Prisma {
     id?: number
     documentType?: string | null
     referenceLettersRequired?: number | null
+    description?: string | null
     platform?: string | null
   }
 
@@ -19637,6 +22922,47 @@ export namespace Prisma {
     create: XOR<ContactCreateWithoutJobPostingInput, ContactUncheckedCreateWithoutJobPostingInput>
   }
 
+  export type JobViewCreateWithoutJobPostingInput = {
+    viewedAt?: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    referrer?: string | null
+  }
+
+  export type JobViewUncheckedCreateWithoutJobPostingInput = {
+    id?: number
+    viewedAt?: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    referrer?: string | null
+  }
+
+  export type JobViewCreateOrConnectWithoutJobPostingInput = {
+    where: JobViewWhereUniqueInput
+    create: XOR<JobViewCreateWithoutJobPostingInput, JobViewUncheckedCreateWithoutJobPostingInput>
+  }
+
+  export type JobViewCreateManyJobPostingInputEnvelope = {
+    data: JobViewCreateManyJobPostingInput | JobViewCreateManyJobPostingInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ResearchAreaCreateWithoutJobPostingsInput = {
+    name: string
+    description?: string | null
+  }
+
+  export type ResearchAreaUncheckedCreateWithoutJobPostingsInput = {
+    id?: number
+    name: string
+    description?: string | null
+  }
+
+  export type ResearchAreaCreateOrConnectWithoutJobPostingsInput = {
+    where: ResearchAreaWhereUniqueInput
+    create: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput>
+  }
+
   export type DepartmentUpsertWithoutJobPostingsInput = {
     update: XOR<DepartmentUpdateWithoutJobPostingsInput, DepartmentUncheckedUpdateWithoutJobPostingsInput>
     create: XOR<DepartmentCreateWithoutJobPostingsInput, DepartmentUncheckedCreateWithoutJobPostingsInput>
@@ -19652,6 +22978,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     institution?: InstitutionUpdateOneRequiredWithoutDepartmentsNestedInput
   }
 
@@ -19661,6 +22989,8 @@ export namespace Prisma {
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
     institutionId?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DisciplineUpsertWithoutJobPostingsInput = {
@@ -19711,6 +23041,7 @@ export namespace Prisma {
     jobPostingId?: IntFilter<"ApplicationRequirement"> | number
     documentType?: StringNullableFilter<"ApplicationRequirement"> | string | null
     referenceLettersRequired?: IntNullableFilter<"ApplicationRequirement"> | number | null
+    description?: StringNullableFilter<"ApplicationRequirement"> | string | null
     platform?: StringNullableFilter<"ApplicationRequirement"> | string | null
   }
 
@@ -19830,6 +23161,59 @@ export namespace Prisma {
     title?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type JobViewUpsertWithWhereUniqueWithoutJobPostingInput = {
+    where: JobViewWhereUniqueInput
+    update: XOR<JobViewUpdateWithoutJobPostingInput, JobViewUncheckedUpdateWithoutJobPostingInput>
+    create: XOR<JobViewCreateWithoutJobPostingInput, JobViewUncheckedCreateWithoutJobPostingInput>
+  }
+
+  export type JobViewUpdateWithWhereUniqueWithoutJobPostingInput = {
+    where: JobViewWhereUniqueInput
+    data: XOR<JobViewUpdateWithoutJobPostingInput, JobViewUncheckedUpdateWithoutJobPostingInput>
+  }
+
+  export type JobViewUpdateManyWithWhereWithoutJobPostingInput = {
+    where: JobViewScalarWhereInput
+    data: XOR<JobViewUpdateManyMutationInput, JobViewUncheckedUpdateManyWithoutJobPostingInput>
+  }
+
+  export type JobViewScalarWhereInput = {
+    AND?: JobViewScalarWhereInput | JobViewScalarWhereInput[]
+    OR?: JobViewScalarWhereInput[]
+    NOT?: JobViewScalarWhereInput | JobViewScalarWhereInput[]
+    id?: IntFilter<"JobView"> | number
+    jobPostingId?: IntFilter<"JobView"> | number
+    viewedAt?: DateTimeFilter<"JobView"> | Date | string
+    ipAddress?: StringNullableFilter<"JobView"> | string | null
+    userAgent?: StringNullableFilter<"JobView"> | string | null
+    referrer?: StringNullableFilter<"JobView"> | string | null
+  }
+
+  export type ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput = {
+    where: ResearchAreaWhereUniqueInput
+    update: XOR<ResearchAreaUpdateWithoutJobPostingsInput, ResearchAreaUncheckedUpdateWithoutJobPostingsInput>
+    create: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput>
+  }
+
+  export type ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput = {
+    where: ResearchAreaWhereUniqueInput
+    data: XOR<ResearchAreaUpdateWithoutJobPostingsInput, ResearchAreaUncheckedUpdateWithoutJobPostingsInput>
+  }
+
+  export type ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput = {
+    where: ResearchAreaScalarWhereInput
+    data: XOR<ResearchAreaUpdateManyMutationInput, ResearchAreaUncheckedUpdateManyWithoutJobPostingsInput>
+  }
+
+  export type ResearchAreaScalarWhereInput = {
+    AND?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
+    OR?: ResearchAreaScalarWhereInput[]
+    NOT?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
+    id?: IntFilter<"ResearchArea"> | number
+    name?: StringFilter<"ResearchArea"> | string
+    description?: StringNullableFilter<"ResearchArea"> | string | null
+  }
+
   export type JobPostingCreateWithoutApplicationRequirementsInput = {
     title: string
     descriptionHtml?: string | null
@@ -19852,9 +23236,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -19862,6 +23252,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutApplicationRequirementsInput = {
@@ -19889,14 +23281,22 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutApplicationRequirementsInput = {
@@ -19937,9 +23337,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -19947,6 +23353,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutApplicationRequirementsInput = {
@@ -19974,14 +23382,22 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobKeywordCreateWithoutKeywordInput = {
@@ -20040,9 +23456,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -20050,6 +23472,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutJobKeywordsInput = {
@@ -20077,14 +23501,22 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutJobKeywordsInput = {
@@ -20139,9 +23571,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -20149,6 +23587,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutJobKeywordsInput = {
@@ -20176,14 +23616,22 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type KeywordUpsertWithoutJobKeywordsInput = {
@@ -20228,9 +23676,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -20238,6 +23692,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutLanguageRequirementsInput = {
@@ -20265,14 +23721,22 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutLanguageRequirementsInput = {
@@ -20313,9 +23777,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -20323,6 +23793,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutLanguageRequirementsInput = {
@@ -20350,14 +23822,22 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingCreateWithoutSuitableBackgroundsInput = {
@@ -20382,9 +23862,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -20392,6 +23878,8 @@ export namespace Prisma {
     languageRequirements?: LanguageRequirementCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutSuitableBackgroundsInput = {
@@ -20419,14 +23907,22 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutSuitableBackgroundsInput = {
@@ -20467,9 +23963,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -20477,6 +23979,8 @@ export namespace Prisma {
     languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutSuitableBackgroundsInput = {
@@ -20504,14 +24008,22 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingCreateWithoutGeoLocationInput = {
@@ -20536,9 +24048,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -20546,6 +24064,8 @@ export namespace Prisma {
     languageRequirements?: LanguageRequirementCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutGeoLocationInput = {
@@ -20573,14 +24093,22 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutGeoLocationInput = {
@@ -20621,9 +24149,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -20631,6 +24165,8 @@ export namespace Prisma {
     languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutGeoLocationInput = {
@@ -20658,14 +24194,22 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingCreateWithoutContactInput = {
@@ -20690,9 +24234,15 @@ export namespace Prisma {
     visaSponsorship?: boolean | null
     interviewProcess?: string | null
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -20700,6 +24250,8 @@ export namespace Prisma {
     languageRequirements?: LanguageRequirementCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingUncheckedCreateWithoutContactInput = {
@@ -20727,14 +24279,22 @@ export namespace Prisma {
     departmentId: number
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
   }
 
   export type JobPostingCreateOrConnectWithoutContactInput = {
@@ -20775,9 +24335,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -20785,6 +24351,8 @@ export namespace Prisma {
     languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutContactInput = {
@@ -20812,14 +24380,314 @@ export namespace Prisma {
     departmentId?: IntFieldUpdateOperationsInput | number
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+  }
+
+  export type JobPostingCreateWithoutJobViewsInput = {
+    title: string
+    descriptionHtml?: string | null
+    descriptionText?: string | null
+    category?: string | null
+    seniorityLevel?: string | null
+    jobType?: string | null
+    workModality?: string | null
+    salaryRange?: string | null
+    contractType?: string | null
+    durationMonths?: number | null
+    renewable?: boolean | null
+    openDate?: Date | string | null
+    closeDate?: Date | string | null
+    deadlineDate?: Date | string | null
+    applicationLink?: string | null
+    sourceUrl?: string | null
+    sourcePortal?: string | null
+    fundingSource?: string | null
+    visaSponsorship?: boolean | null
+    interviewProcess?: string | null
+    status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
+    department: DepartmentCreateNestedOneWithoutJobPostingsInput
+    discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
+    applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
+    jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
+    languageRequirements?: LanguageRequirementCreateNestedManyWithoutJobPostingInput
+    suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
+    geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
+    contact?: ContactCreateNestedOneWithoutJobPostingInput
+    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+  }
+
+  export type JobPostingUncheckedCreateWithoutJobViewsInput = {
+    id?: number
+    title: string
+    descriptionHtml?: string | null
+    descriptionText?: string | null
+    category?: string | null
+    seniorityLevel?: string | null
+    jobType?: string | null
+    workModality?: string | null
+    salaryRange?: string | null
+    contractType?: string | null
+    durationMonths?: number | null
+    renewable?: boolean | null
+    openDate?: Date | string | null
+    closeDate?: Date | string | null
+    deadlineDate?: Date | string | null
+    applicationLink?: string | null
+    sourceUrl?: string | null
+    sourcePortal?: string | null
+    fundingSource?: string | null
+    visaSponsorship?: boolean | null
+    interviewProcess?: string | null
+    departmentId: number
+    disciplineId: number
+    status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
+    applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
+    jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
+    languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
+    suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
+    geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
+    contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+  }
+
+  export type JobPostingCreateOrConnectWithoutJobViewsInput = {
+    where: JobPostingWhereUniqueInput
+    create: XOR<JobPostingCreateWithoutJobViewsInput, JobPostingUncheckedCreateWithoutJobViewsInput>
+  }
+
+  export type JobPostingUpsertWithoutJobViewsInput = {
+    update: XOR<JobPostingUpdateWithoutJobViewsInput, JobPostingUncheckedUpdateWithoutJobViewsInput>
+    create: XOR<JobPostingCreateWithoutJobViewsInput, JobPostingUncheckedCreateWithoutJobViewsInput>
+    where?: JobPostingWhereInput
+  }
+
+  export type JobPostingUpdateToOneWithWhereWithoutJobViewsInput = {
+    where?: JobPostingWhereInput
+    data: XOR<JobPostingUpdateWithoutJobViewsInput, JobPostingUncheckedUpdateWithoutJobViewsInput>
+  }
+
+  export type JobPostingUpdateWithoutJobViewsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
+    discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
+    applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
+    jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
+    languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
+    suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
+    geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
+    contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+  }
+
+  export type JobPostingUncheckedUpdateWithoutJobViewsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentId?: IntFieldUpdateOperationsInput | number
+    disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
+    jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
+    languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
+    suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
+    geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
+    contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+  }
+
+  export type JobPostingCreateWithoutResearchAreasInput = {
+    title: string
+    descriptionHtml?: string | null
+    descriptionText?: string | null
+    category?: string | null
+    seniorityLevel?: string | null
+    jobType?: string | null
+    workModality?: string | null
+    salaryRange?: string | null
+    contractType?: string | null
+    durationMonths?: number | null
+    renewable?: boolean | null
+    openDate?: Date | string | null
+    closeDate?: Date | string | null
+    deadlineDate?: Date | string | null
+    applicationLink?: string | null
+    sourceUrl?: string | null
+    sourcePortal?: string | null
+    fundingSource?: string | null
+    visaSponsorship?: boolean | null
+    interviewProcess?: string | null
+    status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
+    department: DepartmentCreateNestedOneWithoutJobPostingsInput
+    discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
+    applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
+    jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
+    languageRequirements?: LanguageRequirementCreateNestedManyWithoutJobPostingInput
+    suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
+    geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
+    contact?: ContactCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
+  }
+
+  export type JobPostingUncheckedCreateWithoutResearchAreasInput = {
+    id?: number
+    title: string
+    descriptionHtml?: string | null
+    descriptionText?: string | null
+    category?: string | null
+    seniorityLevel?: string | null
+    jobType?: string | null
+    workModality?: string | null
+    salaryRange?: string | null
+    contractType?: string | null
+    durationMonths?: number | null
+    renewable?: boolean | null
+    openDate?: Date | string | null
+    closeDate?: Date | string | null
+    deadlineDate?: Date | string | null
+    applicationLink?: string | null
+    sourceUrl?: string | null
+    sourcePortal?: string | null
+    fundingSource?: string | null
+    visaSponsorship?: boolean | null
+    interviewProcess?: string | null
+    departmentId: number
+    disciplineId: number
+    status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
+    lastSyncedAt?: Date | string
+    expiresAt?: Date | string | null
+    isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
+    applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
+    jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
+    languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
+    suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
+    geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
+    contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
+    jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
+  }
+
+  export type JobPostingCreateOrConnectWithoutResearchAreasInput = {
+    where: JobPostingWhereUniqueInput
+    create: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput>
+  }
+
+  export type JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput = {
+    where: JobPostingWhereUniqueInput
+    update: XOR<JobPostingUpdateWithoutResearchAreasInput, JobPostingUncheckedUpdateWithoutResearchAreasInput>
+    create: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput>
+  }
+
+  export type JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput = {
+    where: JobPostingWhereUniqueInput
+    data: XOR<JobPostingUpdateWithoutResearchAreasInput, JobPostingUncheckedUpdateWithoutResearchAreasInput>
+  }
+
+  export type JobPostingUpdateManyWithWhereWithoutResearchAreasInput = {
+    where: JobPostingScalarWhereInput
+    data: XOR<JobPostingUpdateManyMutationInput, JobPostingUncheckedUpdateManyWithoutResearchAreasInput>
   }
 
   export type DepartmentCreateManyInstitutionInput = {
@@ -20827,12 +24695,16 @@ export namespace Prisma {
     name: string
     location?: string | null
     contactInfo?: string | null
+    description?: string | null
+    website?: string | null
   }
 
   export type DepartmentUpdateWithoutInstitutionInput = {
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUpdateManyWithoutDepartmentNestedInput
   }
 
@@ -20841,6 +24713,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
     jobPostings?: JobPostingUncheckedUpdateManyWithoutDepartmentNestedInput
   }
 
@@ -20849,6 +24723,8 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     location?: NullableStringFieldUpdateOperationsInput | string | null
     contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    website?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type JobPostingCreateManyDepartmentInput = {
@@ -20875,9 +24751,15 @@ export namespace Prisma {
     interviewProcess?: string | null
     disciplineId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
   }
 
   export type JobPostingUpdateWithoutDepartmentInput = {
@@ -20902,9 +24784,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -20912,6 +24800,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutDepartmentInput = {
@@ -20938,15 +24828,23 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateManyWithoutDepartmentInput = {
@@ -20973,9 +24871,15 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     disciplineId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DisciplineCreateManyParentInput = {
@@ -21007,9 +24911,15 @@ export namespace Prisma {
     interviewProcess?: string | null
     departmentId: number
     status?: string
+    isSelfFinanced?: boolean | null
+    isPartTime?: boolean | null
+    workHoursPerWeek?: number | null
+    compensationType?: string | null
     lastSyncedAt?: Date | string
     expiresAt?: Date | string | null
     isActive?: boolean
+    instructions?: string | null
+    qualifications?: string | null
   }
 
   export type DisciplineUpdateWithoutParentInput = {
@@ -21052,9 +24962,15 @@ export namespace Prisma {
     visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -21062,6 +24978,8 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutDisciplineInput = {
@@ -21088,15 +25006,23 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
   }
 
   export type JobPostingUncheckedUpdateManyWithoutDisciplineInput = {
@@ -21123,15 +25049,22 @@ export namespace Prisma {
     interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
     departmentId?: IntFieldUpdateOperationsInput | number
     status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
     lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationRequirementCreateManyJobPostingInput = {
     id?: number
     documentType?: string | null
     referenceLettersRequired?: number | null
+    description?: string | null
     platform?: string | null
   }
 
@@ -21147,9 +25080,18 @@ export namespace Prisma {
     background: string
   }
 
+  export type JobViewCreateManyJobPostingInput = {
+    id?: number
+    viewedAt?: Date | string
+    ipAddress?: string | null
+    userAgent?: string | null
+    referrer?: string | null
+  }
+
   export type ApplicationRequirementUpdateWithoutJobPostingInput = {
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -21157,6 +25099,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -21164,6 +25107,7 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     documentType?: NullableStringFieldUpdateOperationsInput | string | null
     referenceLettersRequired?: NullableIntFieldUpdateOperationsInput | number | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     platform?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -21203,6 +25147,46 @@ export namespace Prisma {
     background?: StringFieldUpdateOperationsInput | string
   }
 
+  export type JobViewUpdateWithoutJobPostingInput = {
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobViewUncheckedUpdateWithoutJobPostingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobViewUncheckedUpdateManyWithoutJobPostingInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    viewedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    ipAddress?: NullableStringFieldUpdateOperationsInput | string | null
+    userAgent?: NullableStringFieldUpdateOperationsInput | string | null
+    referrer?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResearchAreaUpdateWithoutJobPostingsInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResearchAreaUncheckedUpdateWithoutJobPostingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResearchAreaUncheckedUpdateManyWithoutJobPostingsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type JobKeywordCreateManyKeywordInput = {
     jobPostingId: number
   }
@@ -21217,6 +25201,127 @@ export namespace Prisma {
 
   export type JobKeywordUncheckedUpdateManyWithoutKeywordInput = {
     jobPostingId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type JobPostingUpdateWithoutResearchAreasInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
+    discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
+    applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
+    jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
+    languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
+    suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
+    geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
+    contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+  }
+
+  export type JobPostingUncheckedUpdateWithoutResearchAreasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentId?: IntFieldUpdateOperationsInput | number
+    disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
+    jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
+    languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
+    suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
+    geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
+    contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+  }
+
+  export type JobPostingUncheckedUpdateManyWithoutResearchAreasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentId?: IntFieldUpdateOperationsInput | number
+    disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
 

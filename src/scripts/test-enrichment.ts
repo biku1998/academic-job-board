@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { JobEnrichmentService } from "../services/jobEnrichment";
+import { JobEnrichmentService } from "../services/job-enrichment";
 
 const testJobDescription = `
 Assistant Professor Position in Computer Science

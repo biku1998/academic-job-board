@@ -20,12 +20,12 @@ exports.Prisma = Prisma
 exports.$Enums = {}
 
 /**
- * Prisma Client JS version: 6.11.1
- * Query Engine version: f40f79ec31188888a2e33acda0ecc8fd10a853a9
+ * Prisma Client JS version: 6.12.0
+ * Query Engine version: 8047c96bbd92db98a2abc7c9323ce77c02c89dbc
  */
 Prisma.prismaVersion = {
-  client: "6.11.1",
-  engine: "f40f79ec31188888a2e33acda0ecc8fd10a853a9"
+  client: "6.12.0",
+  engine: "8047c96bbd92db98a2abc7c9323ce77c02c89dbc"
 }
 
 Prisma.PrismaClientKnownRequestError = () => {
@@ -125,7 +125,8 @@ exports.Prisma.InstitutionScalarFieldEnum = {
   name: 'name',
   location: 'location',
   website: 'website',
-  type: 'type'
+  type: 'type',
+  description: 'description'
 };
 
 exports.Prisma.DepartmentScalarFieldEnum = {
@@ -133,7 +134,9 @@ exports.Prisma.DepartmentScalarFieldEnum = {
   name: 'name',
   location: 'location',
   contactInfo: 'contactInfo',
-  institutionId: 'institutionId'
+  institutionId: 'institutionId',
+  description: 'description',
+  website: 'website'
 };
 
 exports.Prisma.DisciplineScalarFieldEnum = {
@@ -167,9 +170,15 @@ exports.Prisma.JobPostingScalarFieldEnum = {
   departmentId: 'departmentId',
   disciplineId: 'disciplineId',
   status: 'status',
+  isSelfFinanced: 'isSelfFinanced',
+  isPartTime: 'isPartTime',
+  workHoursPerWeek: 'workHoursPerWeek',
+  compensationType: 'compensationType',
   lastSyncedAt: 'lastSyncedAt',
   expiresAt: 'expiresAt',
-  isActive: 'isActive'
+  isActive: 'isActive',
+  instructions: 'instructions',
+  qualifications: 'qualifications'
 };
 
 exports.Prisma.ApplicationRequirementScalarFieldEnum = {
@@ -177,6 +186,7 @@ exports.Prisma.ApplicationRequirementScalarFieldEnum = {
   jobPostingId: 'jobPostingId',
   documentType: 'documentType',
   referenceLettersRequired: 'referenceLettersRequired',
+  description: 'description',
   platform: 'platform'
 };
 
@@ -211,6 +221,21 @@ exports.Prisma.ContactScalarFieldEnum = {
   name: 'name',
   email: 'email',
   title: 'title'
+};
+
+exports.Prisma.JobViewScalarFieldEnum = {
+  id: 'id',
+  jobPostingId: 'jobPostingId',
+  viewedAt: 'viewedAt',
+  ipAddress: 'ipAddress',
+  userAgent: 'userAgent',
+  referrer: 'referrer'
+};
+
+exports.Prisma.ResearchAreaScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description'
 };
 
 exports.Prisma.SyncLogScalarFieldEnum = {
@@ -255,6 +280,8 @@ exports.Prisma.ModelName = {
   SuitableBackground: 'SuitableBackground',
   GeoLocation: 'GeoLocation',
   Contact: 'Contact',
+  JobView: 'JobView',
+  ResearchArea: 'ResearchArea',
   SyncLog: 'SyncLog'
 };
 

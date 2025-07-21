@@ -3,7 +3,7 @@ import { z } from "zod";
 import axios from "axios";
 import { config } from "@/config";
 import { htmlToText } from "html-to-text";
-import { JobEnrichmentService } from "../services/jobEnrichment";
+import { JobEnrichmentService } from "../services/job-enrichment";
 import type {
   Institution,
   Department,
