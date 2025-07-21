@@ -238,6 +238,11 @@ exports.Prisma.ResearchAreaScalarFieldEnum = {
   description: 'description'
 };
 
+exports.Prisma.JobResearchAreaScalarFieldEnum = {
+  jobPostingId: 'jobPostingId',
+  researchAreaId: 'researchAreaId'
+};
+
 exports.Prisma.SyncLogScalarFieldEnum = {
   id: 'id',
   startedAt: 'startedAt',
@@ -282,6 +287,7 @@ exports.Prisma.ModelName = {
   Contact: 'Contact',
   JobView: 'JobView',
   ResearchArea: 'ResearchArea',
+  JobResearchArea: 'JobResearchArea',
   SyncLog: 'SyncLog'
 };
 

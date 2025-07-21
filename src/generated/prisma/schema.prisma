@@ -89,7 +89,7 @@ model JobPosting {
   geoLocation             GeoLocation?
   contact                 Contact?
   jobViews                JobView[]
-  researchAreas           ResearchArea[]
+  jobResearchAreas        JobResearchArea[]
 
   @@index([status])
   @@index([isActive])
@@ -184,12 +184,23 @@ model JobView {
 }
 
 model ResearchArea {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  description String?
-  jobPostings JobPosting[]
+  id               Int               @id @default(autoincrement())
+  name             String            @unique
+  description      String?
+  jobResearchAreas JobResearchArea[]
 
   @@map("research_areas")
+}
+
+model JobResearchArea {
+  jobPostingId   Int @map("job_posting_id")
+  researchAreaId Int @map("research_area_id")
+
+  jobPosting   JobPosting   @relation(fields: [jobPostingId], references: [id], onDelete: Cascade)
+  researchArea ResearchArea @relation(fields: [researchAreaId], references: [id], onDelete: Cascade)
+
+  @@id([jobPostingId, researchAreaId])
+  @@map("job_posting_research_areas")
 }
 
 model SyncLog {

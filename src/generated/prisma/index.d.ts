@@ -79,6 +79,11 @@ export type JobView = $Result.DefaultSelection<Prisma.$JobViewPayload>
  */
 export type ResearchArea = $Result.DefaultSelection<Prisma.$ResearchAreaPayload>
 /**
+ * Model JobResearchArea
+ * 
+ */
+export type JobResearchArea = $Result.DefaultSelection<Prisma.$JobResearchAreaPayload>
+/**
  * Model SyncLog
  * 
  */
@@ -338,6 +343,16 @@ export class PrismaClient<
     * ```
     */
   get researchArea(): Prisma.ResearchAreaDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.jobResearchArea`: Exposes CRUD operations for the **JobResearchArea** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more JobResearchAreas
+    * const jobResearchAreas = await prisma.jobResearchArea.findMany()
+    * ```
+    */
+  get jobResearchArea(): Prisma.JobResearchAreaDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.syncLog`: Exposes CRUD operations for the **SyncLog** model.
@@ -801,6 +816,7 @@ export namespace Prisma {
     Contact: 'Contact',
     JobView: 'JobView',
     ResearchArea: 'ResearchArea',
+    JobResearchArea: 'JobResearchArea',
     SyncLog: 'SyncLog'
   };
 
@@ -820,7 +836,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "institution" | "department" | "discipline" | "jobPosting" | "applicationRequirement" | "keyword" | "jobKeyword" | "languageRequirement" | "suitableBackground" | "geoLocation" | "contact" | "jobView" | "researchArea" | "syncLog"
+      modelProps: "institution" | "department" | "discipline" | "jobPosting" | "applicationRequirement" | "keyword" | "jobKeyword" | "languageRequirement" | "suitableBackground" | "geoLocation" | "contact" | "jobView" | "researchArea" | "jobResearchArea" | "syncLog"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1786,6 +1802,80 @@ export namespace Prisma {
           }
         }
       }
+      JobResearchArea: {
+        payload: Prisma.$JobResearchAreaPayload<ExtArgs>
+        fields: Prisma.JobResearchAreaFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.JobResearchAreaFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.JobResearchAreaFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>
+          }
+          findFirst: {
+            args: Prisma.JobResearchAreaFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.JobResearchAreaFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>
+          }
+          findMany: {
+            args: Prisma.JobResearchAreaFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>[]
+          }
+          create: {
+            args: Prisma.JobResearchAreaCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>
+          }
+          createMany: {
+            args: Prisma.JobResearchAreaCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.JobResearchAreaCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>[]
+          }
+          delete: {
+            args: Prisma.JobResearchAreaDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>
+          }
+          update: {
+            args: Prisma.JobResearchAreaUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>
+          }
+          deleteMany: {
+            args: Prisma.JobResearchAreaDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.JobResearchAreaUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.JobResearchAreaUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>[]
+          }
+          upsert: {
+            args: Prisma.JobResearchAreaUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$JobResearchAreaPayload>
+          }
+          aggregate: {
+            args: Prisma.JobResearchAreaAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateJobResearchArea>
+          }
+          groupBy: {
+            args: Prisma.JobResearchAreaGroupByArgs<ExtArgs>
+            result: $Utils.Optional<JobResearchAreaGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.JobResearchAreaCountArgs<ExtArgs>
+            result: $Utils.Optional<JobResearchAreaCountAggregateOutputType> | number
+          }
+        }
+      }
       SyncLog: {
         payload: Prisma.$SyncLogPayload<ExtArgs>
         fields: Prisma.SyncLogFieldRefs
@@ -1957,6 +2047,7 @@ export namespace Prisma {
     contact?: ContactOmit
     jobView?: JobViewOmit
     researchArea?: ResearchAreaOmit
+    jobResearchArea?: JobResearchAreaOmit
     syncLog?: SyncLogOmit
   }
 
@@ -2159,7 +2250,7 @@ export namespace Prisma {
     languageRequirements: number
     suitableBackgrounds: number
     jobViews: number
-    researchAreas: number
+    jobResearchAreas: number
   }
 
   export type JobPostingCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2168,7 +2259,7 @@ export namespace Prisma {
     languageRequirements?: boolean | JobPostingCountOutputTypeCountLanguageRequirementsArgs
     suitableBackgrounds?: boolean | JobPostingCountOutputTypeCountSuitableBackgroundsArgs
     jobViews?: boolean | JobPostingCountOutputTypeCountJobViewsArgs
-    researchAreas?: boolean | JobPostingCountOutputTypeCountResearchAreasArgs
+    jobResearchAreas?: boolean | JobPostingCountOutputTypeCountJobResearchAreasArgs
   }
 
   // Custom InputTypes
@@ -2220,8 +2311,8 @@ export namespace Prisma {
   /**
    * JobPostingCountOutputType without action
    */
-  export type JobPostingCountOutputTypeCountResearchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: ResearchAreaWhereInput
+  export type JobPostingCountOutputTypeCountJobResearchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobResearchAreaWhereInput
   }
 
 
@@ -2261,11 +2352,11 @@ export namespace Prisma {
    */
 
   export type ResearchAreaCountOutputType = {
-    jobPostings: number
+    jobResearchAreas: number
   }
 
   export type ResearchAreaCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobPostings?: boolean | ResearchAreaCountOutputTypeCountJobPostingsArgs
+    jobResearchAreas?: boolean | ResearchAreaCountOutputTypeCountJobResearchAreasArgs
   }
 
   // Custom InputTypes
@@ -2282,8 +2373,8 @@ export namespace Prisma {
   /**
    * ResearchAreaCountOutputType without action
    */
-  export type ResearchAreaCountOutputTypeCountJobPostingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: JobPostingWhereInput
+  export type ResearchAreaCountOutputTypeCountJobResearchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobResearchAreaWhereInput
   }
 
 
@@ -6154,7 +6245,7 @@ export namespace Prisma {
     geoLocation?: boolean | JobPosting$geoLocationArgs<ExtArgs>
     contact?: boolean | JobPosting$contactArgs<ExtArgs>
     jobViews?: boolean | JobPosting$jobViewsArgs<ExtArgs>
-    researchAreas?: boolean | JobPosting$researchAreasArgs<ExtArgs>
+    jobResearchAreas?: boolean | JobPosting$jobResearchAreasArgs<ExtArgs>
     _count?: boolean | JobPostingCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
 
@@ -6281,7 +6372,7 @@ export namespace Prisma {
     geoLocation?: boolean | JobPosting$geoLocationArgs<ExtArgs>
     contact?: boolean | JobPosting$contactArgs<ExtArgs>
     jobViews?: boolean | JobPosting$jobViewsArgs<ExtArgs>
-    researchAreas?: boolean | JobPosting$researchAreasArgs<ExtArgs>
+    jobResearchAreas?: boolean | JobPosting$jobResearchAreasArgs<ExtArgs>
     _count?: boolean | JobPostingCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type JobPostingIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6305,7 +6396,7 @@ export namespace Prisma {
       geoLocation: Prisma.$GeoLocationPayload<ExtArgs> | null
       contact: Prisma.$ContactPayload<ExtArgs> | null
       jobViews: Prisma.$JobViewPayload<ExtArgs>[]
-      researchAreas: Prisma.$ResearchAreaPayload<ExtArgs>[]
+      jobResearchAreas: Prisma.$JobResearchAreaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -6744,7 +6835,7 @@ export namespace Prisma {
     geoLocation<T extends JobPosting$geoLocationArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$geoLocationArgs<ExtArgs>>): Prisma__GeoLocationClient<$Result.GetResult<Prisma.$GeoLocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     contact<T extends JobPosting$contactArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$contactArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     jobViews<T extends JobPosting$jobViewsArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$jobViewsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobViewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    researchAreas<T extends JobPosting$researchAreasArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$researchAreasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    jobResearchAreas<T extends JobPosting$jobResearchAreasArgs<ExtArgs> = {}>(args?: Subset<T, JobPosting$jobResearchAreasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7361,27 +7452,27 @@ export namespace Prisma {
   }
 
   /**
-   * JobPosting.researchAreas
+   * JobPosting.jobResearchAreas
    */
-  export type JobPosting$researchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type JobPosting$jobResearchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the ResearchArea
+     * Select specific fields to fetch from the JobResearchArea
      */
-    select?: ResearchAreaSelect<ExtArgs> | null
+    select?: JobResearchAreaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the ResearchArea
+     * Omit specific fields from the JobResearchArea
      */
-    omit?: ResearchAreaOmit<ExtArgs> | null
+    omit?: JobResearchAreaOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: ResearchAreaInclude<ExtArgs> | null
-    where?: ResearchAreaWhereInput
-    orderBy?: ResearchAreaOrderByWithRelationInput | ResearchAreaOrderByWithRelationInput[]
-    cursor?: ResearchAreaWhereUniqueInput
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    where?: JobResearchAreaWhereInput
+    orderBy?: JobResearchAreaOrderByWithRelationInput | JobResearchAreaOrderByWithRelationInput[]
+    cursor?: JobResearchAreaWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: ResearchAreaScalarFieldEnum | ResearchAreaScalarFieldEnum[]
+    distinct?: JobResearchAreaScalarFieldEnum | JobResearchAreaScalarFieldEnum[]
   }
 
   /**
@@ -16196,7 +16287,7 @@ export namespace Prisma {
     id?: boolean
     name?: boolean
     description?: boolean
-    jobPostings?: boolean | ResearchArea$jobPostingsArgs<ExtArgs>
+    jobResearchAreas?: boolean | ResearchArea$jobResearchAreasArgs<ExtArgs>
     _count?: boolean | ResearchAreaCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["researchArea"]>
 
@@ -16220,7 +16311,7 @@ export namespace Prisma {
 
   export type ResearchAreaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description", ExtArgs["result"]["researchArea"]>
   export type ResearchAreaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    jobPostings?: boolean | ResearchArea$jobPostingsArgs<ExtArgs>
+    jobResearchAreas?: boolean | ResearchArea$jobResearchAreasArgs<ExtArgs>
     _count?: boolean | ResearchAreaCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ResearchAreaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -16229,7 +16320,7 @@ export namespace Prisma {
   export type $ResearchAreaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "ResearchArea"
     objects: {
-      jobPostings: Prisma.$JobPostingPayload<ExtArgs>[]
+      jobResearchAreas: Prisma.$JobResearchAreaPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -16629,7 +16720,7 @@ export namespace Prisma {
    */
   export interface Prisma__ResearchAreaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    jobPostings<T extends ResearchArea$jobPostingsArgs<ExtArgs> = {}>(args?: Subset<T, ResearchArea$jobPostingsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobPostingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    jobResearchAreas<T extends ResearchArea$jobResearchAreasArgs<ExtArgs> = {}>(args?: Subset<T, ResearchArea$jobResearchAreasArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -17050,27 +17141,27 @@ export namespace Prisma {
   }
 
   /**
-   * ResearchArea.jobPostings
+   * ResearchArea.jobResearchAreas
    */
-  export type ResearchArea$jobPostingsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type ResearchArea$jobResearchAreasArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the JobPosting
+     * Select specific fields to fetch from the JobResearchArea
      */
-    select?: JobPostingSelect<ExtArgs> | null
+    select?: JobResearchAreaSelect<ExtArgs> | null
     /**
-     * Omit specific fields from the JobPosting
+     * Omit specific fields from the JobResearchArea
      */
-    omit?: JobPostingOmit<ExtArgs> | null
+    omit?: JobResearchAreaOmit<ExtArgs> | null
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: JobPostingInclude<ExtArgs> | null
-    where?: JobPostingWhereInput
-    orderBy?: JobPostingOrderByWithRelationInput | JobPostingOrderByWithRelationInput[]
-    cursor?: JobPostingWhereUniqueInput
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    where?: JobResearchAreaWhereInput
+    orderBy?: JobResearchAreaOrderByWithRelationInput | JobResearchAreaOrderByWithRelationInput[]
+    cursor?: JobResearchAreaWhereUniqueInput
     take?: number
     skip?: number
-    distinct?: JobPostingScalarFieldEnum | JobPostingScalarFieldEnum[]
+    distinct?: JobResearchAreaScalarFieldEnum | JobResearchAreaScalarFieldEnum[]
   }
 
   /**
@@ -17089,6 +17180,1071 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ResearchAreaInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model JobResearchArea
+   */
+
+  export type AggregateJobResearchArea = {
+    _count: JobResearchAreaCountAggregateOutputType | null
+    _avg: JobResearchAreaAvgAggregateOutputType | null
+    _sum: JobResearchAreaSumAggregateOutputType | null
+    _min: JobResearchAreaMinAggregateOutputType | null
+    _max: JobResearchAreaMaxAggregateOutputType | null
+  }
+
+  export type JobResearchAreaAvgAggregateOutputType = {
+    jobPostingId: number | null
+    researchAreaId: number | null
+  }
+
+  export type JobResearchAreaSumAggregateOutputType = {
+    jobPostingId: number | null
+    researchAreaId: number | null
+  }
+
+  export type JobResearchAreaMinAggregateOutputType = {
+    jobPostingId: number | null
+    researchAreaId: number | null
+  }
+
+  export type JobResearchAreaMaxAggregateOutputType = {
+    jobPostingId: number | null
+    researchAreaId: number | null
+  }
+
+  export type JobResearchAreaCountAggregateOutputType = {
+    jobPostingId: number
+    researchAreaId: number
+    _all: number
+  }
+
+
+  export type JobResearchAreaAvgAggregateInputType = {
+    jobPostingId?: true
+    researchAreaId?: true
+  }
+
+  export type JobResearchAreaSumAggregateInputType = {
+    jobPostingId?: true
+    researchAreaId?: true
+  }
+
+  export type JobResearchAreaMinAggregateInputType = {
+    jobPostingId?: true
+    researchAreaId?: true
+  }
+
+  export type JobResearchAreaMaxAggregateInputType = {
+    jobPostingId?: true
+    researchAreaId?: true
+  }
+
+  export type JobResearchAreaCountAggregateInputType = {
+    jobPostingId?: true
+    researchAreaId?: true
+    _all?: true
+  }
+
+  export type JobResearchAreaAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobResearchArea to aggregate.
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobResearchAreas to fetch.
+     */
+    orderBy?: JobResearchAreaOrderByWithRelationInput | JobResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: JobResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobResearchAreas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned JobResearchAreas
+    **/
+    _count?: true | JobResearchAreaCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: JobResearchAreaAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: JobResearchAreaSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: JobResearchAreaMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: JobResearchAreaMaxAggregateInputType
+  }
+
+  export type GetJobResearchAreaAggregateType<T extends JobResearchAreaAggregateArgs> = {
+        [P in keyof T & keyof AggregateJobResearchArea]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateJobResearchArea[P]>
+      : GetScalarType<T[P], AggregateJobResearchArea[P]>
+  }
+
+
+
+
+  export type JobResearchAreaGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: JobResearchAreaWhereInput
+    orderBy?: JobResearchAreaOrderByWithAggregationInput | JobResearchAreaOrderByWithAggregationInput[]
+    by: JobResearchAreaScalarFieldEnum[] | JobResearchAreaScalarFieldEnum
+    having?: JobResearchAreaScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: JobResearchAreaCountAggregateInputType | true
+    _avg?: JobResearchAreaAvgAggregateInputType
+    _sum?: JobResearchAreaSumAggregateInputType
+    _min?: JobResearchAreaMinAggregateInputType
+    _max?: JobResearchAreaMaxAggregateInputType
+  }
+
+  export type JobResearchAreaGroupByOutputType = {
+    jobPostingId: number
+    researchAreaId: number
+    _count: JobResearchAreaCountAggregateOutputType | null
+    _avg: JobResearchAreaAvgAggregateOutputType | null
+    _sum: JobResearchAreaSumAggregateOutputType | null
+    _min: JobResearchAreaMinAggregateOutputType | null
+    _max: JobResearchAreaMaxAggregateOutputType | null
+  }
+
+  type GetJobResearchAreaGroupByPayload<T extends JobResearchAreaGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<JobResearchAreaGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof JobResearchAreaGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], JobResearchAreaGroupByOutputType[P]>
+            : GetScalarType<T[P], JobResearchAreaGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type JobResearchAreaSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jobPostingId?: boolean
+    researchAreaId?: boolean
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+    researchArea?: boolean | ResearchAreaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobResearchArea"]>
+
+  export type JobResearchAreaSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jobPostingId?: boolean
+    researchAreaId?: boolean
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+    researchArea?: boolean | ResearchAreaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobResearchArea"]>
+
+  export type JobResearchAreaSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    jobPostingId?: boolean
+    researchAreaId?: boolean
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+    researchArea?: boolean | ResearchAreaDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["jobResearchArea"]>
+
+  export type JobResearchAreaSelectScalar = {
+    jobPostingId?: boolean
+    researchAreaId?: boolean
+  }
+
+  export type JobResearchAreaOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"jobPostingId" | "researchAreaId", ExtArgs["result"]["jobResearchArea"]>
+  export type JobResearchAreaInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+    researchArea?: boolean | ResearchAreaDefaultArgs<ExtArgs>
+  }
+  export type JobResearchAreaIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+    researchArea?: boolean | ResearchAreaDefaultArgs<ExtArgs>
+  }
+  export type JobResearchAreaIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    jobPosting?: boolean | JobPostingDefaultArgs<ExtArgs>
+    researchArea?: boolean | ResearchAreaDefaultArgs<ExtArgs>
+  }
+
+  export type $JobResearchAreaPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "JobResearchArea"
+    objects: {
+      jobPosting: Prisma.$JobPostingPayload<ExtArgs>
+      researchArea: Prisma.$ResearchAreaPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      jobPostingId: number
+      researchAreaId: number
+    }, ExtArgs["result"]["jobResearchArea"]>
+    composites: {}
+  }
+
+  type JobResearchAreaGetPayload<S extends boolean | null | undefined | JobResearchAreaDefaultArgs> = $Result.GetResult<Prisma.$JobResearchAreaPayload, S>
+
+  type JobResearchAreaCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<JobResearchAreaFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: JobResearchAreaCountAggregateInputType | true
+    }
+
+  export interface JobResearchAreaDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['JobResearchArea'], meta: { name: 'JobResearchArea' } }
+    /**
+     * Find zero or one JobResearchArea that matches the filter.
+     * @param {JobResearchAreaFindUniqueArgs} args - Arguments to find a JobResearchArea
+     * @example
+     * // Get one JobResearchArea
+     * const jobResearchArea = await prisma.jobResearchArea.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends JobResearchAreaFindUniqueArgs>(args: SelectSubset<T, JobResearchAreaFindUniqueArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one JobResearchArea that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {JobResearchAreaFindUniqueOrThrowArgs} args - Arguments to find a JobResearchArea
+     * @example
+     * // Get one JobResearchArea
+     * const jobResearchArea = await prisma.jobResearchArea.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends JobResearchAreaFindUniqueOrThrowArgs>(args: SelectSubset<T, JobResearchAreaFindUniqueOrThrowArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobResearchArea that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaFindFirstArgs} args - Arguments to find a JobResearchArea
+     * @example
+     * // Get one JobResearchArea
+     * const jobResearchArea = await prisma.jobResearchArea.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends JobResearchAreaFindFirstArgs>(args?: SelectSubset<T, JobResearchAreaFindFirstArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first JobResearchArea that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaFindFirstOrThrowArgs} args - Arguments to find a JobResearchArea
+     * @example
+     * // Get one JobResearchArea
+     * const jobResearchArea = await prisma.jobResearchArea.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends JobResearchAreaFindFirstOrThrowArgs>(args?: SelectSubset<T, JobResearchAreaFindFirstOrThrowArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more JobResearchAreas that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all JobResearchAreas
+     * const jobResearchAreas = await prisma.jobResearchArea.findMany()
+     * 
+     * // Get first 10 JobResearchAreas
+     * const jobResearchAreas = await prisma.jobResearchArea.findMany({ take: 10 })
+     * 
+     * // Only select the `jobPostingId`
+     * const jobResearchAreaWithJobPostingIdOnly = await prisma.jobResearchArea.findMany({ select: { jobPostingId: true } })
+     * 
+     */
+    findMany<T extends JobResearchAreaFindManyArgs>(args?: SelectSubset<T, JobResearchAreaFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a JobResearchArea.
+     * @param {JobResearchAreaCreateArgs} args - Arguments to create a JobResearchArea.
+     * @example
+     * // Create one JobResearchArea
+     * const JobResearchArea = await prisma.jobResearchArea.create({
+     *   data: {
+     *     // ... data to create a JobResearchArea
+     *   }
+     * })
+     * 
+     */
+    create<T extends JobResearchAreaCreateArgs>(args: SelectSubset<T, JobResearchAreaCreateArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many JobResearchAreas.
+     * @param {JobResearchAreaCreateManyArgs} args - Arguments to create many JobResearchAreas.
+     * @example
+     * // Create many JobResearchAreas
+     * const jobResearchArea = await prisma.jobResearchArea.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends JobResearchAreaCreateManyArgs>(args?: SelectSubset<T, JobResearchAreaCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many JobResearchAreas and returns the data saved in the database.
+     * @param {JobResearchAreaCreateManyAndReturnArgs} args - Arguments to create many JobResearchAreas.
+     * @example
+     * // Create many JobResearchAreas
+     * const jobResearchArea = await prisma.jobResearchArea.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many JobResearchAreas and only return the `jobPostingId`
+     * const jobResearchAreaWithJobPostingIdOnly = await prisma.jobResearchArea.createManyAndReturn({
+     *   select: { jobPostingId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends JobResearchAreaCreateManyAndReturnArgs>(args?: SelectSubset<T, JobResearchAreaCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a JobResearchArea.
+     * @param {JobResearchAreaDeleteArgs} args - Arguments to delete one JobResearchArea.
+     * @example
+     * // Delete one JobResearchArea
+     * const JobResearchArea = await prisma.jobResearchArea.delete({
+     *   where: {
+     *     // ... filter to delete one JobResearchArea
+     *   }
+     * })
+     * 
+     */
+    delete<T extends JobResearchAreaDeleteArgs>(args: SelectSubset<T, JobResearchAreaDeleteArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one JobResearchArea.
+     * @param {JobResearchAreaUpdateArgs} args - Arguments to update one JobResearchArea.
+     * @example
+     * // Update one JobResearchArea
+     * const jobResearchArea = await prisma.jobResearchArea.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends JobResearchAreaUpdateArgs>(args: SelectSubset<T, JobResearchAreaUpdateArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more JobResearchAreas.
+     * @param {JobResearchAreaDeleteManyArgs} args - Arguments to filter JobResearchAreas to delete.
+     * @example
+     * // Delete a few JobResearchAreas
+     * const { count } = await prisma.jobResearchArea.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends JobResearchAreaDeleteManyArgs>(args?: SelectSubset<T, JobResearchAreaDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobResearchAreas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many JobResearchAreas
+     * const jobResearchArea = await prisma.jobResearchArea.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends JobResearchAreaUpdateManyArgs>(args: SelectSubset<T, JobResearchAreaUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more JobResearchAreas and returns the data updated in the database.
+     * @param {JobResearchAreaUpdateManyAndReturnArgs} args - Arguments to update many JobResearchAreas.
+     * @example
+     * // Update many JobResearchAreas
+     * const jobResearchArea = await prisma.jobResearchArea.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more JobResearchAreas and only return the `jobPostingId`
+     * const jobResearchAreaWithJobPostingIdOnly = await prisma.jobResearchArea.updateManyAndReturn({
+     *   select: { jobPostingId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends JobResearchAreaUpdateManyAndReturnArgs>(args: SelectSubset<T, JobResearchAreaUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one JobResearchArea.
+     * @param {JobResearchAreaUpsertArgs} args - Arguments to update or create a JobResearchArea.
+     * @example
+     * // Update or create a JobResearchArea
+     * const jobResearchArea = await prisma.jobResearchArea.upsert({
+     *   create: {
+     *     // ... data to create a JobResearchArea
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the JobResearchArea we want to update
+     *   }
+     * })
+     */
+    upsert<T extends JobResearchAreaUpsertArgs>(args: SelectSubset<T, JobResearchAreaUpsertArgs<ExtArgs>>): Prisma__JobResearchAreaClient<$Result.GetResult<Prisma.$JobResearchAreaPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of JobResearchAreas.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaCountArgs} args - Arguments to filter JobResearchAreas to count.
+     * @example
+     * // Count the number of JobResearchAreas
+     * const count = await prisma.jobResearchArea.count({
+     *   where: {
+     *     // ... the filter for the JobResearchAreas we want to count
+     *   }
+     * })
+    **/
+    count<T extends JobResearchAreaCountArgs>(
+      args?: Subset<T, JobResearchAreaCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], JobResearchAreaCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a JobResearchArea.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends JobResearchAreaAggregateArgs>(args: Subset<T, JobResearchAreaAggregateArgs>): Prisma.PrismaPromise<GetJobResearchAreaAggregateType<T>>
+
+    /**
+     * Group by JobResearchArea.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {JobResearchAreaGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends JobResearchAreaGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: JobResearchAreaGroupByArgs['orderBy'] }
+        : { orderBy?: JobResearchAreaGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, JobResearchAreaGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetJobResearchAreaGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the JobResearchArea model
+   */
+  readonly fields: JobResearchAreaFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for JobResearchArea.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__JobResearchAreaClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    jobPosting<T extends JobPostingDefaultArgs<ExtArgs> = {}>(args?: Subset<T, JobPostingDefaultArgs<ExtArgs>>): Prisma__JobPostingClient<$Result.GetResult<Prisma.$JobPostingPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    researchArea<T extends ResearchAreaDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ResearchAreaDefaultArgs<ExtArgs>>): Prisma__ResearchAreaClient<$Result.GetResult<Prisma.$ResearchAreaPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the JobResearchArea model
+   */
+  interface JobResearchAreaFieldRefs {
+    readonly jobPostingId: FieldRef<"JobResearchArea", 'Int'>
+    readonly researchAreaId: FieldRef<"JobResearchArea", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * JobResearchArea findUnique
+   */
+  export type JobResearchAreaFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which JobResearchArea to fetch.
+     */
+    where: JobResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * JobResearchArea findUniqueOrThrow
+   */
+  export type JobResearchAreaFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which JobResearchArea to fetch.
+     */
+    where: JobResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * JobResearchArea findFirst
+   */
+  export type JobResearchAreaFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which JobResearchArea to fetch.
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobResearchAreas to fetch.
+     */
+    orderBy?: JobResearchAreaOrderByWithRelationInput | JobResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobResearchAreas.
+     */
+    cursor?: JobResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobResearchAreas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobResearchAreas.
+     */
+    distinct?: JobResearchAreaScalarFieldEnum | JobResearchAreaScalarFieldEnum[]
+  }
+
+  /**
+   * JobResearchArea findFirstOrThrow
+   */
+  export type JobResearchAreaFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which JobResearchArea to fetch.
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobResearchAreas to fetch.
+     */
+    orderBy?: JobResearchAreaOrderByWithRelationInput | JobResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for JobResearchAreas.
+     */
+    cursor?: JobResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobResearchAreas.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of JobResearchAreas.
+     */
+    distinct?: JobResearchAreaScalarFieldEnum | JobResearchAreaScalarFieldEnum[]
+  }
+
+  /**
+   * JobResearchArea findMany
+   */
+  export type JobResearchAreaFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter, which JobResearchAreas to fetch.
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of JobResearchAreas to fetch.
+     */
+    orderBy?: JobResearchAreaOrderByWithRelationInput | JobResearchAreaOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing JobResearchAreas.
+     */
+    cursor?: JobResearchAreaWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` JobResearchAreas from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` JobResearchAreas.
+     */
+    skip?: number
+    distinct?: JobResearchAreaScalarFieldEnum | JobResearchAreaScalarFieldEnum[]
+  }
+
+  /**
+   * JobResearchArea create
+   */
+  export type JobResearchAreaCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * The data needed to create a JobResearchArea.
+     */
+    data: XOR<JobResearchAreaCreateInput, JobResearchAreaUncheckedCreateInput>
+  }
+
+  /**
+   * JobResearchArea createMany
+   */
+  export type JobResearchAreaCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many JobResearchAreas.
+     */
+    data: JobResearchAreaCreateManyInput | JobResearchAreaCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * JobResearchArea createManyAndReturn
+   */
+  export type JobResearchAreaCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * The data used to create many JobResearchAreas.
+     */
+    data: JobResearchAreaCreateManyInput | JobResearchAreaCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JobResearchArea update
+   */
+  export type JobResearchAreaUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * The data needed to update a JobResearchArea.
+     */
+    data: XOR<JobResearchAreaUpdateInput, JobResearchAreaUncheckedUpdateInput>
+    /**
+     * Choose, which JobResearchArea to update.
+     */
+    where: JobResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * JobResearchArea updateMany
+   */
+  export type JobResearchAreaUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update JobResearchAreas.
+     */
+    data: XOR<JobResearchAreaUpdateManyMutationInput, JobResearchAreaUncheckedUpdateManyInput>
+    /**
+     * Filter which JobResearchAreas to update
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * Limit how many JobResearchAreas to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobResearchArea updateManyAndReturn
+   */
+  export type JobResearchAreaUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * The data used to update JobResearchAreas.
+     */
+    data: XOR<JobResearchAreaUpdateManyMutationInput, JobResearchAreaUncheckedUpdateManyInput>
+    /**
+     * Filter which JobResearchAreas to update
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * Limit how many JobResearchAreas to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * JobResearchArea upsert
+   */
+  export type JobResearchAreaUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * The filter to search for the JobResearchArea to update in case it exists.
+     */
+    where: JobResearchAreaWhereUniqueInput
+    /**
+     * In case the JobResearchArea found by the `where` argument doesn't exist, create a new JobResearchArea with this data.
+     */
+    create: XOR<JobResearchAreaCreateInput, JobResearchAreaUncheckedCreateInput>
+    /**
+     * In case the JobResearchArea was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<JobResearchAreaUpdateInput, JobResearchAreaUncheckedUpdateInput>
+  }
+
+  /**
+   * JobResearchArea delete
+   */
+  export type JobResearchAreaDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
+    /**
+     * Filter which JobResearchArea to delete.
+     */
+    where: JobResearchAreaWhereUniqueInput
+  }
+
+  /**
+   * JobResearchArea deleteMany
+   */
+  export type JobResearchAreaDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which JobResearchAreas to delete
+     */
+    where?: JobResearchAreaWhereInput
+    /**
+     * Limit how many JobResearchAreas to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * JobResearchArea without action
+   */
+  export type JobResearchAreaDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the JobResearchArea
+     */
+    select?: JobResearchAreaSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the JobResearchArea
+     */
+    omit?: JobResearchAreaOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: JobResearchAreaInclude<ExtArgs> | null
   }
 
 
@@ -18394,6 +19550,14 @@ export namespace Prisma {
   export type ResearchAreaScalarFieldEnum = (typeof ResearchAreaScalarFieldEnum)[keyof typeof ResearchAreaScalarFieldEnum]
 
 
+  export const JobResearchAreaScalarFieldEnum: {
+    jobPostingId: 'jobPostingId',
+    researchAreaId: 'researchAreaId'
+  };
+
+  export type JobResearchAreaScalarFieldEnum = (typeof JobResearchAreaScalarFieldEnum)[keyof typeof JobResearchAreaScalarFieldEnum]
+
+
   export const SyncLogScalarFieldEnum: {
     id: 'id',
     startedAt: 'startedAt',
@@ -18737,7 +19901,7 @@ export namespace Prisma {
     geoLocation?: XOR<GeoLocationNullableScalarRelationFilter, GeoLocationWhereInput> | null
     contact?: XOR<ContactNullableScalarRelationFilter, ContactWhereInput> | null
     jobViews?: JobViewListRelationFilter
-    researchAreas?: ResearchAreaListRelationFilter
+    jobResearchAreas?: JobResearchAreaListRelationFilter
   }
 
   export type JobPostingOrderByWithRelationInput = {
@@ -18783,7 +19947,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationOrderByWithRelationInput
     contact?: ContactOrderByWithRelationInput
     jobViews?: JobViewOrderByRelationAggregateInput
-    researchAreas?: ResearchAreaOrderByRelationAggregateInput
+    jobResearchAreas?: JobResearchAreaOrderByRelationAggregateInput
   }
 
   export type JobPostingWhereUniqueInput = Prisma.AtLeast<{
@@ -18832,7 +19996,7 @@ export namespace Prisma {
     geoLocation?: XOR<GeoLocationNullableScalarRelationFilter, GeoLocationWhereInput> | null
     contact?: XOR<ContactNullableScalarRelationFilter, ContactWhereInput> | null
     jobViews?: JobViewListRelationFilter
-    researchAreas?: ResearchAreaListRelationFilter
+    jobResearchAreas?: JobResearchAreaListRelationFilter
   }, "id">
 
   export type JobPostingOrderByWithAggregationInput = {
@@ -19319,14 +20483,14 @@ export namespace Prisma {
     id?: IntFilter<"ResearchArea"> | number
     name?: StringFilter<"ResearchArea"> | string
     description?: StringNullableFilter<"ResearchArea"> | string | null
-    jobPostings?: JobPostingListRelationFilter
+    jobResearchAreas?: JobResearchAreaListRelationFilter
   }
 
   export type ResearchAreaOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
     description?: SortOrderInput | SortOrder
-    jobPostings?: JobPostingOrderByRelationAggregateInput
+    jobResearchAreas?: JobResearchAreaOrderByRelationAggregateInput
   }
 
   export type ResearchAreaWhereUniqueInput = Prisma.AtLeast<{
@@ -19336,7 +20500,7 @@ export namespace Prisma {
     OR?: ResearchAreaWhereInput[]
     NOT?: ResearchAreaWhereInput | ResearchAreaWhereInput[]
     description?: StringNullableFilter<"ResearchArea"> | string | null
-    jobPostings?: JobPostingListRelationFilter
+    jobResearchAreas?: JobResearchAreaListRelationFilter
   }, "id" | "name">
 
   export type ResearchAreaOrderByWithAggregationInput = {
@@ -19357,6 +20521,52 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"ResearchArea"> | number
     name?: StringWithAggregatesFilter<"ResearchArea"> | string
     description?: StringNullableWithAggregatesFilter<"ResearchArea"> | string | null
+  }
+
+  export type JobResearchAreaWhereInput = {
+    AND?: JobResearchAreaWhereInput | JobResearchAreaWhereInput[]
+    OR?: JobResearchAreaWhereInput[]
+    NOT?: JobResearchAreaWhereInput | JobResearchAreaWhereInput[]
+    jobPostingId?: IntFilter<"JobResearchArea"> | number
+    researchAreaId?: IntFilter<"JobResearchArea"> | number
+    jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
+    researchArea?: XOR<ResearchAreaScalarRelationFilter, ResearchAreaWhereInput>
+  }
+
+  export type JobResearchAreaOrderByWithRelationInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+    jobPosting?: JobPostingOrderByWithRelationInput
+    researchArea?: ResearchAreaOrderByWithRelationInput
+  }
+
+  export type JobResearchAreaWhereUniqueInput = Prisma.AtLeast<{
+    jobPostingId_researchAreaId?: JobResearchAreaJobPostingIdResearchAreaIdCompoundUniqueInput
+    AND?: JobResearchAreaWhereInput | JobResearchAreaWhereInput[]
+    OR?: JobResearchAreaWhereInput[]
+    NOT?: JobResearchAreaWhereInput | JobResearchAreaWhereInput[]
+    jobPostingId?: IntFilter<"JobResearchArea"> | number
+    researchAreaId?: IntFilter<"JobResearchArea"> | number
+    jobPosting?: XOR<JobPostingScalarRelationFilter, JobPostingWhereInput>
+    researchArea?: XOR<ResearchAreaScalarRelationFilter, ResearchAreaWhereInput>
+  }, "jobPostingId_researchAreaId">
+
+  export type JobResearchAreaOrderByWithAggregationInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+    _count?: JobResearchAreaCountOrderByAggregateInput
+    _avg?: JobResearchAreaAvgOrderByAggregateInput
+    _max?: JobResearchAreaMaxOrderByAggregateInput
+    _min?: JobResearchAreaMinOrderByAggregateInput
+    _sum?: JobResearchAreaSumOrderByAggregateInput
+  }
+
+  export type JobResearchAreaScalarWhereWithAggregatesInput = {
+    AND?: JobResearchAreaScalarWhereWithAggregatesInput | JobResearchAreaScalarWhereWithAggregatesInput[]
+    OR?: JobResearchAreaScalarWhereWithAggregatesInput[]
+    NOT?: JobResearchAreaScalarWhereWithAggregatesInput | JobResearchAreaScalarWhereWithAggregatesInput[]
+    jobPostingId?: IntWithAggregatesFilter<"JobResearchArea"> | number
+    researchAreaId?: IntWithAggregatesFilter<"JobResearchArea"> | number
   }
 
   export type SyncLogWhereInput = {
@@ -19663,7 +20873,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateInput = {
@@ -19707,7 +20917,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUpdateInput = {
@@ -19750,7 +20960,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateInput = {
@@ -19794,7 +21004,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingCreateManyInput = {
@@ -20250,27 +21460,27 @@ export namespace Prisma {
   export type ResearchAreaCreateInput = {
     name: string
     description?: string | null
-    jobPostings?: JobPostingCreateNestedManyWithoutResearchAreasInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutResearchAreaInput
   }
 
   export type ResearchAreaUncheckedCreateInput = {
     id?: number
     name: string
     description?: string | null
-    jobPostings?: JobPostingUncheckedCreateNestedManyWithoutResearchAreasInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutResearchAreaInput
   }
 
   export type ResearchAreaUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    jobPostings?: JobPostingUpdateManyWithoutResearchAreasNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutResearchAreaNestedInput
   }
 
   export type ResearchAreaUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    jobPostings?: JobPostingUncheckedUpdateManyWithoutResearchAreasNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutResearchAreaNestedInput
   }
 
   export type ResearchAreaCreateManyInput = {
@@ -20288,6 +21498,40 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type JobResearchAreaCreateInput = {
+    jobPosting: JobPostingCreateNestedOneWithoutJobResearchAreasInput
+    researchArea: ResearchAreaCreateNestedOneWithoutJobResearchAreasInput
+  }
+
+  export type JobResearchAreaUncheckedCreateInput = {
+    jobPostingId: number
+    researchAreaId: number
+  }
+
+  export type JobResearchAreaUpdateInput = {
+    jobPosting?: JobPostingUpdateOneRequiredWithoutJobResearchAreasNestedInput
+    researchArea?: ResearchAreaUpdateOneRequiredWithoutJobResearchAreasNestedInput
+  }
+
+  export type JobResearchAreaUncheckedUpdateInput = {
+    jobPostingId?: IntFieldUpdateOperationsInput | number
+    researchAreaId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type JobResearchAreaCreateManyInput = {
+    jobPostingId: number
+    researchAreaId: number
+  }
+
+  export type JobResearchAreaUpdateManyMutationInput = {
+
+  }
+
+  export type JobResearchAreaUncheckedUpdateManyInput = {
+    jobPostingId?: IntFieldUpdateOperationsInput | number
+    researchAreaId?: IntFieldUpdateOperationsInput | number
   }
 
   export type SyncLogCreateInput = {
@@ -20735,10 +21979,10 @@ export namespace Prisma {
     none?: JobViewWhereInput
   }
 
-  export type ResearchAreaListRelationFilter = {
-    every?: ResearchAreaWhereInput
-    some?: ResearchAreaWhereInput
-    none?: ResearchAreaWhereInput
+  export type JobResearchAreaListRelationFilter = {
+    every?: JobResearchAreaWhereInput
+    some?: JobResearchAreaWhereInput
+    none?: JobResearchAreaWhereInput
   }
 
   export type ApplicationRequirementOrderByRelationAggregateInput = {
@@ -20761,7 +22005,7 @@ export namespace Prisma {
     _count?: SortOrder
   }
 
-  export type ResearchAreaOrderByRelationAggregateInput = {
+  export type JobResearchAreaOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -21240,6 +22484,41 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type ResearchAreaScalarRelationFilter = {
+    is?: ResearchAreaWhereInput
+    isNot?: ResearchAreaWhereInput
+  }
+
+  export type JobResearchAreaJobPostingIdResearchAreaIdCompoundUniqueInput = {
+    jobPostingId: number
+    researchAreaId: number
+  }
+
+  export type JobResearchAreaCountOrderByAggregateInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+  }
+
+  export type JobResearchAreaAvgOrderByAggregateInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+  }
+
+  export type JobResearchAreaMaxOrderByAggregateInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+  }
+
+  export type JobResearchAreaMinOrderByAggregateInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+  }
+
+  export type JobResearchAreaSumOrderByAggregateInput = {
+    jobPostingId?: SortOrder
+    researchAreaId?: SortOrder
+  }
+
   export type SyncLogCountOrderByAggregateInput = {
     id?: SortOrder
     startedAt?: SortOrder
@@ -21583,10 +22862,11 @@ export namespace Prisma {
     connect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
   }
 
-  export type ResearchAreaCreateNestedManyWithoutJobPostingsInput = {
-    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
-    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
-    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+  export type JobResearchAreaCreateNestedManyWithoutJobPostingInput = {
+    create?: XOR<JobResearchAreaCreateWithoutJobPostingInput, JobResearchAreaUncheckedCreateWithoutJobPostingInput> | JobResearchAreaCreateWithoutJobPostingInput[] | JobResearchAreaUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutJobPostingInput | JobResearchAreaCreateOrConnectWithoutJobPostingInput[]
+    createMany?: JobResearchAreaCreateManyJobPostingInputEnvelope
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
   }
 
   export type ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput = {
@@ -21636,10 +22916,11 @@ export namespace Prisma {
     connect?: JobViewWhereUniqueInput | JobViewWhereUniqueInput[]
   }
 
-  export type ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput = {
-    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
-    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
-    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
+  export type JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput = {
+    create?: XOR<JobResearchAreaCreateWithoutJobPostingInput, JobResearchAreaUncheckedCreateWithoutJobPostingInput> | JobResearchAreaCreateWithoutJobPostingInput[] | JobResearchAreaUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutJobPostingInput | JobResearchAreaCreateOrConnectWithoutJobPostingInput[]
+    createMany?: JobResearchAreaCreateManyJobPostingInputEnvelope
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
   }
 
   export type NullableBoolFieldUpdateOperationsInput = {
@@ -21764,17 +23045,18 @@ export namespace Prisma {
     deleteMany?: JobViewScalarWhereInput | JobViewScalarWhereInput[]
   }
 
-  export type ResearchAreaUpdateManyWithoutJobPostingsNestedInput = {
-    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
-    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
-    upsert?: ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput[]
-    set?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    disconnect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    delete?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    update?: ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput[]
-    updateMany?: ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput | ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput[]
-    deleteMany?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
+  export type JobResearchAreaUpdateManyWithoutJobPostingNestedInput = {
+    create?: XOR<JobResearchAreaCreateWithoutJobPostingInput, JobResearchAreaUncheckedCreateWithoutJobPostingInput> | JobResearchAreaCreateWithoutJobPostingInput[] | JobResearchAreaUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutJobPostingInput | JobResearchAreaCreateOrConnectWithoutJobPostingInput[]
+    upsert?: JobResearchAreaUpsertWithWhereUniqueWithoutJobPostingInput | JobResearchAreaUpsertWithWhereUniqueWithoutJobPostingInput[]
+    createMany?: JobResearchAreaCreateManyJobPostingInputEnvelope
+    set?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    disconnect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    delete?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    update?: JobResearchAreaUpdateWithWhereUniqueWithoutJobPostingInput | JobResearchAreaUpdateWithWhereUniqueWithoutJobPostingInput[]
+    updateMany?: JobResearchAreaUpdateManyWithWhereWithoutJobPostingInput | JobResearchAreaUpdateManyWithWhereWithoutJobPostingInput[]
+    deleteMany?: JobResearchAreaScalarWhereInput | JobResearchAreaScalarWhereInput[]
   }
 
   export type ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput = {
@@ -21867,17 +23149,18 @@ export namespace Prisma {
     deleteMany?: JobViewScalarWhereInput | JobViewScalarWhereInput[]
   }
 
-  export type ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput = {
-    create?: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput> | ResearchAreaCreateWithoutJobPostingsInput[] | ResearchAreaUncheckedCreateWithoutJobPostingsInput[]
-    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobPostingsInput | ResearchAreaCreateOrConnectWithoutJobPostingsInput[]
-    upsert?: ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput[]
-    set?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    disconnect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    delete?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    connect?: ResearchAreaWhereUniqueInput | ResearchAreaWhereUniqueInput[]
-    update?: ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput | ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput[]
-    updateMany?: ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput | ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput[]
-    deleteMany?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
+  export type JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput = {
+    create?: XOR<JobResearchAreaCreateWithoutJobPostingInput, JobResearchAreaUncheckedCreateWithoutJobPostingInput> | JobResearchAreaCreateWithoutJobPostingInput[] | JobResearchAreaUncheckedCreateWithoutJobPostingInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutJobPostingInput | JobResearchAreaCreateOrConnectWithoutJobPostingInput[]
+    upsert?: JobResearchAreaUpsertWithWhereUniqueWithoutJobPostingInput | JobResearchAreaUpsertWithWhereUniqueWithoutJobPostingInput[]
+    createMany?: JobResearchAreaCreateManyJobPostingInputEnvelope
+    set?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    disconnect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    delete?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    update?: JobResearchAreaUpdateWithWhereUniqueWithoutJobPostingInput | JobResearchAreaUpdateWithWhereUniqueWithoutJobPostingInput[]
+    updateMany?: JobResearchAreaUpdateManyWithWhereWithoutJobPostingInput | JobResearchAreaUpdateManyWithWhereWithoutJobPostingInput[]
+    deleteMany?: JobResearchAreaScalarWhereInput | JobResearchAreaScalarWhereInput[]
   }
 
   export type JobPostingCreateNestedOneWithoutApplicationRequirementsInput = {
@@ -22042,42 +23325,74 @@ export namespace Prisma {
     update?: XOR<XOR<JobPostingUpdateToOneWithWhereWithoutJobViewsInput, JobPostingUpdateWithoutJobViewsInput>, JobPostingUncheckedUpdateWithoutJobViewsInput>
   }
 
-  export type JobPostingCreateNestedManyWithoutResearchAreasInput = {
-    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
-    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
-    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+  export type JobResearchAreaCreateNestedManyWithoutResearchAreaInput = {
+    create?: XOR<JobResearchAreaCreateWithoutResearchAreaInput, JobResearchAreaUncheckedCreateWithoutResearchAreaInput> | JobResearchAreaCreateWithoutResearchAreaInput[] | JobResearchAreaUncheckedCreateWithoutResearchAreaInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutResearchAreaInput | JobResearchAreaCreateOrConnectWithoutResearchAreaInput[]
+    createMany?: JobResearchAreaCreateManyResearchAreaInputEnvelope
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
   }
 
-  export type JobPostingUncheckedCreateNestedManyWithoutResearchAreasInput = {
-    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
-    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
-    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
+  export type JobResearchAreaUncheckedCreateNestedManyWithoutResearchAreaInput = {
+    create?: XOR<JobResearchAreaCreateWithoutResearchAreaInput, JobResearchAreaUncheckedCreateWithoutResearchAreaInput> | JobResearchAreaCreateWithoutResearchAreaInput[] | JobResearchAreaUncheckedCreateWithoutResearchAreaInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutResearchAreaInput | JobResearchAreaCreateOrConnectWithoutResearchAreaInput[]
+    createMany?: JobResearchAreaCreateManyResearchAreaInputEnvelope
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
   }
 
-  export type JobPostingUpdateManyWithoutResearchAreasNestedInput = {
-    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
-    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
-    upsert?: JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput | JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput[]
-    set?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    disconnect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    delete?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    update?: JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput | JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput[]
-    updateMany?: JobPostingUpdateManyWithWhereWithoutResearchAreasInput | JobPostingUpdateManyWithWhereWithoutResearchAreasInput[]
-    deleteMany?: JobPostingScalarWhereInput | JobPostingScalarWhereInput[]
+  export type JobResearchAreaUpdateManyWithoutResearchAreaNestedInput = {
+    create?: XOR<JobResearchAreaCreateWithoutResearchAreaInput, JobResearchAreaUncheckedCreateWithoutResearchAreaInput> | JobResearchAreaCreateWithoutResearchAreaInput[] | JobResearchAreaUncheckedCreateWithoutResearchAreaInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutResearchAreaInput | JobResearchAreaCreateOrConnectWithoutResearchAreaInput[]
+    upsert?: JobResearchAreaUpsertWithWhereUniqueWithoutResearchAreaInput | JobResearchAreaUpsertWithWhereUniqueWithoutResearchAreaInput[]
+    createMany?: JobResearchAreaCreateManyResearchAreaInputEnvelope
+    set?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    disconnect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    delete?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    update?: JobResearchAreaUpdateWithWhereUniqueWithoutResearchAreaInput | JobResearchAreaUpdateWithWhereUniqueWithoutResearchAreaInput[]
+    updateMany?: JobResearchAreaUpdateManyWithWhereWithoutResearchAreaInput | JobResearchAreaUpdateManyWithWhereWithoutResearchAreaInput[]
+    deleteMany?: JobResearchAreaScalarWhereInput | JobResearchAreaScalarWhereInput[]
   }
 
-  export type JobPostingUncheckedUpdateManyWithoutResearchAreasNestedInput = {
-    create?: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput> | JobPostingCreateWithoutResearchAreasInput[] | JobPostingUncheckedCreateWithoutResearchAreasInput[]
-    connectOrCreate?: JobPostingCreateOrConnectWithoutResearchAreasInput | JobPostingCreateOrConnectWithoutResearchAreasInput[]
-    upsert?: JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput | JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput[]
-    set?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    disconnect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    delete?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    connect?: JobPostingWhereUniqueInput | JobPostingWhereUniqueInput[]
-    update?: JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput | JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput[]
-    updateMany?: JobPostingUpdateManyWithWhereWithoutResearchAreasInput | JobPostingUpdateManyWithWhereWithoutResearchAreasInput[]
-    deleteMany?: JobPostingScalarWhereInput | JobPostingScalarWhereInput[]
+  export type JobResearchAreaUncheckedUpdateManyWithoutResearchAreaNestedInput = {
+    create?: XOR<JobResearchAreaCreateWithoutResearchAreaInput, JobResearchAreaUncheckedCreateWithoutResearchAreaInput> | JobResearchAreaCreateWithoutResearchAreaInput[] | JobResearchAreaUncheckedCreateWithoutResearchAreaInput[]
+    connectOrCreate?: JobResearchAreaCreateOrConnectWithoutResearchAreaInput | JobResearchAreaCreateOrConnectWithoutResearchAreaInput[]
+    upsert?: JobResearchAreaUpsertWithWhereUniqueWithoutResearchAreaInput | JobResearchAreaUpsertWithWhereUniqueWithoutResearchAreaInput[]
+    createMany?: JobResearchAreaCreateManyResearchAreaInputEnvelope
+    set?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    disconnect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    delete?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    connect?: JobResearchAreaWhereUniqueInput | JobResearchAreaWhereUniqueInput[]
+    update?: JobResearchAreaUpdateWithWhereUniqueWithoutResearchAreaInput | JobResearchAreaUpdateWithWhereUniqueWithoutResearchAreaInput[]
+    updateMany?: JobResearchAreaUpdateManyWithWhereWithoutResearchAreaInput | JobResearchAreaUpdateManyWithWhereWithoutResearchAreaInput[]
+    deleteMany?: JobResearchAreaScalarWhereInput | JobResearchAreaScalarWhereInput[]
+  }
+
+  export type JobPostingCreateNestedOneWithoutJobResearchAreasInput = {
+    create?: XOR<JobPostingCreateWithoutJobResearchAreasInput, JobPostingUncheckedCreateWithoutJobResearchAreasInput>
+    connectOrCreate?: JobPostingCreateOrConnectWithoutJobResearchAreasInput
+    connect?: JobPostingWhereUniqueInput
+  }
+
+  export type ResearchAreaCreateNestedOneWithoutJobResearchAreasInput = {
+    create?: XOR<ResearchAreaCreateWithoutJobResearchAreasInput, ResearchAreaUncheckedCreateWithoutJobResearchAreasInput>
+    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobResearchAreasInput
+    connect?: ResearchAreaWhereUniqueInput
+  }
+
+  export type JobPostingUpdateOneRequiredWithoutJobResearchAreasNestedInput = {
+    create?: XOR<JobPostingCreateWithoutJobResearchAreasInput, JobPostingUncheckedCreateWithoutJobResearchAreasInput>
+    connectOrCreate?: JobPostingCreateOrConnectWithoutJobResearchAreasInput
+    upsert?: JobPostingUpsertWithoutJobResearchAreasInput
+    connect?: JobPostingWhereUniqueInput
+    update?: XOR<XOR<JobPostingUpdateToOneWithWhereWithoutJobResearchAreasInput, JobPostingUpdateWithoutJobResearchAreasInput>, JobPostingUncheckedUpdateWithoutJobResearchAreasInput>
+  }
+
+  export type ResearchAreaUpdateOneRequiredWithoutJobResearchAreasNestedInput = {
+    create?: XOR<ResearchAreaCreateWithoutJobResearchAreasInput, ResearchAreaUncheckedCreateWithoutJobResearchAreasInput>
+    connectOrCreate?: ResearchAreaCreateOrConnectWithoutJobResearchAreasInput
+    upsert?: ResearchAreaUpsertWithoutJobResearchAreasInput
+    connect?: ResearchAreaWhereUniqueInput
+    update?: XOR<XOR<ResearchAreaUpdateToOneWithWhereWithoutJobResearchAreasInput, ResearchAreaUpdateWithoutJobResearchAreasInput>, ResearchAreaUncheckedUpdateWithoutJobResearchAreasInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -22429,7 +23744,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutDepartmentInput = {
@@ -22472,7 +23787,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutDepartmentInput = {
@@ -22648,7 +23963,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutDisciplineInput = {
@@ -22691,7 +24006,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutDisciplineInput = {
@@ -22947,20 +24262,22 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ResearchAreaCreateWithoutJobPostingsInput = {
-    name: string
-    description?: string | null
+  export type JobResearchAreaCreateWithoutJobPostingInput = {
+    researchArea: ResearchAreaCreateNestedOneWithoutJobResearchAreasInput
   }
 
-  export type ResearchAreaUncheckedCreateWithoutJobPostingsInput = {
-    id?: number
-    name: string
-    description?: string | null
+  export type JobResearchAreaUncheckedCreateWithoutJobPostingInput = {
+    researchAreaId: number
   }
 
-  export type ResearchAreaCreateOrConnectWithoutJobPostingsInput = {
-    where: ResearchAreaWhereUniqueInput
-    create: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput>
+  export type JobResearchAreaCreateOrConnectWithoutJobPostingInput = {
+    where: JobResearchAreaWhereUniqueInput
+    create: XOR<JobResearchAreaCreateWithoutJobPostingInput, JobResearchAreaUncheckedCreateWithoutJobPostingInput>
+  }
+
+  export type JobResearchAreaCreateManyJobPostingInputEnvelope = {
+    data: JobResearchAreaCreateManyJobPostingInput | JobResearchAreaCreateManyJobPostingInput[]
+    skipDuplicates?: boolean
   }
 
   export type DepartmentUpsertWithoutJobPostingsInput = {
@@ -23189,29 +24506,28 @@ export namespace Prisma {
     referrer?: StringNullableFilter<"JobView"> | string | null
   }
 
-  export type ResearchAreaUpsertWithWhereUniqueWithoutJobPostingsInput = {
-    where: ResearchAreaWhereUniqueInput
-    update: XOR<ResearchAreaUpdateWithoutJobPostingsInput, ResearchAreaUncheckedUpdateWithoutJobPostingsInput>
-    create: XOR<ResearchAreaCreateWithoutJobPostingsInput, ResearchAreaUncheckedCreateWithoutJobPostingsInput>
+  export type JobResearchAreaUpsertWithWhereUniqueWithoutJobPostingInput = {
+    where: JobResearchAreaWhereUniqueInput
+    update: XOR<JobResearchAreaUpdateWithoutJobPostingInput, JobResearchAreaUncheckedUpdateWithoutJobPostingInput>
+    create: XOR<JobResearchAreaCreateWithoutJobPostingInput, JobResearchAreaUncheckedCreateWithoutJobPostingInput>
   }
 
-  export type ResearchAreaUpdateWithWhereUniqueWithoutJobPostingsInput = {
-    where: ResearchAreaWhereUniqueInput
-    data: XOR<ResearchAreaUpdateWithoutJobPostingsInput, ResearchAreaUncheckedUpdateWithoutJobPostingsInput>
+  export type JobResearchAreaUpdateWithWhereUniqueWithoutJobPostingInput = {
+    where: JobResearchAreaWhereUniqueInput
+    data: XOR<JobResearchAreaUpdateWithoutJobPostingInput, JobResearchAreaUncheckedUpdateWithoutJobPostingInput>
   }
 
-  export type ResearchAreaUpdateManyWithWhereWithoutJobPostingsInput = {
-    where: ResearchAreaScalarWhereInput
-    data: XOR<ResearchAreaUpdateManyMutationInput, ResearchAreaUncheckedUpdateManyWithoutJobPostingsInput>
+  export type JobResearchAreaUpdateManyWithWhereWithoutJobPostingInput = {
+    where: JobResearchAreaScalarWhereInput
+    data: XOR<JobResearchAreaUpdateManyMutationInput, JobResearchAreaUncheckedUpdateManyWithoutJobPostingInput>
   }
 
-  export type ResearchAreaScalarWhereInput = {
-    AND?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
-    OR?: ResearchAreaScalarWhereInput[]
-    NOT?: ResearchAreaScalarWhereInput | ResearchAreaScalarWhereInput[]
-    id?: IntFilter<"ResearchArea"> | number
-    name?: StringFilter<"ResearchArea"> | string
-    description?: StringNullableFilter<"ResearchArea"> | string | null
+  export type JobResearchAreaScalarWhereInput = {
+    AND?: JobResearchAreaScalarWhereInput | JobResearchAreaScalarWhereInput[]
+    OR?: JobResearchAreaScalarWhereInput[]
+    NOT?: JobResearchAreaScalarWhereInput | JobResearchAreaScalarWhereInput[]
+    jobPostingId?: IntFilter<"JobResearchArea"> | number
+    researchAreaId?: IntFilter<"JobResearchArea"> | number
   }
 
   export type JobPostingCreateWithoutApplicationRequirementsInput = {
@@ -23253,7 +24569,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutApplicationRequirementsInput = {
@@ -23296,7 +24612,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutApplicationRequirementsInput = {
@@ -23354,7 +24670,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutApplicationRequirementsInput = {
@@ -23397,7 +24713,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobKeywordCreateWithoutKeywordInput = {
@@ -23473,7 +24789,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutJobKeywordsInput = {
@@ -23516,7 +24832,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutJobKeywordsInput = {
@@ -23588,7 +24904,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutJobKeywordsInput = {
@@ -23631,7 +24947,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type KeywordUpsertWithoutJobKeywordsInput = {
@@ -23693,7 +25009,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutLanguageRequirementsInput = {
@@ -23736,7 +25052,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutLanguageRequirementsInput = {
@@ -23794,7 +25110,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutLanguageRequirementsInput = {
@@ -23837,7 +25153,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingCreateWithoutSuitableBackgroundsInput = {
@@ -23879,7 +25195,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutSuitableBackgroundsInput = {
@@ -23922,7 +25238,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutSuitableBackgroundsInput = {
@@ -23980,7 +25296,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutSuitableBackgroundsInput = {
@@ -24023,7 +25339,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingCreateWithoutGeoLocationInput = {
@@ -24065,7 +25381,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutGeoLocationInput = {
@@ -24108,7 +25424,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutGeoLocationInput = {
@@ -24166,7 +25482,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutGeoLocationInput = {
@@ -24209,7 +25525,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingCreateWithoutContactInput = {
@@ -24251,7 +25567,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutContactInput = {
@@ -24294,7 +25610,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutContactInput = {
@@ -24352,7 +25668,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutContactInput = {
@@ -24395,7 +25711,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingCreateWithoutJobViewsInput = {
@@ -24437,7 +25753,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationCreateNestedOneWithoutJobPostingInput
     contact?: ContactCreateNestedOneWithoutJobPostingInput
-    researchAreas?: ResearchAreaCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingUncheckedCreateWithoutJobViewsInput = {
@@ -24480,7 +25796,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
     geoLocation?: GeoLocationUncheckedCreateNestedOneWithoutJobPostingInput
     contact?: ContactUncheckedCreateNestedOneWithoutJobPostingInput
-    researchAreas?: ResearchAreaUncheckedCreateNestedManyWithoutJobPostingsInput
+    jobResearchAreas?: JobResearchAreaUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
   export type JobPostingCreateOrConnectWithoutJobViewsInput = {
@@ -24538,7 +25854,7 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutJobViewsInput = {
@@ -24581,10 +25897,44 @@ export namespace Prisma {
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
-  export type JobPostingCreateWithoutResearchAreasInput = {
+  export type JobResearchAreaCreateWithoutResearchAreaInput = {
+    jobPosting: JobPostingCreateNestedOneWithoutJobResearchAreasInput
+  }
+
+  export type JobResearchAreaUncheckedCreateWithoutResearchAreaInput = {
+    jobPostingId: number
+  }
+
+  export type JobResearchAreaCreateOrConnectWithoutResearchAreaInput = {
+    where: JobResearchAreaWhereUniqueInput
+    create: XOR<JobResearchAreaCreateWithoutResearchAreaInput, JobResearchAreaUncheckedCreateWithoutResearchAreaInput>
+  }
+
+  export type JobResearchAreaCreateManyResearchAreaInputEnvelope = {
+    data: JobResearchAreaCreateManyResearchAreaInput | JobResearchAreaCreateManyResearchAreaInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type JobResearchAreaUpsertWithWhereUniqueWithoutResearchAreaInput = {
+    where: JobResearchAreaWhereUniqueInput
+    update: XOR<JobResearchAreaUpdateWithoutResearchAreaInput, JobResearchAreaUncheckedUpdateWithoutResearchAreaInput>
+    create: XOR<JobResearchAreaCreateWithoutResearchAreaInput, JobResearchAreaUncheckedCreateWithoutResearchAreaInput>
+  }
+
+  export type JobResearchAreaUpdateWithWhereUniqueWithoutResearchAreaInput = {
+    where: JobResearchAreaWhereUniqueInput
+    data: XOR<JobResearchAreaUpdateWithoutResearchAreaInput, JobResearchAreaUncheckedUpdateWithoutResearchAreaInput>
+  }
+
+  export type JobResearchAreaUpdateManyWithWhereWithoutResearchAreaInput = {
+    where: JobResearchAreaScalarWhereInput
+    data: XOR<JobResearchAreaUpdateManyMutationInput, JobResearchAreaUncheckedUpdateManyWithoutResearchAreaInput>
+  }
+
+  export type JobPostingCreateWithoutJobResearchAreasInput = {
     title: string
     descriptionHtml?: string | null
     descriptionText?: string | null
@@ -24626,7 +25976,7 @@ export namespace Prisma {
     jobViews?: JobViewCreateNestedManyWithoutJobPostingInput
   }
 
-  export type JobPostingUncheckedCreateWithoutResearchAreasInput = {
+  export type JobPostingUncheckedCreateWithoutJobResearchAreasInput = {
     id?: number
     title: string
     descriptionHtml?: string | null
@@ -24669,25 +26019,143 @@ export namespace Prisma {
     jobViews?: JobViewUncheckedCreateNestedManyWithoutJobPostingInput
   }
 
-  export type JobPostingCreateOrConnectWithoutResearchAreasInput = {
+  export type JobPostingCreateOrConnectWithoutJobResearchAreasInput = {
     where: JobPostingWhereUniqueInput
-    create: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput>
+    create: XOR<JobPostingCreateWithoutJobResearchAreasInput, JobPostingUncheckedCreateWithoutJobResearchAreasInput>
   }
 
-  export type JobPostingUpsertWithWhereUniqueWithoutResearchAreasInput = {
-    where: JobPostingWhereUniqueInput
-    update: XOR<JobPostingUpdateWithoutResearchAreasInput, JobPostingUncheckedUpdateWithoutResearchAreasInput>
-    create: XOR<JobPostingCreateWithoutResearchAreasInput, JobPostingUncheckedCreateWithoutResearchAreasInput>
+  export type ResearchAreaCreateWithoutJobResearchAreasInput = {
+    name: string
+    description?: string | null
   }
 
-  export type JobPostingUpdateWithWhereUniqueWithoutResearchAreasInput = {
-    where: JobPostingWhereUniqueInput
-    data: XOR<JobPostingUpdateWithoutResearchAreasInput, JobPostingUncheckedUpdateWithoutResearchAreasInput>
+  export type ResearchAreaUncheckedCreateWithoutJobResearchAreasInput = {
+    id?: number
+    name: string
+    description?: string | null
   }
 
-  export type JobPostingUpdateManyWithWhereWithoutResearchAreasInput = {
-    where: JobPostingScalarWhereInput
-    data: XOR<JobPostingUpdateManyMutationInput, JobPostingUncheckedUpdateManyWithoutResearchAreasInput>
+  export type ResearchAreaCreateOrConnectWithoutJobResearchAreasInput = {
+    where: ResearchAreaWhereUniqueInput
+    create: XOR<ResearchAreaCreateWithoutJobResearchAreasInput, ResearchAreaUncheckedCreateWithoutJobResearchAreasInput>
+  }
+
+  export type JobPostingUpsertWithoutJobResearchAreasInput = {
+    update: XOR<JobPostingUpdateWithoutJobResearchAreasInput, JobPostingUncheckedUpdateWithoutJobResearchAreasInput>
+    create: XOR<JobPostingCreateWithoutJobResearchAreasInput, JobPostingUncheckedCreateWithoutJobResearchAreasInput>
+    where?: JobPostingWhereInput
+  }
+
+  export type JobPostingUpdateToOneWithWhereWithoutJobResearchAreasInput = {
+    where?: JobPostingWhereInput
+    data: XOR<JobPostingUpdateWithoutJobResearchAreasInput, JobPostingUncheckedUpdateWithoutJobResearchAreasInput>
+  }
+
+  export type JobPostingUpdateWithoutJobResearchAreasInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
+    discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
+    applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
+    jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
+    languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
+    suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
+    geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
+    contact?: ContactUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+  }
+
+  export type JobPostingUncheckedUpdateWithoutJobResearchAreasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    title?: StringFieldUpdateOperationsInput | string
+    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
+    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
+    jobType?: NullableStringFieldUpdateOperationsInput | string | null
+    workModality?: NullableStringFieldUpdateOperationsInput | string | null
+    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
+    contractType?: NullableStringFieldUpdateOperationsInput | string | null
+    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
+    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
+    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
+    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
+    departmentId?: IntFieldUpdateOperationsInput | number
+    disciplineId?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
+    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
+    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    instructions?: NullableStringFieldUpdateOperationsInput | string | null
+    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
+    jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
+    languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
+    suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
+    geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
+    contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
+    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+  }
+
+  export type ResearchAreaUpsertWithoutJobResearchAreasInput = {
+    update: XOR<ResearchAreaUpdateWithoutJobResearchAreasInput, ResearchAreaUncheckedUpdateWithoutJobResearchAreasInput>
+    create: XOR<ResearchAreaCreateWithoutJobResearchAreasInput, ResearchAreaUncheckedCreateWithoutJobResearchAreasInput>
+    where?: ResearchAreaWhereInput
+  }
+
+  export type ResearchAreaUpdateToOneWithWhereWithoutJobResearchAreasInput = {
+    where?: ResearchAreaWhereInput
+    data: XOR<ResearchAreaUpdateWithoutJobResearchAreasInput, ResearchAreaUncheckedUpdateWithoutJobResearchAreasInput>
+  }
+
+  export type ResearchAreaUpdateWithoutJobResearchAreasInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ResearchAreaUncheckedUpdateWithoutJobResearchAreasInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DepartmentCreateManyInstitutionInput = {
@@ -24801,7 +26269,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutDepartmentInput = {
@@ -24844,7 +26312,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateManyWithoutDepartmentInput = {
@@ -24979,7 +26447,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateWithoutDisciplineInput = {
@@ -25022,7 +26490,7 @@ export namespace Prisma {
     geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
     contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
     jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
-    researchAreas?: ResearchAreaUncheckedUpdateManyWithoutJobPostingsNestedInput
+    jobResearchAreas?: JobResearchAreaUncheckedUpdateManyWithoutJobPostingNestedInput
   }
 
   export type JobPostingUncheckedUpdateManyWithoutDisciplineInput = {
@@ -25086,6 +26554,10 @@ export namespace Prisma {
     ipAddress?: string | null
     userAgent?: string | null
     referrer?: string | null
+  }
+
+  export type JobResearchAreaCreateManyJobPostingInput = {
+    researchAreaId: number
   }
 
   export type ApplicationRequirementUpdateWithoutJobPostingInput = {
@@ -25170,21 +26642,16 @@ export namespace Prisma {
     referrer?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type ResearchAreaUpdateWithoutJobPostingsInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type JobResearchAreaUpdateWithoutJobPostingInput = {
+    researchArea?: ResearchAreaUpdateOneRequiredWithoutJobResearchAreasNestedInput
   }
 
-  export type ResearchAreaUncheckedUpdateWithoutJobPostingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type JobResearchAreaUncheckedUpdateWithoutJobPostingInput = {
+    researchAreaId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type ResearchAreaUncheckedUpdateManyWithoutJobPostingsInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
+  export type JobResearchAreaUncheckedUpdateManyWithoutJobPostingInput = {
+    researchAreaId?: IntFieldUpdateOperationsInput | number
   }
 
   export type JobKeywordCreateManyKeywordInput = {
@@ -25203,125 +26670,20 @@ export namespace Prisma {
     jobPostingId?: IntFieldUpdateOperationsInput | number
   }
 
-  export type JobPostingUpdateWithoutResearchAreasInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
-    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    jobType?: NullableStringFieldUpdateOperationsInput | string | null
-    workModality?: NullableStringFieldUpdateOperationsInput | string | null
-    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
-    contractType?: NullableStringFieldUpdateOperationsInput | string | null
-    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
-    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
-    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
-    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
-    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
-    status?: StringFieldUpdateOperationsInput | string
-    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
-    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
-    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    instructions?: NullableStringFieldUpdateOperationsInput | string | null
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
-    department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
-    discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
-    applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
-    jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
-    languageRequirements?: LanguageRequirementUpdateManyWithoutJobPostingNestedInput
-    suitableBackgrounds?: SuitableBackgroundUpdateManyWithoutJobPostingNestedInput
-    geoLocation?: GeoLocationUpdateOneWithoutJobPostingNestedInput
-    contact?: ContactUpdateOneWithoutJobPostingNestedInput
-    jobViews?: JobViewUpdateManyWithoutJobPostingNestedInput
+  export type JobResearchAreaCreateManyResearchAreaInput = {
+    jobPostingId: number
   }
 
-  export type JobPostingUncheckedUpdateWithoutResearchAreasInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
-    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    jobType?: NullableStringFieldUpdateOperationsInput | string | null
-    workModality?: NullableStringFieldUpdateOperationsInput | string | null
-    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
-    contractType?: NullableStringFieldUpdateOperationsInput | string | null
-    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
-    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
-    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
-    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
-    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentId?: IntFieldUpdateOperationsInput | number
-    disciplineId?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
-    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
-    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    instructions?: NullableStringFieldUpdateOperationsInput | string | null
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
-    applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
-    jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
-    languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
-    suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
-    geoLocation?: GeoLocationUncheckedUpdateOneWithoutJobPostingNestedInput
-    contact?: ContactUncheckedUpdateOneWithoutJobPostingNestedInput
-    jobViews?: JobViewUncheckedUpdateManyWithoutJobPostingNestedInput
+  export type JobResearchAreaUpdateWithoutResearchAreaInput = {
+    jobPosting?: JobPostingUpdateOneRequiredWithoutJobResearchAreasNestedInput
   }
 
-  export type JobPostingUncheckedUpdateManyWithoutResearchAreasInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    descriptionHtml?: NullableStringFieldUpdateOperationsInput | string | null
-    descriptionText?: NullableStringFieldUpdateOperationsInput | string | null
-    category?: NullableStringFieldUpdateOperationsInput | string | null
-    seniorityLevel?: NullableStringFieldUpdateOperationsInput | string | null
-    jobType?: NullableStringFieldUpdateOperationsInput | string | null
-    workModality?: NullableStringFieldUpdateOperationsInput | string | null
-    salaryRange?: NullableStringFieldUpdateOperationsInput | string | null
-    contractType?: NullableStringFieldUpdateOperationsInput | string | null
-    durationMonths?: NullableIntFieldUpdateOperationsInput | number | null
-    renewable?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    openDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    closeDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deadlineDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    applicationLink?: NullableStringFieldUpdateOperationsInput | string | null
-    sourceUrl?: NullableStringFieldUpdateOperationsInput | string | null
-    sourcePortal?: NullableStringFieldUpdateOperationsInput | string | null
-    fundingSource?: NullableStringFieldUpdateOperationsInput | string | null
-    visaSponsorship?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    interviewProcess?: NullableStringFieldUpdateOperationsInput | string | null
-    departmentId?: IntFieldUpdateOperationsInput | number
-    disciplineId?: IntFieldUpdateOperationsInput | number
-    status?: StringFieldUpdateOperationsInput | string
-    isSelfFinanced?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    isPartTime?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    workHoursPerWeek?: NullableIntFieldUpdateOperationsInput | number | null
-    compensationType?: NullableStringFieldUpdateOperationsInput | string | null
-    lastSyncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    expiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    instructions?: NullableStringFieldUpdateOperationsInput | string | null
-    qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+  export type JobResearchAreaUncheckedUpdateWithoutResearchAreaInput = {
+    jobPostingId?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type JobResearchAreaUncheckedUpdateManyWithoutResearchAreaInput = {
+    jobPostingId?: IntFieldUpdateOperationsInput | number
   }
 
 
