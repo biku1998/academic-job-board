@@ -61,10 +61,10 @@ const JobListingResponseSchema = z.object({
   total_count: z.number(),
 });
 
-type ApiJobPosting = z.infer<typeof JobPostingSchema>;
+type JobPosting = z.infer<typeof JobPostingSchema>;
 
 const extractJobs = async () => {
-  const jobPosts: ApiJobPosting[] = [];
+  const jobPosts: JobPosting[] = [];
   let page = 1;
   let totalCount = 0;
   const limit = 10;
@@ -120,7 +120,7 @@ const extractJobs = async () => {
   }
 };
 
-const transformJobs = async (jobs: ApiJobPosting[]) => {
+const transformJobs = async (jobs: JobPosting[]) => {
   const transformedData = {
     institutions: new Map<string, Omit<Institution, "id">>(),
     departments: new Map<

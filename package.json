@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync-jobs": "npx tsx src/scripts/sync-jobs.ts",
+    "sync-jobs": "npx tsx src/job-sync-etl/sync.ts",
     "test-enrichment": "npx tsx src/scripts/test-enrichment.ts"
   },
   "dependencies": {
