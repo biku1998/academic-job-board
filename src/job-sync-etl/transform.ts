@@ -151,6 +151,36 @@ const processJob = async (job: JobPosting) => {
     fundingSource: null,
     visaSponsorship: null,
     interviewProcess: null,
+    // Phase 1: New fields
+    isSelfFinanced: null,
+    isPartTime: null,
+    workHoursPerWeek: null,
+    compensationType: null,
+    // Phase 2: New fields
+    applicationRequirements: {
+      documentTypes: [],
+      referenceLettersRequired: null,
+      platform: null,
+    },
+    languageRequirements: {
+      languages: [],
+    },
+    suitableBackgrounds: {
+      backgrounds: [],
+    },
+    // Phase 3: New fields
+    geoLocation: {
+      lat: null,
+      lon: null,
+    },
+    contact: {
+      name: null,
+      email: null,
+      title: null,
+    },
+    researchAreas: {
+      researchAreas: [],
+    },
     departmentKey: departmentKey,
     disciplineKey: disciplineKey,
     keywords: keywords,
@@ -170,9 +200,47 @@ const processJob = async (job: JobPosting) => {
     interviewProcess: null as string | null,
   };
 
+  let jobDetailsData = {
+    isSelfFinanced: null as boolean | null,
+    isPartTime: null as boolean | null,
+    workHoursPerWeek: null as number | null,
+    compensationType: null as string | null,
+  };
+
+  const phase2Data = {
+    applicationRequirements: {
+      documentTypes: [] as string[],
+      referenceLettersRequired: null as number | null,
+      platform: null as string | null,
+    },
+    languageRequirements: {
+      languages: [] as string[],
+    },
+    suitableBackgrounds: {
+      backgrounds: [] as string[],
+    },
+  };
+
+  const phase3Data = {
+    geoLocation: {
+      lat: null as number | null,
+      lon: null as number | null,
+    },
+    contact: {
+      name: null as string | null,
+      email: null as string | null,
+      title: null as string | null,
+    },
+    researchAreas: {
+      researchAreas: [] as string[],
+    },
+  };
+
   if (jobEnrichmentService && job.description) {
     try {
       console.log(`🤖 Enriching job: ${job.name}`);
+
+      // Extract job attributes (existing enrichment)
       const enrichedAttributes =
         await jobEnrichmentService.extractJobAttributes(
           job.name,
@@ -192,11 +260,141 @@ const processJob = async (job: JobPosting) => {
           interviewProcess: enrichedAttributes.interviewProcess || null,
         };
         console.log(
-          `✅ Enriched job with confidence: ${enrichedAttributes.confidence}`
+          `✅ Enriched job attributes with confidence: ${enrichedAttributes.confidence}`
         );
       } else {
         console.log(
-          `⚠️  Low confidence enrichment (${enrichedAttributes.confidence}), skipping`
+          `⚠️  Low confidence job attributes enrichment (${enrichedAttributes.confidence}), skipping`
+        );
+      }
+
+      // Extract job details (Phase 1: new fields)
+      const jobDetails = await jobEnrichmentService.extractJobDetails(
+        job.name,
+        job.description,
+        job.salary || "",
+        job.instructions || "",
+        job.qualifications || ""
+      );
+
+      if (jobDetails.confidence > 0.3) {
+        jobDetailsData = {
+          isSelfFinanced: jobDetails.isSelfFinanced,
+          isPartTime: jobDetails.isPartTime,
+          workHoursPerWeek: jobDetails.workHoursPerWeek,
+          compensationType: jobDetails.compensationType,
+        };
+        console.log(
+          `✅ Extracted job details with confidence: ${jobDetails.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence job details extraction (${jobDetails.confidence}), skipping`
+        );
+      }
+
+      // Extract Phase 2 data (application requirements, language requirements, suitable backgrounds)
+      const [applicationReqs, languageReqs, suitableBackgrounds] =
+        await Promise.all([
+          jobEnrichmentService.extractApplicationRequirements(job.description),
+          jobEnrichmentService.extractLanguageRequirements(job.description),
+          jobEnrichmentService.extractSuitableBackgrounds(job.description),
+        ]);
+
+      if (applicationReqs.confidence > 0.3) {
+        phase2Data.applicationRequirements = {
+          documentTypes: applicationReqs.documentTypes,
+          referenceLettersRequired: applicationReqs.referenceLettersRequired,
+          platform: applicationReqs.platform,
+        };
+        console.log(
+          `✅ Extracted application requirements with confidence: ${applicationReqs.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence application requirements extraction (${applicationReqs.confidence}), skipping`
+        );
+      }
+
+      if (languageReqs.confidence > 0.3) {
+        phase2Data.languageRequirements = {
+          languages: languageReqs.languages,
+        };
+        console.log(
+          `✅ Extracted language requirements with confidence: ${languageReqs.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence language requirements extraction (${languageReqs.confidence}), skipping`
+        );
+      }
+
+      if (suitableBackgrounds.confidence > 0.3) {
+        phase2Data.suitableBackgrounds = {
+          backgrounds: suitableBackgrounds.backgrounds,
+        };
+        console.log(
+          `✅ Extracted suitable backgrounds with confidence: ${suitableBackgrounds.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence suitable backgrounds extraction (${suitableBackgrounds.confidence}), skipping`
+        );
+      }
+
+      // Extract Phase 3 data (geolocation, contact, research areas)
+      const [geoLocation, contact, researchAreas] = await Promise.all([
+        jobEnrichmentService.extractGeoLocation(
+          job.name,
+          job.description,
+          job.location
+        ),
+        jobEnrichmentService.extractContact(
+          job.description,
+          job.instructions || ""
+        ),
+        jobEnrichmentService.extractResearchAreas(job.name, job.description),
+      ]);
+
+      if (geoLocation.confidence > 0.3) {
+        phase3Data.geoLocation = {
+          lat: geoLocation.lat,
+          lon: geoLocation.lon,
+        };
+        console.log(
+          `✅ Extracted geolocation with confidence: ${geoLocation.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence geolocation extraction (${geoLocation.confidence}), skipping`
+        );
+      }
+
+      if (contact.confidence > 0.3) {
+        phase3Data.contact = {
+          name: contact.name,
+          email: contact.email,
+          title: contact.title,
+        };
+        console.log(
+          `✅ Extracted contact information with confidence: ${contact.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence contact extraction (${contact.confidence}), skipping`
+        );
+      }
+
+      if (researchAreas.confidence > 0.3) {
+        phase3Data.researchAreas = {
+          researchAreas: researchAreas.researchAreas,
+        };
+        console.log(
+          `✅ Extracted research areas with confidence: ${researchAreas.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence research areas extraction (${researchAreas.confidence}), skipping`
         );
       }
     } catch (error) {
@@ -207,6 +405,9 @@ const processJob = async (job: JobPosting) => {
   const transformedJob = {
     ...baseJob,
     ...enrichedData,
+    ...jobDetailsData,
+    ...phase2Data,
+    ...phase3Data,
   };
 
   return {

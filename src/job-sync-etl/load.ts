@@ -321,6 +321,11 @@ const batchUpsertJobPostings = async (
           fundingSource: jobData.fundingSource,
           visaSponsorship: jobData.visaSponsorship,
           interviewProcess: jobData.interviewProcess,
+          // Phase 1: New fields
+          isSelfFinanced: jobData.isSelfFinanced,
+          isPartTime: jobData.isPartTime,
+          workHoursPerWeek: jobData.workHoursPerWeek,
+          compensationType: jobData.compensationType,
           departmentId: departmentId,
           disciplineId: disciplineId,
           status: "active" as const,
@@ -359,6 +364,138 @@ const batchUpsertJobPostings = async (
               skipDuplicates: true,
             });
             stats.jobKeywords += keywordRelations.length;
+          }
+
+          // Create Phase 2 relationships (only for new jobs)
+          // Application Requirements
+          if (
+            jobData.applicationRequirements.documentTypes.length > 0 ||
+            jobData.applicationRequirements.referenceLettersRequired !== null ||
+            jobData.applicationRequirements.platform !== null
+          ) {
+            await prisma.applicationRequirement.create({
+              data: {
+                jobPostingId: jobPosting.id,
+                documentType:
+                  jobData.applicationRequirements.documentTypes.join(", "),
+                referenceLettersRequired:
+                  jobData.applicationRequirements.referenceLettersRequired,
+                platform: jobData.applicationRequirements.platform,
+                description: `Documents: ${jobData.applicationRequirements.documentTypes.join(
+                  ", "
+                )}`,
+              },
+            });
+          }
+
+          // Language Requirements
+          if (jobData.languageRequirements.languages.length > 0) {
+            const languageRelations =
+              jobData.languageRequirements.languages.map((language) => ({
+                jobPostingId: jobPosting.id,
+                language: language,
+              }));
+
+            await prisma.languageRequirement.createMany({
+              data: languageRelations,
+              skipDuplicates: true,
+            });
+          }
+
+          // Suitable Backgrounds
+          if (jobData.suitableBackgrounds.backgrounds.length > 0) {
+            const backgroundRelations =
+              jobData.suitableBackgrounds.backgrounds.map((background) => ({
+                jobPostingId: jobPosting.id,
+                background: background,
+              }));
+
+            await prisma.suitableBackground.createMany({
+              data: backgroundRelations,
+              skipDuplicates: true,
+            });
+          }
+
+          // Phase 3: Create GeoLocation, Contact, and ResearchArea relationships
+          // GeoLocation
+          if (
+            jobData.geoLocation.lat !== null &&
+            jobData.geoLocation.lon !== null
+          ) {
+            await prisma.geoLocation.create({
+              data: {
+                jobPostingId: jobPosting.id,
+                lat: jobData.geoLocation.lat,
+                lon: jobData.geoLocation.lon,
+              },
+            });
+          }
+
+          // Contact
+          if (
+            jobData.contact.name !== null ||
+            jobData.contact.email !== null ||
+            jobData.contact.title !== null
+          ) {
+            await prisma.contact.create({
+              data: {
+                jobPostingId: jobPosting.id,
+                name: jobData.contact.name,
+                email: jobData.contact.email,
+                title: jobData.contact.title,
+              },
+            });
+          }
+
+          // Research Areas
+          if (jobData.researchAreas.researchAreas.length > 0) {
+            // First, upsert research areas to get their IDs
+            const researchAreaData = jobData.researchAreas.researchAreas.map(
+              (area) => ({
+                name: area,
+              })
+            );
+
+            const researchAreaMap = new Map<string, number>();
+
+            // Get existing research areas
+            const existingResearchAreas = await prisma.researchArea.findMany({
+              where: {
+                name: {
+                  in: jobData.researchAreas.researchAreas,
+                },
+              },
+            });
+
+            existingResearchAreas.forEach((area) => {
+              researchAreaMap.set(area.name, area.id);
+            });
+
+            // Create new research areas
+            for (const areaName of jobData.researchAreas.researchAreas) {
+              if (!researchAreaMap.has(areaName)) {
+                const newArea = await prisma.researchArea.create({
+                  data: { name: areaName },
+                });
+                researchAreaMap.set(areaName, newArea.id);
+              }
+            }
+
+            // Create job-research area relationships
+            const researchAreaRelations = jobData.researchAreas.researchAreas
+              .map((areaName) => researchAreaMap.get(areaName))
+              .filter(Boolean)
+              .map((areaId) => ({
+                jobPostingId: jobPosting.id,
+                researchAreaId: areaId!,
+              }));
+
+            if (researchAreaRelations.length > 0) {
+              await prisma.jobResearchArea.createMany({
+                data: researchAreaRelations,
+                skipDuplicates: true,
+              });
+            }
           }
         }
 

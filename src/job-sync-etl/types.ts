@@ -57,6 +57,36 @@ export type TransformedJob = {
   fundingSource: string | null;
   visaSponsorship: boolean | null;
   interviewProcess: string | null;
+  // Phase 1: New fields
+  isSelfFinanced: boolean | null;
+  isPartTime: boolean | null;
+  workHoursPerWeek: number | null;
+  compensationType: string | null;
+  // Phase 2: New fields
+  applicationRequirements: {
+    documentTypes: string[];
+    referenceLettersRequired: number | null;
+    platform: string | null;
+  };
+  languageRequirements: {
+    languages: string[];
+  };
+  suitableBackgrounds: {
+    backgrounds: string[];
+  };
+  // Phase 3: New fields
+  geoLocation: {
+    lat: number | null;
+    lon: number | null;
+  };
+  contact: {
+    name: string | null;
+    email: string | null;
+    title: string | null;
+  };
+  researchAreas: {
+    researchAreas: string[];
+  };
   departmentKey: string;
   disciplineKey: string;
   keywords: string[];
