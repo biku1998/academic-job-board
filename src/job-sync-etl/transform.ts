@@ -1,4 +1,3 @@
-import { JobEnrichmentService } from "@/services/job-enrichment";
 import type {
   Institution,
   Department,
@@ -13,12 +12,14 @@ import {
   extractKeywords,
   determineJobType,
 } from "./utils";
+import { LLMEnrichmentService } from "@/services/llm-enrichment";
+import { z } from "zod";
 
-// Initialize enrichment service if API key is available
-let enrichmentService: JobEnrichmentService | null = null;
+// Initialize generic LLM enrichment service if API key is available
+let llmEnrichmentService: LLMEnrichmentService | null = null;
 try {
   if (config.cohereApiKey) {
-    enrichmentService = new JobEnrichmentService();
+    llmEnrichmentService = new LLMEnrichmentService();
     console.log("✅ LLM enrichment service initialized with Cohere");
   } else {
     console.log("⚠️  No COHERE_API_KEY found, skipping LLM enrichment");
@@ -26,6 +27,18 @@ try {
 } catch (error) {
   console.log("⚠️  Failed to initialize LLM enrichment service:", error);
 }
+
+const jobAttrSchema = z.object({
+  category: z.string().nullable(),
+  workModality: z.string().nullable(),
+  contractType: z.string().nullable(),
+  durationMonths: z.number().nullable(),
+  renewable: z.boolean().nullable(),
+  fundingSource: z.string().nullable(),
+  visaSponsorship: z.boolean().nullable(),
+  interviewProcess: z.string().nullable(),
+  confidence: z.number(),
+});
 
 export const transformJobs = async (jobs: JobPosting[]) => {
   const transformedData = {
@@ -168,31 +181,43 @@ export const transformJobs = async (jobs: JobPosting[]) => {
       interviewProcess: null as string | null,
     };
 
-    if (enrichmentService && job.description) {
+    if (llmEnrichmentService && job.description) {
       try {
         console.log(`🤖 Enriching job: ${job.name}`);
-        const enrichedAttributes = await enrichmentService.extractJobAttributes(
-          job.name,
-          job.description,
-          job.salary || ""
-        );
-        if (enrichedAttributes.confidence > 0.5) {
+        const prompt = `Analyze this academic job posting and extract key attributes. Return ONLY a valid JSON object with the following structure:\n\n{
+  "category": "string or null - Academic discipline category (e.g., Physics, Computer Science, Biology)",
+  "workModality": "string or null - On-site, Remote, Hybrid, or null if unclear",
+  "contractType": "string or null - Full-time, Part-time, Temporary, Permanent, or null if unclear",
+  "durationMonths": "number or null - Duration in months if temporary/fixed-term, null if permanent",
+  "renewable": "boolean or null - Whether the position is renewable, null if unclear",
+  "fundingSource": "string or null - Source of funding (e.g., Grant, University, Government, Industry)",
+  "visaSponsorship": "boolean or null - Whether visa sponsorship is available, null if unclear",
+  "interviewProcess": "string or null - Brief description of interview process if mentioned",
+  "confidence": "number between 0 and 1 - Confidence in the extraction"
+}\n\nJob Title: ${job.name}\nSalary: ${job.salary}`;
+        const enrichment = await llmEnrichmentService.enrich({
+          prompt,
+          inputText: job.description,
+          schema: jobAttrSchema,
+          webSearchQuery: `${job.name} ${job.univ} ${job.unit_name}`,
+        });
+        if (enrichment.data && enrichment.confidence > 0.5) {
           enrichedData = {
-            category: enrichedAttributes.category || null,
-            workModality: enrichedAttributes.workModality || null,
-            contractType: enrichedAttributes.contractType || null,
-            durationMonths: enrichedAttributes.durationMonths || null,
-            renewable: enrichedAttributes.renewable || null,
-            fundingSource: enrichedAttributes.fundingSource || null,
-            visaSponsorship: enrichedAttributes.visaSponsorship || null,
-            interviewProcess: enrichedAttributes.interviewProcess || null,
+            category: enrichment.data.category || null,
+            workModality: enrichment.data.workModality || null,
+            contractType: enrichment.data.contractType || null,
+            durationMonths: enrichment.data.durationMonths || null,
+            renewable: enrichment.data.renewable || null,
+            fundingSource: enrichment.data.fundingSource || null,
+            visaSponsorship: enrichment.data.visaSponsorship || null,
+            interviewProcess: enrichment.data.interviewProcess || null,
           };
           console.log(
-            `✅ Enriched job with confidence: ${enrichedAttributes.confidence}`
+            `✅ Enriched job with confidence: ${enrichment.confidence} (source: ${enrichment.source})`
           );
         } else {
           console.log(
-            `⚠️  Low confidence enrichment (${enrichedAttributes.confidence}), skipping`
+            `⚠️  Low confidence enrichment (${enrichment.confidence}), skipping`
           );
         }
       } catch (error) {
