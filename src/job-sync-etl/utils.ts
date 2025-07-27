@@ -46,7 +46,12 @@ export const cleanHtml = (html: string): string => {
 
 export const extractKeywords = (text: string): string[] => {
   if (!text) return [];
+
+  // Simplified fallback keyword extraction when LLM is not available
+  // This is a basic implementation that extracts common academic terms
   const cleanText = cleanHtml(text).toLowerCase();
+
+  // Core academic keywords to look for
   const academicKeywords = [
     "professor",
     "assistant",
@@ -56,6 +61,11 @@ export const extractKeywords = (text: string): string[] => {
     "fellow",
     "research",
     "teaching",
+    "phd",
+    "doctoral",
+    "graduate",
+    "faculty",
+    "tenure",
     "mathematics",
     "physics",
     "chemistry",
@@ -70,28 +80,17 @@ export const extractKeywords = (text: string): string[] => {
     "learning",
     "artificial",
     "intelligence",
-    "nuclear",
-    "materials",
-    "optical",
-    "spectroscopy",
     "experimental",
     "theoretical",
     "computational",
-    "phd",
-    "doctoral",
-    "graduate",
-    "undergraduate",
-    "faculty",
-    "tenure",
-    "laboratory",
-    "institute",
-    "university",
-    "college",
-    "department",
   ];
+
+  // Find academic keywords in the text
   const foundKeywords = academicKeywords.filter((keyword) =>
     cleanText.includes(keyword)
   );
+
+  // Extract additional meaningful words (3+ characters, not common words)
   const commonWords = [
     "the",
     "and",
@@ -112,7 +111,6 @@ export const extractKeywords = (text: string): string[] => {
     "do",
     "does",
     "did",
-    "will",
     "would",
     "could",
     "should",
@@ -122,6 +120,7 @@ export const extractKeywords = (text: string): string[] => {
     "can",
     "shall",
   ];
+
   const words = cleanText
     .replace(/[^\w\s]/g, " ")
     .split(/\s+/)
@@ -131,7 +130,8 @@ export const extractKeywords = (text: string): string[] => {
         !commonWords.includes(word) &&
         !foundKeywords.includes(word)
     )
-    .slice(0, 5);
+    .slice(0, 5); // Limit additional words
+
   return [...new Set([...foundKeywords, ...words])];
 };
 

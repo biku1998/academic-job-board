@@ -37,6 +37,20 @@ async function testEnrichment() {
 
     const enrichmentService = new JobEnrichmentService();
 
+    if (!enrichmentService.isAvailable()) {
+      console.log("❌ Service not available - no API key configured");
+      return;
+    }
+
+    console.log("\n🔍 Testing keyword extraction...");
+    const keywords = await enrichmentService.extractKeywords(
+      "Assistant Professor in Computer Science",
+      testJobDescription,
+      "Ph.D. in Computer Science or related field with strong research record in AI/ML"
+    );
+
+    console.log("✅ Keywords:", JSON.stringify(keywords, null, 2));
+
     console.log("\n📝 Testing job attributes extraction...");
     const attributes = await enrichmentService.extractJobAttributes(
       "Assistant Professor in Computer Science",

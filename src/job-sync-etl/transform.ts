@@ -12,35 +12,251 @@ import {
   extractKeywords,
   determineJobType,
 } from "./utils";
-import { LLMEnrichmentService } from "@/services/llm-enrichment";
-import { z } from "zod";
+import { JobEnrichmentService } from "@/services/job-enrichment";
 
-// Initialize generic LLM enrichment service if API key is available
-let llmEnrichmentService: LLMEnrichmentService | null = null;
+// Initialize job enrichment service if API key is available
+let jobEnrichmentService: JobEnrichmentService | null = null;
 try {
   if (config.cohereApiKey) {
-    llmEnrichmentService = new LLMEnrichmentService();
-    console.log("✅ LLM enrichment service initialized with Cohere");
+    jobEnrichmentService = new JobEnrichmentService();
+    console.log("✅ Job enrichment service initialized with Cohere");
   } else {
     console.log("⚠️  No COHERE_API_KEY found, skipping LLM enrichment");
   }
 } catch (error) {
-  console.log("⚠️  Failed to initialize LLM enrichment service:", error);
+  console.log("⚠️  Failed to initialize job enrichment service:", error);
 }
 
-const jobAttrSchema = z.object({
-  category: z.string().nullable(),
-  workModality: z.string().nullable(),
-  contractType: z.string().nullable(),
-  durationMonths: z.number().nullable(),
-  renewable: z.boolean().nullable(),
-  fundingSource: z.string().nullable(),
-  visaSponsorship: z.boolean().nullable(),
-  interviewProcess: z.string().nullable(),
-  confidence: z.number(),
-});
+// Configuration for parallel processing
+const CONCURRENCY_LIMIT = 5; // Process 5 jobs simultaneously
+const BATCH_SIZE = 10; // Process jobs in batches of 10
+
+/**
+ * Process a single job with enrichment
+ */
+const processJob = async (job: JobPosting) => {
+  // Validate required fields
+  if (!job.univ || !job.name || !job.url) {
+    console.warn(`Skipping job with missing required fields:`, {
+      id: job.id,
+      univ: job.univ,
+      name: job.name,
+      url: job.url,
+    });
+    return null;
+  }
+
+  // Extract and normalize institution data
+  const institutionKey = job.univ.toLowerCase().trim();
+  const institutionData = {
+    name: job.univ,
+    location: job.location || null,
+    website: null,
+    type: null,
+    description: null,
+  };
+
+  // Extract and normalize department data
+  const unitName = job.unit_name.trim() || "General Department";
+  const departmentKey = `${institutionKey}-${unitName.toLowerCase().trim()}`;
+  const departmentData = {
+    name: unitName,
+    location: job.location || null,
+    contactInfo: null,
+    institutionId: 0,
+    institutionKey: institutionKey,
+    description: null,
+    website: null,
+  };
+
+  // Extract and normalize discipline data
+  const disciplineKey = job.disc.toLowerCase().trim();
+  const disciplineData = {
+    name: job.disc,
+    parentId: null,
+  };
+
+  // Extract keywords using LLM if available, otherwise fall back to manual extraction
+  let keywords: string[] = [];
+  if (jobEnrichmentService && job.description) {
+    try {
+      console.log(`🔍 Extracting keywords for job: ${job.name}`);
+      const keywordExtraction = await jobEnrichmentService.extractKeywords(
+        job.name,
+        job.description,
+        job.qualifications
+      );
+
+      if (
+        keywordExtraction.confidence > 0.3 &&
+        keywordExtraction.keywords.length > 0
+      ) {
+        keywords = keywordExtraction.keywords;
+        console.log(
+          `✅ Extracted ${keywords.length} keywords with confidence: ${keywordExtraction.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence keyword extraction (${keywordExtraction.confidence}), using fallback`
+        );
+        // Fallback to manual extraction
+        keywords = [
+          ...extractKeywords(job.name),
+          ...extractKeywords(job.description),
+          ...extractKeywords(job.qualifications),
+        ];
+      }
+    } catch (error) {
+      console.warn(
+        `❌ Failed to extract keywords for job ${job.name}, using fallback:`,
+        error
+      );
+      // Fallback to manual extraction
+      keywords = [
+        ...extractKeywords(job.name),
+        ...extractKeywords(job.description),
+        ...extractKeywords(job.qualifications),
+      ];
+    }
+  } else {
+    // Manual extraction when LLM is not available
+    keywords = [
+      ...extractKeywords(job.name),
+      ...extractKeywords(job.description),
+      ...extractKeywords(job.qualifications),
+    ];
+  }
+
+  const { jobType, seniorityLevel } = determineJobType(job.name, job.tag);
+
+  // Transform job posting using Prisma types with camelCase field names
+  const baseJob = {
+    title: job.name,
+    descriptionHtml: job.description || null,
+    descriptionText: cleanHtml(job.description) || null,
+    category: null,
+    seniorityLevel: seniorityLevel,
+    jobType: jobType,
+    workModality: null,
+    salaryRange: job.salary || null,
+    contractType: null,
+    durationMonths: null,
+    renewable: null,
+    openDate: parseDate(job.open_date_raw),
+    closeDate: parseDate(job.close_date_raw),
+    deadlineDate: parseDate(job.deadline_raw),
+    applicationLink: job.apply,
+    sourceUrl: job.url,
+    sourcePortal: "academic_jobs",
+    fundingSource: null,
+    visaSponsorship: null,
+    interviewProcess: null,
+    departmentKey: departmentKey,
+    disciplineKey: disciplineKey,
+    keywords: keywords,
+    instructions: job.instructions,
+    qualifications: job.qualifications,
+    legacyPositionId: job.legacy_position_id,
+  };
+
+  let enrichedData = {
+    category: null as string | null,
+    workModality: null as string | null,
+    contractType: null as string | null,
+    durationMonths: null as number | null,
+    renewable: null as boolean | null,
+    fundingSource: null as string | null,
+    visaSponsorship: null as boolean | null,
+    interviewProcess: null as string | null,
+  };
+
+  if (jobEnrichmentService && job.description) {
+    try {
+      console.log(`🤖 Enriching job: ${job.name}`);
+      const enrichedAttributes =
+        await jobEnrichmentService.extractJobAttributes(
+          job.name,
+          job.description,
+          job.salary || ""
+        );
+
+      if (enrichedAttributes.confidence > 0.5) {
+        enrichedData = {
+          category: enrichedAttributes.category || null,
+          workModality: enrichedAttributes.workModality || null,
+          contractType: enrichedAttributes.contractType || null,
+          durationMonths: enrichedAttributes.durationMonths || null,
+          renewable: enrichedAttributes.renewable || null,
+          fundingSource: enrichedAttributes.fundingSource || null,
+          visaSponsorship: enrichedAttributes.visaSponsorship || null,
+          interviewProcess: enrichedAttributes.interviewProcess || null,
+        };
+        console.log(
+          `✅ Enriched job with confidence: ${enrichedAttributes.confidence}`
+        );
+      } else {
+        console.log(
+          `⚠️  Low confidence enrichment (${enrichedAttributes.confidence}), skipping`
+        );
+      }
+    } catch (error) {
+      console.warn(`❌ Failed to enrich job ${job.name}:`, error);
+    }
+  }
+
+  const transformedJob = {
+    ...baseJob,
+    ...enrichedData,
+  };
+
+  return {
+    institution: { key: institutionKey, data: institutionData },
+    department: { key: departmentKey, data: departmentData },
+    discipline: { key: disciplineKey, data: disciplineData },
+    jobPosting: transformedJob,
+    keywords: keywords.map((keyword) => ({ name: keyword })),
+  };
+};
+
+/**
+ * Process jobs in parallel with controlled concurrency
+ */
+const processJobsInParallel = async (jobs: JobPosting[]) => {
+  const results: Array<Awaited<ReturnType<typeof processJob>>> = [];
+
+  // Process jobs in batches to control memory usage
+  for (let i = 0; i < jobs.length; i += BATCH_SIZE) {
+    const batch = jobs.slice(i, i + BATCH_SIZE);
+    console.log(
+      `🔄 Processing batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(
+        jobs.length / BATCH_SIZE
+      )} (${batch.length} jobs)`
+    );
+
+    // Process batch with controlled concurrency
+    const batchPromises = batch.map(async (job, index) => {
+      // Add small delay to avoid overwhelming the LLM API
+      if (index > 0) {
+        await new Promise((resolve) => setTimeout(resolve, 200));
+      }
+      return processJob(job);
+    });
+
+    const batchResults = await Promise.all(batchPromises);
+    results.push(...batchResults);
+  }
+
+  return results.filter((result) => result !== null);
+};
 
 export const transformJobs = async (jobs: JobPosting[]) => {
+  console.log(`🚀 Starting parallel transformation of ${jobs.length} jobs...`);
+  const startTime = Date.now();
+
+  // Process all jobs in parallel
+  const processedJobs = await processJobsInParallel(jobs);
+
+  // Consolidate results
   const transformedData = {
     institutions: new Map<string, Omit<Institution, "id">>(),
     departments: new Map<
@@ -77,161 +293,49 @@ export const transformJobs = async (jobs: JobPosting[]) => {
     keywords: new Map<string, Omit<Keyword, "id">>(),
   };
 
-  for (const job of jobs) {
-    // Validate required fields
-    if (!job.univ || !job.name || !job.url) {
-      console.warn(`Skipping job with missing required fields:`, {
-        id: job.id,
-        univ: job.univ,
-        name: job.name,
-        url: job.url,
-      });
-      return;
+  // Consolidate all processed data
+  for (const result of processedJobs) {
+    if (!result) continue;
+
+    // Add institution
+    if (!transformedData.institutions.has(result.institution.key)) {
+      transformedData.institutions.set(
+        result.institution.key,
+        result.institution.data
+      );
     }
 
-    // Extract and normalize institution data
-    const institutionKey = job.univ.toLowerCase().trim();
-    if (!transformedData.institutions.has(institutionKey)) {
-      transformedData.institutions.set(institutionKey, {
-        name: job.univ,
-        location: job.location || null,
-        website: null, // Not available in API
-        type: null, // Not available in API
-        description: null, // Not available in API
-      });
+    // Add department
+    if (!transformedData.departments.has(result.department.key)) {
+      transformedData.departments.set(
+        result.department.key,
+        result.department.data
+      );
     }
 
-    // Extract and normalize department data
-    // Handle empty unit_name by using a default or extracting from institution name
-    const unitName = job.unit_name.trim() || "General Department";
-    const departmentKey = `${institutionKey}-${unitName.toLowerCase().trim()}`;
-    if (!transformedData.departments.has(departmentKey)) {
-      transformedData.departments.set(departmentKey, {
-        name: unitName,
-        location: job.location || null,
-        contactInfo: null, // Not available in API
-        institutionId: 0, // Will be set when saving to DB
-        institutionKey: institutionKey,
-        description: null, // Not available in API
-        website: null, // Not available in API
-      });
+    // Add discipline
+    if (!transformedData.disciplines.has(result.discipline.key)) {
+      transformedData.disciplines.set(
+        result.discipline.key,
+        result.discipline.data
+      );
     }
 
-    // Extract and normalize discipline data
-    const disciplineKey = job.disc.toLowerCase().trim();
-    if (!transformedData.disciplines.has(disciplineKey)) {
-      transformedData.disciplines.set(disciplineKey, {
-        name: job.disc,
-        parentId: null, // Would need logic to determine hierarchy
-      });
-    }
+    // Add job posting
+    transformedData.jobPostings.push(result.jobPosting);
 
-    // Extract keywords from title, description, and qualifications
-    const keywords = [
-      ...extractKeywords(job.name),
-      ...extractKeywords(job.description),
-      ...extractKeywords(job.qualifications),
-    ];
-    keywords.forEach((keyword) => {
-      if (!transformedData.keywords.has(keyword)) {
-        transformedData.keywords.set(keyword, { name: keyword });
-      }
-    });
-
-    const { jobType, seniorityLevel } = determineJobType(job.name, job.tag);
-
-    // Transform job posting using Prisma types with camelCase field names
-    const baseJob = {
-      title: job.name,
-      descriptionHtml: job.description || null,
-      descriptionText: cleanHtml(job.description) || null,
-      category: null,
-      seniorityLevel: seniorityLevel,
-      jobType: jobType,
-      workModality: null,
-      salaryRange: job.salary || null,
-      contractType: null,
-      durationMonths: null,
-      renewable: null,
-      openDate: parseDate(job.open_date_raw),
-      closeDate: parseDate(job.close_date_raw),
-      deadlineDate: parseDate(job.deadline_raw),
-      applicationLink: job.apply,
-      sourceUrl: job.url,
-      sourcePortal: "academic_jobs",
-      fundingSource: null,
-      visaSponsorship: null,
-      interviewProcess: null,
-      departmentKey: departmentKey,
-      disciplineKey: disciplineKey,
-      keywords: keywords,
-      instructions: job.instructions,
-      qualifications: job.qualifications,
-      legacyPositionId: job.legacy_position_id,
-    };
-
-    let enrichedData = {
-      category: null as string | null,
-      workModality: null as string | null,
-      contractType: null as string | null,
-      durationMonths: null as number | null,
-      renewable: null as boolean | null,
-      fundingSource: null as string | null,
-      visaSponsorship: null as boolean | null,
-      interviewProcess: null as string | null,
-    };
-
-    if (llmEnrichmentService && job.description) {
-      try {
-        console.log(`🤖 Enriching job: ${job.name}`);
-        const prompt = `Analyze this academic job posting and extract key attributes. Return ONLY a valid JSON object with the following structure:\n\n{
-  "category": "string or null - Academic discipline category (e.g., Physics, Computer Science, Biology)",
-  "workModality": "string or null - On-site, Remote, Hybrid, or null if unclear",
-  "contractType": "string or null - Full-time, Part-time, Temporary, Permanent, or null if unclear",
-  "durationMonths": "number or null - Duration in months if temporary/fixed-term, null if permanent",
-  "renewable": "boolean or null - Whether the position is renewable, null if unclear",
-  "fundingSource": "string or null - Source of funding (e.g., Grant, University, Government, Industry)",
-  "visaSponsorship": "boolean or null - Whether visa sponsorship is available, null if unclear",
-  "interviewProcess": "string or null - Brief description of interview process if mentioned",
-  "confidence": "number between 0 and 1 - Confidence in the extraction"
-}\n\nJob Title: ${job.name}\nSalary: ${job.salary}`;
-        const enrichment = await llmEnrichmentService.enrich({
-          prompt,
-          inputText: job.description,
-          schema: jobAttrSchema,
-          webSearchQuery: `${job.name} ${job.univ} ${job.unit_name}`,
-        });
-        if (enrichment.data && enrichment.confidence > 0.5) {
-          enrichedData = {
-            category: enrichment.data.category || null,
-            workModality: enrichment.data.workModality || null,
-            contractType: enrichment.data.contractType || null,
-            durationMonths: enrichment.data.durationMonths || null,
-            renewable: enrichment.data.renewable || null,
-            fundingSource: enrichment.data.fundingSource || null,
-            visaSponsorship: enrichment.data.visaSponsorship || null,
-            interviewProcess: enrichment.data.interviewProcess || null,
-          };
-          console.log(
-            `✅ Enriched job with confidence: ${enrichment.confidence} (source: ${enrichment.source})`
-          );
-        } else {
-          console.log(
-            `⚠️  Low confidence enrichment (${enrichment.confidence}), skipping`
-          );
-        }
-      } catch (error) {
-        console.warn(`❌ Failed to enrich job ${job.name}:`, error);
+    // Add keywords
+    for (const keyword of result.keywords) {
+      if (!transformedData.keywords.has(keyword.name)) {
+        transformedData.keywords.set(keyword.name, keyword);
       }
     }
-
-    const transformedJob = {
-      ...baseJob,
-      ...enrichedData,
-    };
-
-    transformedData.jobPostings.push(transformedJob);
   }
+
+  const endTime = Date.now();
+  console.log(
+    `✅ Parallel transformation completed in ${endTime - startTime}ms`
+  );
 
   return transformedData;
 };

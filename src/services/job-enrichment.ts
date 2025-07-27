@@ -1,5 +1,7 @@
 import { config } from "@/config";
-import { CohereClient } from "cohere-ai";
+import { LLMEnrichmentService } from "./llm-enrichment";
+import { PromptLoader } from "@/lib/prompt-loader";
+import { z } from "zod";
 
 export interface JobAttributes {
   category: string | null;
@@ -30,89 +32,176 @@ export interface SuitableBackgrounds {
   confidence: number;
 }
 
+export interface KeywordExtraction {
+  keywords: string[];
+  confidence: number;
+}
+
+// Zod schemas for validation
+const jobAttrSchema = z.object({
+  category: z.string().nullable(),
+  workModality: z.string().nullable(),
+  contractType: z.string().nullable(),
+  durationMonths: z.number().nullable(),
+  renewable: z.boolean().nullable(),
+  fundingSource: z.string().nullable(),
+  visaSponsorship: z.boolean().nullable(),
+  interviewProcess: z.string().nullable(),
+  confidence: z.number(),
+});
+
+const applicationReqSchema = z.object({
+  documentTypes: z.array(z.string()),
+  referenceLettersRequired: z.number().nullable(),
+  platform: z.string().nullable(),
+  confidence: z.number(),
+});
+
+const languageReqSchema = z.object({
+  languages: z.array(z.string()),
+  confidence: z.number(),
+});
+
+const suitableBackgroundsSchema = z.object({
+  backgrounds: z.array(z.string()),
+  confidence: z.number(),
+});
+
+const keywordExtractionSchema = z.object({
+  keywords: z.array(z.string()),
+  confidence: z.number(),
+});
+
 export class JobEnrichmentService {
-  private cohere: CohereClient | null;
+  private llmService: LLMEnrichmentService | null;
 
   constructor() {
     if (config.cohereApiKey) {
-      this.cohere = new CohereClient({ token: config.cohereApiKey });
+      this.llmService = new LLMEnrichmentService();
     } else {
-      this.cohere = null;
+      this.llmService = null;
+      console.warn(
+        "⚠️  No COHERE_API_KEY found, JobEnrichmentService will not be available"
+      );
     }
   }
 
-  private async callCohere(
-    prompt: string,
-    temperature: number = 0.1
-  ): Promise<string> {
-    if (!this.cohere) {
-      throw new Error("Cohere client not initialized");
+  /**
+   * Check if the service is available (has API key)
+   */
+  isAvailable(): boolean {
+    return this.llmService !== null;
+  }
+
+  /**
+   * Extract keywords from job content using LLM
+   */
+  async extractKeywords(
+    title: string,
+    description: string,
+    qualifications: string
+  ): Promise<KeywordExtraction> {
+    if (!this.llmService) {
+      return {
+        keywords: [],
+        confidence: 0,
+      };
     }
 
     try {
-      const response = await this.cohere.generate({
-        model: "command-r-08-2024",
-        prompt: prompt,
-        maxTokens: 1000,
-        temperature: temperature,
-        k: 0,
-        stopSequences: [],
-        returnLikelihoods: "NONE",
+      const prompt = PromptLoader.getPromptContent("keyword-extraction");
+      const combinedText = `Job Title: ${title}\n\nDescription: ${description.substring(
+        0,
+        1500
+      )}\n\nQualifications: ${qualifications.substring(0, 1000)}`;
+
+      const enrichment = await this.llmService.enrich({
+        prompt: `${prompt}\n\nJob Content:\n${combinedText}\n\nReturn only the JSON array of keywords, no other text.`,
+        inputText: combinedText,
+        schema: keywordExtractionSchema,
+        webSearchQuery: `${title} ${description.substring(0, 100)}`,
       });
 
-      return response.generations[0].text.trim();
+      if (enrichment.data && enrichment.confidence > 0.3) {
+        return {
+          keywords: enrichment.data.keywords || [],
+          confidence: enrichment.confidence,
+        };
+      }
+
+      return {
+        keywords: [],
+        confidence: enrichment.confidence,
+      };
     } catch (error) {
-      console.error("Error calling Cohere API:", error);
-      throw error;
+      console.error("Error extracting keywords:", error);
+      return {
+        keywords: [],
+        confidence: 0,
+      };
     }
   }
 
+  /**
+   * Extract job attributes using LLM
+   */
   async extractJobAttributes(
     title: string,
     description: string,
     salary: string
   ): Promise<JobAttributes> {
-    const prompt = `Analyze this academic job posting and extract key attributes. Return ONLY a valid JSON object with the following structure:
-
-{
-  "category": "string or null - Academic discipline category (e.g., Physics, Computer Science, Biology)",
-  "workModality": "string or null - On-site, Remote, Hybrid, or null if unclear",
-  "contractType": "string or null - Full-time, Part-time, Temporary, Permanent, or null if unclear",
-  "durationMonths": "number or null - Duration in months if temporary/fixed-term, null if permanent",
-  "renewable": "boolean or null - Whether the position is renewable, null if unclear",
-  "fundingSource": "string or null - Source of funding (e.g., Grant, University, Government, Industry)",
-  "visaSponsorship": "boolean or null - Whether visa sponsorship is available, null if unclear",
-  "interviewProcess": "string or null - Brief description of interview process if mentioned",
-  "confidence": "number between 0 and 1 - Confidence in the extraction"
-}
-
-Job Title: ${title}
-Salary: ${salary}
-Description: ${description.substring(0, 2000)}...
-
-Return only the JSON object, no other text.`;
+    if (!this.llmService) {
+      return {
+        category: null,
+        workModality: null,
+        contractType: null,
+        durationMonths: null,
+        renewable: null,
+        fundingSource: null,
+        visaSponsorship: null,
+        interviewProcess: null,
+        confidence: 0,
+      };
+    }
 
     try {
-      const response = await this.callCohere(prompt);
+      const prompt = PromptLoader.getPromptContent("job-attributes");
+      const combinedText = `Job Title: ${title}\nSalary: ${salary}\nDescription: ${description.substring(
+        0,
+        2000
+      )}`;
 
-      // Clean the response to extract JSON
-      const jsonMatch = response.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error("No JSON found in response");
+      const enrichment = await this.llmService.enrich({
+        prompt: `${prompt}\n\nJob Content:\n${combinedText}\n\nReturn only the JSON object, no other text.`,
+        inputText: combinedText,
+        schema: jobAttrSchema,
+        webSearchQuery: `${title} ${salary}`,
+      });
+
+      if (enrichment.data && enrichment.confidence > 0.5) {
+        return {
+          category: enrichment.data.category || null,
+          workModality: enrichment.data.workModality || null,
+          contractType: enrichment.data.contractType || null,
+          durationMonths: enrichment.data.durationMonths || null,
+          renewable: enrichment.data.renewable || null,
+          fundingSource: enrichment.data.fundingSource || null,
+          visaSponsorship: enrichment.data.visaSponsorship || null,
+          interviewProcess: enrichment.data.interviewProcess || null,
+          confidence: enrichment.confidence,
+        };
       }
 
-      const parsed = JSON.parse(jsonMatch[0]);
-
       return {
-        category: parsed.category || null,
-        workModality: parsed.workModality || null,
-        contractType: parsed.contractType || null,
-        durationMonths: parsed.durationMonths || null,
-        renewable: parsed.renewable || null,
-        fundingSource: parsed.fundingSource || null,
-        visaSponsorship: parsed.visaSponsorship || null,
-        interviewProcess: parsed.interviewProcess || null,
-        confidence: parsed.confidence || 0,
+        category: null,
+        workModality: null,
+        contractType: null,
+        durationMonths: null,
+        renewable: null,
+        fundingSource: null,
+        visaSponsorship: null,
+        interviewProcess: null,
+        confidence: enrichment.confidence,
       };
     } catch (error) {
       console.error("Error extracting job attributes:", error);
@@ -130,37 +219,48 @@ Return only the JSON object, no other text.`;
     }
   }
 
+  /**
+   * Extract application requirements using LLM
+   */
   async extractApplicationRequirements(
     description: string
   ): Promise<ApplicationRequirements> {
-    const prompt = `Analyze this job description and extract application requirements. Return ONLY a valid JSON object with the following structure:
-
-{
-  "documentTypes": ["array of strings - Required documents (e.g., CV, Cover Letter, Research Statement)"],
-  "referenceLettersRequired": "number or null - Number of reference letters required",
-  "platform": "string or null - Application platform if mentioned (e.g., AcademicJobsOnline, Interfolio)",
-  "confidence": "number between 0 and 1 - Confidence in the extraction"
-}
-
-Description: ${description.substring(0, 2000)}...
-
-Return only the JSON object, no other text.`;
+    if (!this.llmService) {
+      return {
+        documentTypes: [],
+        referenceLettersRequired: null,
+        platform: null,
+        confidence: 0,
+      };
+    }
 
     try {
-      const response = await this.callCohere(prompt);
+      const prompt = PromptLoader.getPromptContent("application-requirements");
 
-      const jsonMatch = response.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error("No JSON found in response");
+      const enrichment = await this.llmService.enrich({
+        prompt: `${prompt}\n\nDescription: ${description.substring(
+          0,
+          2000
+        )}\n\nReturn only the JSON object, no other text.`,
+        inputText: description,
+        schema: applicationReqSchema,
+      });
+
+      if (enrichment.data && enrichment.confidence > 0.5) {
+        return {
+          documentTypes: enrichment.data.documentTypes || [],
+          referenceLettersRequired:
+            enrichment.data.referenceLettersRequired || null,
+          platform: enrichment.data.platform || null,
+          confidence: enrichment.confidence,
+        };
       }
 
-      const parsed = JSON.parse(jsonMatch[0]);
-
       return {
-        documentTypes: parsed.documentTypes || [],
-        referenceLettersRequired: parsed.referenceLettersRequired || null,
-        platform: parsed.platform || null,
-        confidence: parsed.confidence || 0,
+        documentTypes: [],
+        referenceLettersRequired: null,
+        platform: null,
+        confidence: enrichment.confidence,
       };
     } catch (error) {
       console.error("Error extracting application requirements:", error);
@@ -173,33 +273,41 @@ Return only the JSON object, no other text.`;
     }
   }
 
+  /**
+   * Extract language requirements using LLM
+   */
   async extractLanguageRequirements(
     description: string
   ): Promise<LanguageRequirements> {
-    const prompt = `Analyze this job description and extract language requirements. Return ONLY a valid JSON object with the following structure:
-
-{
-  "languages": ["array of strings - Required languages (e.g., English, Spanish, French)"],
-  "confidence": "number between 0 and 1 - Confidence in the extraction"
-}
-
-Description: ${description.substring(0, 2000)}...
-
-Return only the JSON object, no other text.`;
+    if (!this.llmService) {
+      return {
+        languages: [],
+        confidence: 0,
+      };
+    }
 
     try {
-      const response = await this.callCohere(prompt);
+      const prompt = PromptLoader.getPromptContent("language-requirements");
 
-      const jsonMatch = response.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error("No JSON found in response");
+      const enrichment = await this.llmService.enrich({
+        prompt: `${prompt}\n\nDescription: ${description.substring(
+          0,
+          2000
+        )}\n\nReturn only the JSON object, no other text.`,
+        inputText: description,
+        schema: languageReqSchema,
+      });
+
+      if (enrichment.data && enrichment.confidence > 0.5) {
+        return {
+          languages: enrichment.data.languages || [],
+          confidence: enrichment.confidence,
+        };
       }
 
-      const parsed = JSON.parse(jsonMatch[0]);
-
       return {
-        languages: parsed.languages || [],
-        confidence: parsed.confidence || 0,
+        languages: [],
+        confidence: enrichment.confidence,
       };
     } catch (error) {
       console.error("Error extracting language requirements:", error);
@@ -210,33 +318,41 @@ Return only the JSON object, no other text.`;
     }
   }
 
+  /**
+   * Extract suitable backgrounds using LLM
+   */
   async extractSuitableBackgrounds(
     description: string
   ): Promise<SuitableBackgrounds> {
-    const prompt = `Analyze this job description and extract suitable academic backgrounds. Return ONLY a valid JSON object with the following structure:
-
-{
-  "backgrounds": ["array of strings - Suitable academic backgrounds (e.g., PhD in Physics, Master's in Computer Science)"],
-  "confidence": "number between 0 and 1 - Confidence in the extraction"
-}
-
-Description: ${description.substring(0, 2000)}...
-
-Return only the JSON object, no other text.`;
+    if (!this.llmService) {
+      return {
+        backgrounds: [],
+        confidence: 0,
+      };
+    }
 
     try {
-      const response = await this.callCohere(prompt);
+      const prompt = PromptLoader.getPromptContent("suitable-backgrounds");
 
-      const jsonMatch = response.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) {
-        throw new Error("No JSON found in response");
+      const enrichment = await this.llmService.enrich({
+        prompt: `${prompt}\n\nDescription: ${description.substring(
+          0,
+          2000
+        )}\n\nReturn only the JSON object, no other text.`,
+        inputText: description,
+        schema: suitableBackgroundsSchema,
+      });
+
+      if (enrichment.data && enrichment.confidence > 0.5) {
+        return {
+          backgrounds: enrichment.data.backgrounds || [],
+          confidence: enrichment.confidence,
+        };
       }
 
-      const parsed = JSON.parse(jsonMatch[0]);
-
       return {
-        backgrounds: parsed.backgrounds || [],
-        confidence: parsed.confidence || 0,
+        backgrounds: [],
+        confidence: enrichment.confidence,
       };
     } catch (error) {
       console.error("Error extracting suitable backgrounds:", error);
