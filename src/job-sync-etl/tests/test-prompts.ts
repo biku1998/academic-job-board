@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { PromptLoader } from "../lib/prompt-loader";
+import { PromptLoader } from "@/job-sync-etl/services/prompt-loader";
 
 async function testPrompts() {
   try {

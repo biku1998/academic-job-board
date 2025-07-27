@@ -450,12 +450,6 @@ const batchUpsertJobPostings = async (
           // Research Areas
           if (jobData.researchAreas.researchAreas.length > 0) {
             // First, upsert research areas to get their IDs
-            const researchAreaData = jobData.researchAreas.researchAreas.map(
-              (area) => ({
-                name: area,
-              })
-            );
-
             const researchAreaMap = new Map<string, number>();
 
             // Get existing research areas

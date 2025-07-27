@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "next lint",
     "sync-jobs": "npx tsx src/job-sync-etl/sync.ts",
-    "test-enrichment": "npx tsx src/scripts/test-enrichment.ts"
+    "test-enrichment": "npx tsx src/job-sync-etl/tests/test-enrichment.ts",
+    "test-prompts": "npx tsx src/job-sync-etl/tests/test-prompts.ts",
+    "test-job-details": "npx tsx src/job-sync-etl/tests/test-job-details.ts",
+    "test-phase2-extraction": "npx tsx src/job-sync-etl/tests/test-phase2-extraction.ts",
+    "test-phase3-extraction": "npx tsx src/job-sync-etl/tests/test-phase3-extraction.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.57.0",

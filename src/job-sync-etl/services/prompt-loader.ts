@@ -2,7 +2,12 @@ import fs from "fs";
 import path from "path";
 
 export class PromptLoader {
-  private static promptsDir = path.join(process.cwd(), "src", "prompts");
+  private static promptsDir = path.join(
+    process.cwd(),
+    "src",
+    "job-sync-etl",
+    "prompts"
+  );
 
   /**
    * Load a prompt from a markdown file

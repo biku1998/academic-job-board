@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { JobEnrichmentService } from "@/services/job-enrichment";
+import { JobEnrichmentService } from "@/job-sync-etl/services/job-enrichment";
 
 async function testJobDetailsExtraction() {
   console.log("🧪 Testing Job Details Extraction (Phase 1)...\n");

@@ -12,7 +12,7 @@ import {
   extractKeywords,
   determineJobType,
 } from "./utils";
-import { JobEnrichmentService } from "@/services/job-enrichment";
+import { JobEnrichmentService } from "@/job-sync-etl/services/job-enrichment";
 
 // Initialize job enrichment service if API key is available
 let jobEnrichmentService: JobEnrichmentService | null = null;
@@ -28,7 +28,6 @@ try {
 }
 
 // Configuration for parallel processing
-const CONCURRENCY_LIMIT = 5; // Process 5 jobs simultaneously
 const BATCH_SIZE = 10; // Process jobs in batches of 10
 
 /**

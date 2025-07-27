@@ -1,6 +1,6 @@
 import { config } from "@/config";
 import { LLMEnrichmentService } from "./llm-enrichment";
-import { PromptLoader } from "@/lib/prompt-loader";
+import { PromptLoader } from "@/job-sync-etl/services/prompt-loader";
 import { z } from "zod";
 
 export interface JobAttributes {
