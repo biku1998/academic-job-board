@@ -3,4 +3,7 @@ export const config = {
   anthropicApiKey: process.env.ANTHROPIC_API_KEY || "",
   cohereApiKey: process.env.COHERE_API_KEY || "",
   tavilyApiKey: process.env.TAVILY_API_KEY || "",
+  ollamaUrl: process.env.OLLAMA_URL || "",
 };
+
+export const ollamaModels = ["mistral:latest", "deepseek-r1:latest"];

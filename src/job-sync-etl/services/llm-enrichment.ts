@@ -2,15 +2,14 @@ import { ZodType } from "zod";
 import { config } from "@/config";
 import { CohereClient } from "cohere-ai";
 import axios from "axios";
+import {
+  BaseEnrichmentService,
+  BaseEnrichmentResponse,
+} from "./base-enrichment";
 
-export type LLMEnrichmentResponse<T> = {
-  data: T | null;
-  source: "description" | "web" | "none";
-  confidence: number;
-  error?: string;
-};
+export type LLMEnrichmentResponse<T> = BaseEnrichmentResponse<T>;
 
-export class LLMEnrichmentService {
+export class LLMEnrichmentService implements BaseEnrichmentService {
   private cohere: CohereClient | null;
 
   constructor() {

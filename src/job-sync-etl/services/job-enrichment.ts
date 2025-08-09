@@ -1,5 +1,7 @@
-import { config } from "@/config";
+import { config, ollamaModels } from "@/config";
 import { LLMEnrichmentService } from "./llm-enrichment";
+import { OllamaEnrichmentService } from "./ollama-enrichment";
+import { BaseEnrichmentService } from "./base-enrichment";
 import { PromptLoader } from "@/job-sync-etl/services/prompt-loader";
 import { z } from "zod";
 
@@ -125,15 +127,26 @@ const researchAreasSchema = z.object({
 });
 
 export class JobEnrichmentService {
-  private llmService: LLMEnrichmentService | null;
+  private llmService: BaseEnrichmentService | null;
 
   constructor() {
-    if (config.cohereApiKey) {
+    // Try Ollama first if URL is configured
+    if (config.ollamaUrl) {
+      this.llmService = new OllamaEnrichmentService();
+      console.log(
+        `✅ Job enrichment service initialized with Ollama models: ${ollamaModels.join(
+          ", "
+        )}`
+      );
+    } else if (config.cohereApiKey) {
       this.llmService = new LLMEnrichmentService();
+      console.log(
+        "✅ Job enrichment service initialized with Cohere (fallback)"
+      );
     } else {
       this.llmService = null;
       console.warn(
-        "⚠️  No COHERE_API_KEY found, JobEnrichmentService will not be available"
+        "⚠️  No LLM service available - check OLLAMA_URL or COHERE_API_KEY"
       );
     }
   }
@@ -143,6 +156,19 @@ export class JobEnrichmentService {
    */
   isAvailable(): boolean {
     return this.llmService !== null;
+  }
+
+  /**
+   * Check if the service is healthy and ready to use
+   */
+  async isHealthy(): Promise<boolean> {
+    if (!this.llmService) return false;
+
+    if (this.llmService instanceof OllamaEnrichmentService) {
+      return await this.llmService.isHealthy();
+    }
+
+    return true; // Assume Cohere is healthy if API key exists
   }
 
   /**

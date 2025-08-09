@@ -14,14 +14,21 @@ import {
 } from "./utils";
 import { JobEnrichmentService } from "@/job-sync-etl/services/job-enrichment";
 
-// Initialize job enrichment service if API key is available
+// Initialize job enrichment service - Ollama first, then Cohere fallback
 let jobEnrichmentService: JobEnrichmentService | null = null;
 try {
-  if (config.cohereApiKey) {
+  if (config.ollamaUrl || config.cohereApiKey) {
     jobEnrichmentService = new JobEnrichmentService();
-    console.log("✅ Job enrichment service initialized with Cohere");
+
+    // Test service health if it's available
+    if (jobEnrichmentService.isAvailable()) {
+      console.log("🔍 Testing LLM service health...");
+      // Note: Health check will be performed during first use to avoid blocking startup
+    }
   } else {
-    console.log("⚠️  No COHERE_API_KEY found, skipping LLM enrichment");
+    console.log(
+      "⚠️  No OLLAMA_URL or COHERE_API_KEY found, skipping LLM enrichment"
+    );
   }
 } catch (error) {
   console.log("⚠️  Failed to initialize job enrichment service:", error);
@@ -29,6 +36,17 @@ try {
 
 // Configuration for parallel processing
 const BATCH_SIZE = 10; // Process jobs in batches of 10
+
+/**
+ * Fallback keyword extraction when LLM is unavailable or fails
+ */
+const fallbackKeywordExtraction = (job: JobPosting): string[] => {
+  return [
+    ...extractKeywords(job.name),
+    ...extractKeywords(job.description),
+    ...extractKeywords(job.qualifications),
+  ];
+};
 
 /**
  * Process a single job with enrichment
@@ -88,31 +106,36 @@ const processJob = async (job: JobPosting) => {
   let keywords: string[] = [];
   if (jobEnrichmentService && job.description) {
     try {
-      console.log(`🔍 Extracting keywords for job: ${job.name}`);
-      const keywordExtraction = await jobEnrichmentService.extractKeywords(
-        job.name,
-        job.description,
-        job.qualifications
-      );
+      // Check service health before attempting extraction
+      const isHealthy = await jobEnrichmentService.isHealthy();
+      if (isHealthy) {
+        console.log(`🔍 Extracting keywords for job: ${job.name}`);
+        const keywordExtraction = await jobEnrichmentService.extractKeywords(
+          job.name,
+          job.description,
+          job.qualifications
+        );
 
-      if (
-        keywordExtraction.confidence > 0.3 &&
-        keywordExtraction.keywords.length > 0
-      ) {
-        keywords = keywordExtraction.keywords;
-        console.log(
-          `✅ Extracted ${keywords.length} keywords with confidence: ${keywordExtraction.confidence}`
-        );
+        if (
+          keywordExtraction.confidence > 0.3 &&
+          keywordExtraction.keywords.length > 0
+        ) {
+          keywords = keywordExtraction.keywords;
+          console.log(
+            `✅ Extracted ${keywords.length} keywords with confidence: ${keywordExtraction.confidence}`
+          );
+        } else {
+          console.log(
+            `⚠️  Low confidence keyword extraction (${keywordExtraction.confidence}), using fallback`
+          );
+          // Fallback to manual extraction
+          keywords = fallbackKeywordExtraction(job);
+        }
       } else {
-        console.log(
-          `⚠️  Low confidence keyword extraction (${keywordExtraction.confidence}), using fallback`
+        console.warn(
+          "⚠️  LLM service unhealthy, using fallback keyword extraction"
         );
-        // Fallback to manual extraction
-        keywords = [
-          ...extractKeywords(job.name),
-          ...extractKeywords(job.description),
-          ...extractKeywords(job.qualifications),
-        ];
+        keywords = fallbackKeywordExtraction(job);
       }
     } catch (error) {
       console.warn(
@@ -120,19 +143,11 @@ const processJob = async (job: JobPosting) => {
         error
       );
       // Fallback to manual extraction
-      keywords = [
-        ...extractKeywords(job.name),
-        ...extractKeywords(job.description),
-        ...extractKeywords(job.qualifications),
-      ];
+      keywords = fallbackKeywordExtraction(job);
     }
   } else {
     // Manual extraction when LLM is not available
-    keywords = [
-      ...extractKeywords(job.name),
-      ...extractKeywords(job.description),
-      ...extractKeywords(job.qualifications),
-    ];
+    keywords = fallbackKeywordExtraction(job);
   }
 
   const { jobType, seniorityLevel } = determineJobType(job.name, job.tag);
