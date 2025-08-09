@@ -56,7 +56,16 @@ const processJob = async (job: JobPosting) => {
   };
 
   // Extract and normalize department data
-  const unitName = job.unit_name.trim() || "General Department";
+  // Try to extract department from unit_name, or fall back to discipline if unit_name is empty
+  const unitName =
+    job.unit_name.trim() || job.disc.trim() || "General Department";
+
+  // Debug logging for department extraction
+  if (!job.unit_name.trim()) {
+    console.log(
+      `⚠️  Empty unit_name for job "${job.name}", using discipline: ${job.disc}`
+    );
+  }
   const departmentKey = `${institutionKey}-${unitName.toLowerCase().trim()}`;
   const departmentData = {
     name: unitName,

@@ -6,7 +6,7 @@ export const JobPostingSchema = z.object({
   g: z.number(),
   name: z.string(),
   univ: z.string(),
-  url: z.url(),
+  url: z.string(),
   description: z.string(),
   deadline_raw: z.string(),
   unit_name: z.string(),
@@ -20,7 +20,7 @@ export const JobPostingSchema = z.object({
   open_date_raw: z.string(),
   legacy_position_id: z.number(),
   qualifications: z.string(),
-  apply: z.url(),
+  apply: z.string(),
 });
 
 export const JobListingResponseSchema = z.object({

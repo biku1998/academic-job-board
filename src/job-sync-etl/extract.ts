@@ -40,8 +40,8 @@ export const extractJobs = async () => {
       );
       page++;
       // Add a small delay to be respectful to the server
-      console.log("Waiting 5 seconds...");
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      console.log("Waiting 2 seconds...");
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       // DEV: Break after 2 pages for development
       // if (page > 2) {
       //   console.log("DEV: Breaking after 2 pages for development");
