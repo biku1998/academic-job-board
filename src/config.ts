@@ -6,4 +6,10 @@ export const config = {
   ollamaUrl: process.env.OLLAMA_URL || "",
 };
 
-export const ollamaModels = ["mistral:latest", "deepseek-r1:latest"];
+export const ollamaModels = [
+  "smollm2:135m",
+  "llama3.2:3b",
+  "gemma3:1b",
+  "mistral:latest",
+  "deepseek-r1:latest",
+];

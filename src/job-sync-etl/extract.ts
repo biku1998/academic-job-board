@@ -42,11 +42,13 @@ export const extractJobs = async () => {
       // Add a small delay to be respectful to the server
       console.log("Waiting 2 seconds...");
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      // DEV: Break after 2 pages for development
-      // if (page > 2) {
-      //   console.log("DEV: Breaking after 2 pages for development");
-      //   break;
-      // }
+
+      const breakAfter = 1;
+      // DEV: Break after {breakAfter} pages for development
+      if (page > breakAfter) {
+        console.log(`DEV: Breaking after ${breakAfter} pages for development`);
+        break;
+      }
     } while (jobPosts.length < totalCount);
     console.log(`Successfully fetched all ${jobPosts.length} jobs`);
     return jobPosts;
