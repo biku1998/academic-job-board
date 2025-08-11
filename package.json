@@ -12,7 +12,8 @@
     "test-prompts": "npx tsx src/job-sync-etl/tests/test-prompts.ts",
     "test-job-details": "npx tsx src/job-sync-etl/tests/test-job-details.ts",
     "test-phase2-extraction": "npx tsx src/job-sync-etl/tests/test-phase2-extraction.ts",
-    "test-phase3-extraction": "npx tsx src/job-sync-etl/tests/test-phase3-extraction.ts"
+    "test-phase3-extraction": "npx tsx src/job-sync-etl/tests/test-phase3-extraction.ts",
+    "test-openai-migration": "npx tsx src/job-sync-etl/tests/test-openai-migration.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.57.0",
@@ -27,6 +28,7 @@
     "html-to-text": "^9.0.5",
     "lucide-react": "^0.526.0",
     "next": "15.4.4",
+    "openai": "^5.12.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwind-merge": "^3.3.1",
