@@ -1,47 +1,40 @@
-# Language Requirements Extraction Prompt
+# Language Requirements Extraction
 
-Analyze this job description and extract language requirements. Return ONLY a valid JSON object with the following structure:
+Extract language requirements from this job description.
 
-## Required Fields
+## Output Format
 
-### languages
+Return ONLY a valid JSON object with this exact structure:
 
-- **Type**: array of strings
-- **Description**: Required languages for the position
-- **Examples**: ["English", "Spanish", "French", "German", "Mandarin"]
+```json
+{
+  "languages": ["string", "string"],
+  "confidence": 0.85
+}
+```
 
-### confidence
+## Field Requirements
 
-- **Type**: number between 0 and 1
-- **Description**: Confidence in the extraction
-- **Examples**: 0.8, 0.6, 0.9
+- **languages**: Array of required languages (e.g., ["English", "Spanish"])
+- **confidence**: Number between 0.0 and 1.0
 
-## Language Requirements to Look For
+## Language Types
 
-- **Primary Language**: Usually English for most academic positions
-- **Secondary Languages**: Additional languages required for research, teaching, or collaboration
-- **Regional Languages**: Languages specific to the institution's location
-- **Research Languages**: Languages needed for accessing research literature or collaborating with international teams
+- **Primary**: English, Spanish, French, German, Chinese, Japanese, Arabic
+- **Regional**: Portuguese, Italian, Russian, Korean, Hindi
+- **Research**: Languages needed for literature access or collaboration
 
-## Common Language Indicators
+## Common Indicators
 
 - "Fluency in [language] required"
 - "Proficiency in [language] preferred"
 - "Ability to teach in [language]"
 - "Research experience in [language]-speaking regions"
-- "International collaboration requiring [language]"
 
-## Output Format
+## Rules
 
-Return only the JSON object, no other text or explanation.
-
-Example:
-
-```json
-{
-  "languages": ["English", "Spanish"],
-  "confidence": 0.85
-}
-```
-
-Note: If no specific language requirements are mentioned, return an empty array for languages.
+- Return empty array if no specific requirements
+- Use standard language names
+- Include proficiency levels if specified
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

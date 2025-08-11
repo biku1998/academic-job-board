@@ -1,43 +1,31 @@
-# Suitable Backgrounds Extraction Prompt
+# Suitable Backgrounds Extraction
 
-Analyze this job description and extract suitable academic backgrounds. Return ONLY a valid JSON object with the following structure:
+Extract suitable academic backgrounds from this job description.
 
-## Required Fields
+## Output Format
 
-### backgrounds
+Return ONLY a valid JSON object with this exact structure:
 
-- **Type**: array of strings
-- **Description**: Suitable academic backgrounds for the position
-- **Examples**: ["PhD in Physics", "Master's in Computer Science", "PhD in Mathematics with focus on Applied Statistics"]
+```json
+{
+  "backgrounds": ["string", "string"],
+  "confidence": 0.85
+}
+```
 
-### confidence
+## Field Requirements
 
-- **Type**: number between 0 and 1
-- **Description**: Confidence in the extraction
-- **Examples**: 0.8, 0.6, 0.9
+- **backgrounds**: Array of suitable academic backgrounds (e.g., ["PhD in Computer Science", "PhD in Mathematics"])
+- **confidence**: Number between 0.0 and 1.0
 
-## Background Types to Look For
+## Background Types
 
-### Degree Levels
-
-- **PhD**: Doctoral degrees in specific fields
-- **Master's**: Graduate degrees in relevant disciplines
-- **Bachelor's**: Undergraduate degrees (less common for faculty positions)
-- **Postdoctoral**: Postdoctoral experience requirements
-
-### Academic Disciplines
-
+- **Degree Levels**: PhD, Master's, Bachelor's, Postdoctoral
 - **Core Disciplines**: Physics, Chemistry, Biology, Mathematics, Computer Science
 - **Interdisciplinary**: Bioinformatics, Computational Biology, Materials Science
 - **Applied Fields**: Engineering, Applied Mathematics, Data Science
 
-### Specializations
-
-- **Research Areas**: Specific research focus areas
-- **Methodologies**: Experimental, theoretical, computational approaches
-- **Techniques**: Specific laboratory or computational techniques
-
-## Common Background Indicators
+## Common Indicators
 
 - "PhD in [field] required"
 - "Candidates with background in [field] preferred"
@@ -45,21 +33,10 @@ Analyze this job description and extract suitable academic backgrounds. Return O
 - "Training in [methodology]"
 - "Specialization in [subfield]"
 
-## Output Format
+## Rules
 
-Return only the JSON object, no other text or explanation.
-
-Example:
-
-```json
-{
-  "backgrounds": [
-    "PhD in Computer Science",
-    "PhD in Mathematics with focus on Machine Learning",
-    "PhD in Statistics with computational experience"
-  ],
-  "confidence": 0.9
-}
-```
-
-Note: Focus on the most relevant and specific backgrounds mentioned in the job description.
+- Return empty array if no specific requirements
+- Use specific academic terms
+- Include interdisciplinary backgrounds if mentioned
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

@@ -5816,6 +5816,7 @@ export namespace Prisma {
     departmentId: number | null
     disciplineId: number | null
     workHoursPerWeek: number | null
+    attemptCount: number | null
   }
 
   export type JobPostingSumAggregateOutputType = {
@@ -5824,6 +5825,7 @@ export namespace Prisma {
     departmentId: number | null
     disciplineId: number | null
     workHoursPerWeek: number | null
+    attemptCount: number | null
   }
 
   export type JobPostingMinAggregateOutputType = {
@@ -5860,6 +5862,11 @@ export namespace Prisma {
     isActive: boolean | null
     instructions: string | null
     qualifications: string | null
+    enrichmentStatus: string | null
+    attemptCount: number | null
+    lastAttemptAt: Date | null
+    enrichedAt: Date | null
+    enrichmentError: string | null
   }
 
   export type JobPostingMaxAggregateOutputType = {
@@ -5896,6 +5903,11 @@ export namespace Prisma {
     isActive: boolean | null
     instructions: string | null
     qualifications: string | null
+    enrichmentStatus: string | null
+    attemptCount: number | null
+    lastAttemptAt: Date | null
+    enrichedAt: Date | null
+    enrichmentError: string | null
   }
 
   export type JobPostingCountAggregateOutputType = {
@@ -5932,6 +5944,11 @@ export namespace Prisma {
     isActive: number
     instructions: number
     qualifications: number
+    enrichmentStatus: number
+    attemptCount: number
+    lastAttemptAt: number
+    enrichedAt: number
+    enrichmentError: number
     _all: number
   }
 
@@ -5942,6 +5959,7 @@ export namespace Prisma {
     departmentId?: true
     disciplineId?: true
     workHoursPerWeek?: true
+    attemptCount?: true
   }
 
   export type JobPostingSumAggregateInputType = {
@@ -5950,6 +5968,7 @@ export namespace Prisma {
     departmentId?: true
     disciplineId?: true
     workHoursPerWeek?: true
+    attemptCount?: true
   }
 
   export type JobPostingMinAggregateInputType = {
@@ -5986,6 +6005,11 @@ export namespace Prisma {
     isActive?: true
     instructions?: true
     qualifications?: true
+    enrichmentStatus?: true
+    attemptCount?: true
+    lastAttemptAt?: true
+    enrichedAt?: true
+    enrichmentError?: true
   }
 
   export type JobPostingMaxAggregateInputType = {
@@ -6022,6 +6046,11 @@ export namespace Prisma {
     isActive?: true
     instructions?: true
     qualifications?: true
+    enrichmentStatus?: true
+    attemptCount?: true
+    lastAttemptAt?: true
+    enrichedAt?: true
+    enrichmentError?: true
   }
 
   export type JobPostingCountAggregateInputType = {
@@ -6058,6 +6087,11 @@ export namespace Prisma {
     isActive?: true
     instructions?: true
     qualifications?: true
+    enrichmentStatus?: true
+    attemptCount?: true
+    lastAttemptAt?: true
+    enrichedAt?: true
+    enrichmentError?: true
     _all?: true
   }
 
@@ -6181,6 +6215,11 @@ export namespace Prisma {
     isActive: boolean
     instructions: string | null
     qualifications: string | null
+    enrichmentStatus: string | null
+    attemptCount: number
+    lastAttemptAt: Date | null
+    enrichedAt: Date | null
+    enrichmentError: string | null
     _count: JobPostingCountAggregateOutputType | null
     _avg: JobPostingAvgAggregateOutputType | null
     _sum: JobPostingSumAggregateOutputType | null
@@ -6236,6 +6275,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: boolean
     qualifications?: boolean
+    enrichmentStatus?: boolean
+    attemptCount?: boolean
+    lastAttemptAt?: boolean
+    enrichedAt?: boolean
+    enrichmentError?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
     applicationRequirements?: boolean | JobPosting$applicationRequirementsArgs<ExtArgs>
@@ -6283,6 +6327,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: boolean
     qualifications?: boolean
+    enrichmentStatus?: boolean
+    attemptCount?: boolean
+    lastAttemptAt?: boolean
+    enrichedAt?: boolean
+    enrichmentError?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -6321,6 +6370,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: boolean
     qualifications?: boolean
+    enrichmentStatus?: boolean
+    attemptCount?: boolean
+    lastAttemptAt?: boolean
+    enrichedAt?: boolean
+    enrichmentError?: boolean
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["jobPosting"]>
@@ -6359,9 +6413,14 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: boolean
     qualifications?: boolean
+    enrichmentStatus?: boolean
+    attemptCount?: boolean
+    lastAttemptAt?: boolean
+    enrichedAt?: boolean
+    enrichmentError?: boolean
   }
 
-  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "descriptionHtml" | "descriptionText" | "category" | "seniorityLevel" | "jobType" | "workModality" | "salaryRange" | "contractType" | "durationMonths" | "renewable" | "openDate" | "closeDate" | "deadlineDate" | "applicationLink" | "sourceUrl" | "sourcePortal" | "fundingSource" | "visaSponsorship" | "interviewProcess" | "departmentId" | "disciplineId" | "status" | "isSelfFinanced" | "isPartTime" | "workHoursPerWeek" | "compensationType" | "lastSyncedAt" | "expiresAt" | "isActive" | "instructions" | "qualifications", ExtArgs["result"]["jobPosting"]>
+  export type JobPostingOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "descriptionHtml" | "descriptionText" | "category" | "seniorityLevel" | "jobType" | "workModality" | "salaryRange" | "contractType" | "durationMonths" | "renewable" | "openDate" | "closeDate" | "deadlineDate" | "applicationLink" | "sourceUrl" | "sourcePortal" | "fundingSource" | "visaSponsorship" | "interviewProcess" | "departmentId" | "disciplineId" | "status" | "isSelfFinanced" | "isPartTime" | "workHoursPerWeek" | "compensationType" | "lastSyncedAt" | "expiresAt" | "isActive" | "instructions" | "qualifications" | "enrichmentStatus" | "attemptCount" | "lastAttemptAt" | "enrichedAt" | "enrichmentError", ExtArgs["result"]["jobPosting"]>
   export type JobPostingInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     department?: boolean | DepartmentDefaultArgs<ExtArgs>
     discipline?: boolean | DisciplineDefaultArgs<ExtArgs>
@@ -6432,6 +6491,11 @@ export namespace Prisma {
       isActive: boolean
       instructions: string | null
       qualifications: string | null
+      enrichmentStatus: string | null
+      attemptCount: number
+      lastAttemptAt: Date | null
+      enrichedAt: Date | null
+      enrichmentError: string | null
     }, ExtArgs["result"]["jobPosting"]>
     composites: {}
   }
@@ -6898,6 +6962,11 @@ export namespace Prisma {
     readonly isActive: FieldRef<"JobPosting", 'Boolean'>
     readonly instructions: FieldRef<"JobPosting", 'String'>
     readonly qualifications: FieldRef<"JobPosting", 'String'>
+    readonly enrichmentStatus: FieldRef<"JobPosting", 'String'>
+    readonly attemptCount: FieldRef<"JobPosting", 'Int'>
+    readonly lastAttemptAt: FieldRef<"JobPosting", 'DateTime'>
+    readonly enrichedAt: FieldRef<"JobPosting", 'DateTime'>
+    readonly enrichmentError: FieldRef<"JobPosting", 'String'>
   }
     
 
@@ -19460,7 +19529,12 @@ export namespace Prisma {
     expiresAt: 'expiresAt',
     isActive: 'isActive',
     instructions: 'instructions',
-    qualifications: 'qualifications'
+    qualifications: 'qualifications',
+    enrichmentStatus: 'enrichmentStatus',
+    attemptCount: 'attemptCount',
+    lastAttemptAt: 'lastAttemptAt',
+    enrichedAt: 'enrichedAt',
+    enrichmentError: 'enrichmentError'
   };
 
   export type JobPostingScalarFieldEnum = (typeof JobPostingScalarFieldEnum)[keyof typeof JobPostingScalarFieldEnum]
@@ -19892,6 +19966,11 @@ export namespace Prisma {
     isActive?: BoolFilter<"JobPosting"> | boolean
     instructions?: StringNullableFilter<"JobPosting"> | string | null
     qualifications?: StringNullableFilter<"JobPosting"> | string | null
+    enrichmentStatus?: StringNullableFilter<"JobPosting"> | string | null
+    attemptCount?: IntFilter<"JobPosting"> | number
+    lastAttemptAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    enrichedAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    enrichmentError?: StringNullableFilter<"JobPosting"> | string | null
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
     applicationRequirements?: ApplicationRequirementListRelationFilter
@@ -19938,6 +20017,11 @@ export namespace Prisma {
     isActive?: SortOrder
     instructions?: SortOrderInput | SortOrder
     qualifications?: SortOrderInput | SortOrder
+    enrichmentStatus?: SortOrderInput | SortOrder
+    attemptCount?: SortOrder
+    lastAttemptAt?: SortOrderInput | SortOrder
+    enrichedAt?: SortOrderInput | SortOrder
+    enrichmentError?: SortOrderInput | SortOrder
     department?: DepartmentOrderByWithRelationInput
     discipline?: DisciplineOrderByWithRelationInput
     applicationRequirements?: ApplicationRequirementOrderByRelationAggregateInput
@@ -19987,6 +20071,11 @@ export namespace Prisma {
     isActive?: BoolFilter<"JobPosting"> | boolean
     instructions?: StringNullableFilter<"JobPosting"> | string | null
     qualifications?: StringNullableFilter<"JobPosting"> | string | null
+    enrichmentStatus?: StringNullableFilter<"JobPosting"> | string | null
+    attemptCount?: IntFilter<"JobPosting"> | number
+    lastAttemptAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    enrichedAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    enrichmentError?: StringNullableFilter<"JobPosting"> | string | null
     department?: XOR<DepartmentScalarRelationFilter, DepartmentWhereInput>
     discipline?: XOR<DisciplineScalarRelationFilter, DisciplineWhereInput>
     applicationRequirements?: ApplicationRequirementListRelationFilter
@@ -20033,6 +20122,11 @@ export namespace Prisma {
     isActive?: SortOrder
     instructions?: SortOrderInput | SortOrder
     qualifications?: SortOrderInput | SortOrder
+    enrichmentStatus?: SortOrderInput | SortOrder
+    attemptCount?: SortOrder
+    lastAttemptAt?: SortOrderInput | SortOrder
+    enrichedAt?: SortOrderInput | SortOrder
+    enrichmentError?: SortOrderInput | SortOrder
     _count?: JobPostingCountOrderByAggregateInput
     _avg?: JobPostingAvgOrderByAggregateInput
     _max?: JobPostingMaxOrderByAggregateInput
@@ -20077,6 +20171,11 @@ export namespace Prisma {
     isActive?: BoolWithAggregatesFilter<"JobPosting"> | boolean
     instructions?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
     qualifications?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
+    enrichmentStatus?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
+    attemptCount?: IntWithAggregatesFilter<"JobPosting"> | number
+    lastAttemptAt?: DateTimeNullableWithAggregatesFilter<"JobPosting"> | Date | string | null
+    enrichedAt?: DateTimeNullableWithAggregatesFilter<"JobPosting"> | Date | string | null
+    enrichmentError?: StringNullableWithAggregatesFilter<"JobPosting"> | string | null
   }
 
   export type ApplicationRequirementWhereInput = {
@@ -20864,6 +20963,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -20910,6 +21014,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -20951,6 +21060,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -20997,6 +21111,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -21041,6 +21160,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
   }
 
   export type JobPostingUpdateManyMutationInput = {
@@ -21074,6 +21198,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type JobPostingUncheckedUpdateManyInput = {
@@ -21110,6 +21239,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationRequirementCreateInput = {
@@ -22043,6 +22177,11 @@ export namespace Prisma {
     isActive?: SortOrder
     instructions?: SortOrder
     qualifications?: SortOrder
+    enrichmentStatus?: SortOrder
+    attemptCount?: SortOrder
+    lastAttemptAt?: SortOrder
+    enrichedAt?: SortOrder
+    enrichmentError?: SortOrder
   }
 
   export type JobPostingAvgOrderByAggregateInput = {
@@ -22051,6 +22190,7 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     workHoursPerWeek?: SortOrder
+    attemptCount?: SortOrder
   }
 
   export type JobPostingMaxOrderByAggregateInput = {
@@ -22087,6 +22227,11 @@ export namespace Prisma {
     isActive?: SortOrder
     instructions?: SortOrder
     qualifications?: SortOrder
+    enrichmentStatus?: SortOrder
+    attemptCount?: SortOrder
+    lastAttemptAt?: SortOrder
+    enrichedAt?: SortOrder
+    enrichmentError?: SortOrder
   }
 
   export type JobPostingMinOrderByAggregateInput = {
@@ -22123,6 +22268,11 @@ export namespace Prisma {
     isActive?: SortOrder
     instructions?: SortOrder
     qualifications?: SortOrder
+    enrichmentStatus?: SortOrder
+    attemptCount?: SortOrder
+    lastAttemptAt?: SortOrder
+    enrichedAt?: SortOrder
+    enrichmentError?: SortOrder
   }
 
   export type JobPostingSumOrderByAggregateInput = {
@@ -22131,6 +22281,7 @@ export namespace Prisma {
     departmentId?: SortOrder
     disciplineId?: SortOrder
     workHoursPerWeek?: SortOrder
+    attemptCount?: SortOrder
   }
 
   export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -23736,6 +23887,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -23780,6 +23936,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -23881,6 +24042,11 @@ export namespace Prisma {
     isActive?: BoolFilter<"JobPosting"> | boolean
     instructions?: StringNullableFilter<"JobPosting"> | string | null
     qualifications?: StringNullableFilter<"JobPosting"> | string | null
+    enrichmentStatus?: StringNullableFilter<"JobPosting"> | string | null
+    attemptCount?: IntFilter<"JobPosting"> | number
+    lastAttemptAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    enrichedAt?: DateTimeNullableFilter<"JobPosting"> | Date | string | null
+    enrichmentError?: StringNullableFilter<"JobPosting"> | string | null
   }
 
   export type DisciplineCreateWithoutChildrenInput = {
@@ -23955,6 +24121,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -23999,6 +24170,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -24561,6 +24737,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     jobKeywords?: JobKeywordCreateNestedManyWithoutJobPostingInput
@@ -24606,6 +24787,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
@@ -24662,6 +24848,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -24707,6 +24898,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -24781,6 +24977,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -24826,6 +25027,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
@@ -24896,6 +25102,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -24941,6 +25152,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -25001,6 +25217,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -25046,6 +25267,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     suitableBackgrounds?: SuitableBackgroundUncheckedCreateNestedManyWithoutJobPostingInput
@@ -25102,6 +25328,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -25147,6 +25378,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     suitableBackgrounds?: SuitableBackgroundUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -25187,6 +25423,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -25232,6 +25473,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -25288,6 +25534,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -25333,6 +25584,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -25373,6 +25629,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -25418,6 +25679,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -25474,6 +25740,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -25519,6 +25790,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -25559,6 +25835,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -25604,6 +25885,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -25660,6 +25946,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -25705,6 +25996,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -25745,6 +26041,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -25790,6 +26091,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -25846,6 +26152,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -25891,6 +26202,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -25965,6 +26281,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     department: DepartmentCreateNestedOneWithoutJobPostingsInput
     discipline: DisciplineCreateNestedOneWithoutJobPostingsInput
     applicationRequirements?: ApplicationRequirementCreateNestedManyWithoutJobPostingInput
@@ -26010,6 +26331,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
     applicationRequirements?: ApplicationRequirementUncheckedCreateNestedManyWithoutJobPostingInput
     jobKeywords?: JobKeywordUncheckedCreateNestedManyWithoutJobPostingInput
     languageRequirements?: LanguageRequirementUncheckedCreateNestedManyWithoutJobPostingInput
@@ -26082,6 +26408,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
@@ -26127,6 +26458,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -26228,6 +26564,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
   }
 
   export type JobPostingUpdateWithoutDepartmentInput = {
@@ -26261,6 +26602,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     discipline?: DisciplineUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -26305,6 +26651,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -26348,6 +26699,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type DisciplineCreateManyParentInput = {
@@ -26388,6 +26744,11 @@ export namespace Prisma {
     isActive?: boolean
     instructions?: string | null
     qualifications?: string | null
+    enrichmentStatus?: string | null
+    attemptCount?: number
+    lastAttemptAt?: Date | string | null
+    enrichedAt?: Date | string | null
+    enrichmentError?: string | null
   }
 
   export type DisciplineUpdateWithoutParentInput = {
@@ -26439,6 +26800,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     department?: DepartmentUpdateOneRequiredWithoutJobPostingsNestedInput
     applicationRequirements?: ApplicationRequirementUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUpdateManyWithoutJobPostingNestedInput
@@ -26483,6 +26849,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
     applicationRequirements?: ApplicationRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
     jobKeywords?: JobKeywordUncheckedUpdateManyWithoutJobPostingNestedInput
     languageRequirements?: LanguageRequirementUncheckedUpdateManyWithoutJobPostingNestedInput
@@ -26526,6 +26897,11 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     instructions?: NullableStringFieldUpdateOperationsInput | string | null
     qualifications?: NullableStringFieldUpdateOperationsInput | string | null
+    enrichmentStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    attemptCount?: IntFieldUpdateOperationsInput | number
+    lastAttemptAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    enrichmentError?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ApplicationRequirementCreateManyJobPostingInput = {

@@ -178,7 +178,12 @@ exports.Prisma.JobPostingScalarFieldEnum = {
   expiresAt: 'expiresAt',
   isActive: 'isActive',
   instructions: 'instructions',
-  qualifications: 'qualifications'
+  qualifications: 'qualifications',
+  enrichmentStatus: 'enrichmentStatus',
+  attemptCount: 'attemptCount',
+  lastAttemptAt: 'lastAttemptAt',
+  enrichedAt: 'enrichedAt',
+  enrichmentError: 'enrichmentError'
 };
 
 exports.Prisma.ApplicationRequirementScalarFieldEnum = {

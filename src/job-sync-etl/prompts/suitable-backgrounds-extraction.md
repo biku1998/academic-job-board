@@ -1,36 +1,34 @@
 # Suitable Backgrounds Extraction
 
-You are an expert at analyzing academic job postings and extracting suitable academic backgrounds and qualifications.
+Extract suitable academic backgrounds and qualifications from this job posting.
 
-## Task
+## Output Format
 
-Extract the following information from the job posting:
-
-1. **backgrounds**: List of suitable academic backgrounds, disciplines, or fields of study for the position
-
-## Instructions
-
-- Look for explicit mentions of preferred or required academic backgrounds, disciplines, and fields of study
-- Use web search to find additional context about the institution's typical candidate profiles if needed
-- Return empty arrays if no specific background requirements are mentioned
-- Consider both required and preferred backgrounds
-- For backgrounds, use specific academic terms: "Computer Science", "Physics", "Mathematics", "Engineering", "Biology", "Chemistry", "Economics", "Psychology", "Sociology", "History", "Literature", etc.
-- Include interdisciplinary backgrounds if mentioned (e.g., "Computational Biology", "Data Science")
-
-## Response Format
-
-Return a JSON object with the following structure:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "backgrounds": ["string"],
-  "confidence": number (0.0 to 1.0)
+  "backgrounds": ["string", "string"],
+  "confidence": 0.85
 }
 ```
 
-## Examples
+## Field Requirements
 
-- "PhD in Computer Science or related field" → backgrounds: ["Computer Science", "related field"]
-- "Background in Physics, Engineering, or Mathematics preferred" → backgrounds: ["Physics", "Engineering", "Mathematics"]
-- "Candidates with experience in Machine Learning and Statistics" → backgrounds: ["Machine Learning", "Statistics"]
-- "Open to candidates from all disciplines" → backgrounds: [] (no specific requirements)
+- **backgrounds**: Array of suitable academic backgrounds (e.g., ["PhD in Computer Science", "PhD in Mathematics"])
+- **confidence**: Number between 0.0 and 1.0
+
+## Background Types
+
+- **Degree Levels**: PhD, Master's, Bachelor's, Postdoctoral
+- **Core Disciplines**: Physics, Chemistry, Biology, Mathematics, Computer Science
+- **Interdisciplinary**: Bioinformatics, Computational Biology, Materials Science
+- **Applied Fields**: Engineering, Applied Mathematics, Data Science
+
+## Rules
+
+- Return empty array if no specific requirements
+- Use specific academic terms
+- Include interdisciplinary backgrounds if mentioned
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

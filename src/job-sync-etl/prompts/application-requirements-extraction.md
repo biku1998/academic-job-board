@@ -1,42 +1,37 @@
 # Application Requirements Extraction
 
-You are an expert at analyzing academic job postings and extracting specific application requirements and procedures.
+Extract application requirements and procedures from this job posting.
 
-## Task
+## Output Format
 
-Extract the following information from the job posting:
-
-1. **documentTypes**: Types of documents required for application (CV, cover letter, research statement, etc.)
-2. **referenceLettersRequired**: Number of reference letters required (if specified)
-3. **platform**: Application platform or system (AcademicJobsOnline, Interfolio, direct email, etc.)
-4. **description**: Additional application requirements or procedures
-
-## Instructions
-
-- Look for explicit mentions of required documents, reference letters, and application procedures
-- Use web search to find additional context about the institution's typical application process if needed
-- Return empty arrays for documentTypes if not specified
-- Return null for referenceLettersRequired if not specified
-- Return null for platform if not specified
-- For documentTypes, use specific terms like: "CV", "resume", "cover letter", "research statement", "teaching statement", "diversity statement", "publications list", "transcripts", "certificates", "portfolio"
-- For platform, use specific terms like: "AcademicJobsOnline", "Interfolio", "direct email", "university portal", "HR system", "online application"
-
-## Response Format
-
-Return a JSON object with the following structure:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "documentTypes": ["string"],
-  "referenceLettersRequired": number or null,
-  "platform": string or null,
-  "description": string or null,
-  "confidence": number (0.0 to 1.0)
+  "documentTypes": ["string", "string"],
+  "referenceLettersRequired": "number or null",
+  "platform": "string or null",
+  "description": "string or null",
+  "confidence": 0.85
 }
 ```
 
-## Examples
+## Field Requirements
 
-- "Submit CV, research statement, and three letters of recommendation" → documentTypes: ["CV", "research statement"], referenceLettersRequired: 3
-- "Apply through AcademicJobsOnline" → platform: "AcademicJobsOnline"
-- "Send application materials to chair@university.edu" → platform: "direct email"
+- **documentTypes**: Array of required documents (e.g., ["CV", "Cover Letter", "Research Statement"])
+- **referenceLettersRequired**: Number of reference letters needed
+- **platform**: Application system (e.g., "AcademicJobsOnline", "Interfolio", "direct email")
+- **description**: Additional requirements or procedures
+- **confidence**: Number between 0.0 and 1.0
+
+## Common Values
+
+- **Documents**: "CV", "Cover Letter", "Research Statement", "Teaching Statement", "Publication List", "Transcripts"
+- **Platforms**: "AcademicJobsOnline", "Interfolio", "University Portal", "direct email", "online form"
+
+## Rules
+
+- Return empty array for documentTypes if none specified
+- Return null for unclear fields
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

@@ -1,36 +1,32 @@
 # Language Requirements Extraction
 
-You are an expert at analyzing academic job postings and extracting language proficiency requirements.
+Extract language proficiency requirements from this job posting.
 
-## Task
+## Output Format
 
-Extract the following information from the job posting:
-
-1. **languages**: List of languages required for the position (English, Spanish, French, etc.)
-
-## Instructions
-
-- Look for explicit mentions of language requirements, proficiency levels, and communication skills
-- Use web search to find additional context about the institution's language policies if needed
-- Return empty arrays if no specific language requirements are mentioned
-- Consider both teaching and research language requirements
-- For languages, use standard language names: "English", "Spanish", "French", "German", "Chinese", "Japanese", "Arabic", etc.
-- Include proficiency levels if specified (e.g., "fluent", "native", "proficient")
-
-## Response Format
-
-Return a JSON object with the following structure:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "languages": ["string"],
-  "confidence": number (0.0 to 1.0)
+  "languages": ["string", "string"],
+  "confidence": 0.85
 }
 ```
 
-## Examples
+## Field Requirements
 
-- "Fluency in English required" → languages: ["English"]
-- "Must be able to teach in Spanish and English" → languages: ["Spanish", "English"]
-- "Native or near-native proficiency in French" → languages: ["French"]
-- "International applicants welcome" → languages: [] (no specific requirements)
+- **languages**: Array of required languages (e.g., ["English", "Spanish"])
+- **confidence**: Number between 0.0 and 1.0
+
+## Common Languages
+
+- **Primary**: English, Spanish, French, German, Chinese, Japanese, Arabic
+- **Regional**: Portuguese, Italian, Russian, Korean, Hindi
+
+## Rules
+
+- Return empty array if no language requirements
+- Use standard language names
+- Include proficiency levels if specified (e.g., "fluent", "native")
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

@@ -1,39 +1,35 @@
 # Geolocation Extraction
 
-You are an expert at analyzing academic job postings and extracting geographical location information.
+Extract geographical coordinates from this job posting.
 
-## Task
+## Output Format
 
-Extract the following information from the job posting:
-
-1. **lat**: Latitude coordinate of the job location
-2. **lon**: Longitude coordinate of the job location
-
-## Instructions
-
-- Look for explicit mentions of city, state, country, or specific location information
-- Use web search to find the exact coordinates for the mentioned locations
-- Return null for coordinates if location information is not available or unclear
-- For coordinates, return decimal degrees (e.g., 40.7128, -74.0060 for New York City)
-- Focus on the primary work location, not remote work locations
-- Consider both the institution location and any specific campus or facility mentioned
-
-## Response Format
-
-Return a JSON object with the following structure:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "lat": number or null,
-  "lon": number or null,
-  "confidence": number (0.0 to 1.0)
+  "lat": "number or null",
+  "lon": "number or null",
+  "confidence": 0.85
 }
 ```
 
-## Examples
+## Field Requirements
 
-- "University of California, Berkeley" → lat: 37.8716, lon: -122.2727
-- "MIT, Cambridge, MA" → lat: 42.3601, lon: -71.0589
-- "Stanford University, Palo Alto, CA" → lat: 37.4275, lon: -122.1697
-- "Remote position" → lat: null, lon: null
-- "Location to be determined" → lat: null, lon: null
+- **lat**: Latitude coordinate in decimal degrees (e.g., 40.7128)
+- **lon**: Longitude coordinate in decimal degrees (e.g., -74.0060)
+- **confidence**: Number between 0.0 and 1.0
+
+## Coordinate Format
+
+- Use decimal degrees (not degrees/minutes/seconds)
+- Positive for North/East, negative for South/West
+- Focus on primary work location, not remote locations
+- Return null if location unclear or remote position
+
+## Rules
+
+- Return null for unclear locations
+- Use exact coordinates from location lookup
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

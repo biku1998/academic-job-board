@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "sync-jobs": "npx tsx src/job-sync-etl/sync.ts",
+    "sync-sequential": "npx tsx src/job-sync-etl/sync-sequential.ts",
+    "enrich-only": "npx tsx src/job-sync-etl/enrich-only.ts",
+    "test-ollama-performance": "npx tsx src/job-sync-etl/test-ollama-performance.ts",
     "test-enrichment": "npx tsx src/job-sync-etl/tests/test-enrichment.ts",
     "test-prompts": "npx tsx src/job-sync-etl/tests/test-prompts.ts",
     "test-job-details": "npx tsx src/job-sync-etl/tests/test-job-details.ts",
     "test-phase2-extraction": "npx tsx src/job-sync-etl/tests/test-phase2-extraction.ts",
-    "test-phase3-extraction": "npx tsx src/job-sync-etl/tests/test-phase3-extraction.ts"
+    "test-phase3-extraction": "npx tsx src/job-sync-etl/tests/test-phase3-extraction.ts",
+    "batch-etl": "npx tsx src/job-sync-etl/batch-etl.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.57.0",

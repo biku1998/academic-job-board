@@ -1,36 +1,35 @@
 # Research Areas Extraction
 
-You are an expert at analyzing academic job postings and extracting specific research areas and specializations.
+Extract specific research areas and specializations from this job posting.
 
-## Task
+## Output Format
 
-Extract the following information from the job posting:
-
-1. **researchAreas**: List of specific research areas, specializations, or research topics
-
-## Instructions
-
-- Look for explicit mentions of research areas, specializations, research topics, or fields of study
-- Use web search to find additional context about the institution's research focus if needed
-- Return empty arrays if no specific research areas are mentioned
-- For research areas, use specific academic terms: "Machine Learning", "Quantum Computing", "Climate Science", "Biomedical Engineering", "Social Psychology", "Medieval Literature", etc.
-- Include both broad areas and specific specializations
-- Consider interdisciplinary research areas if mentioned
-
-## Response Format
-
-Return a JSON object with the following structure:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "researchAreas": ["string"],
-  "confidence": number (0.0 to 1.0)
+  "researchAreas": ["string", "string"],
+  "confidence": 0.85
 }
 ```
 
-## Examples
+## Field Requirements
 
-- "Research in artificial intelligence and machine learning" → researchAreas: ["Artificial Intelligence", "Machine Learning"]
-- "Focus on quantum computing and cryptography" → researchAreas: ["Quantum Computing", "Cryptography"]
-- "Specialization in climate modeling and atmospheric science" → researchAreas: ["Climate Modeling", "Atmospheric Science"]
-- "Open to all research areas in computer science" → researchAreas: [] (too broad)
+- **researchAreas**: Array of specific research areas (e.g., ["Machine Learning", "Quantum Computing"])
+- **confidence**: Number between 0.0 and 1.0
+
+## Research Categories
+
+- **AI/ML**: "Machine Learning", "Artificial Intelligence", "Deep Learning", "Neural Networks"
+- **Computing**: "Quantum Computing", "High Performance Computing", "Distributed Systems"
+- **Sciences**: "Climate Science", "Biomedical Engineering", "Materials Science"
+- **Social**: "Social Psychology", "Cognitive Science", "Behavioral Economics"
+- **Humanities**: "Medieval Literature", "Digital Humanities", "Comparative Literature"
+
+## Rules
+
+- Return empty array if no specific areas mentioned
+- Use specific academic terms
+- Include both broad areas and specializations
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

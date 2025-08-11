@@ -1,42 +1,32 @@
 # Job Details Extraction
 
-You are an expert at analyzing academic job postings and extracting specific details about employment conditions and compensation.
+Extract employment conditions and compensation details from this job posting.
 
-## Task
+## Output Format
 
-Extract the following information from the job posting:
-
-1. **isSelfFinanced**: Whether the candidate needs to be self-financed or bring their own funding
-2. **isPartTime**: Whether this is a part-time position
-3. **workHoursPerWeek**: The number of work hours per week (if specified)
-4. **compensationType**: The type of compensation (salary, stipend, fellowship, grant, etc.)
-
-## Instructions
-
-- Look for explicit mentions of funding requirements, part-time status, work hours, and compensation details
-- Use web search to find additional context about the institution's typical employment practices if needed
-- Return null for fields where information is not available or unclear
-- For workHoursPerWeek, return the actual number (e.g., 40, 20, 35)
-- For compensationType, use specific terms like: "salary", "stipend", "fellowship", "grant", "hourly", "contract", "tenure-track", "visiting"
-
-## Response Format
-
-Return a JSON object with the following structure:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "isSelfFinanced": boolean or null,
-  "isPartTime": boolean or null,
-  "workHoursPerWeek": number or null,
-  "compensationType": string or null,
-  "confidence": number (0.0 to 1.0)
+  "isSelfFinanced": "boolean or null",
+  "isPartTime": "boolean or null",
+  "workHoursPerWeek": "number or null",
+  "compensationType": "string or null",
+  "confidence": 0.85
 }
 ```
 
-## Examples
+## Field Requirements
 
-- "The successful candidate will be responsible for securing their own funding" → isSelfFinanced: true
-- "This is a part-time position" → isPartTime: true
-- "40 hours per week" → workHoursPerWeek: 40
-- "Competitive salary" → compensationType: "salary"
-- "Postdoctoral fellowship" → compensationType: "fellowship"
+- **isSelfFinanced**: true if candidate must bring funding, false if not, null if unclear
+- **isPartTime**: true if part-time, false if full-time, null if unclear
+- **workHoursPerWeek**: Number of hours (e.g., 40, 20, 35)
+- **compensationType**: "salary", "stipend", "fellowship", "grant", "hourly", "contract"
+- **confidence**: Number between 0.0 and 1.0
+
+## Rules
+
+- Return null for unclear fields
+- Use exact values from the posting
+- No explanation text - JSON only
+- If uncertain, use lower confidence score

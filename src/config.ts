@@ -4,12 +4,7 @@ export const config = {
   cohereApiKey: process.env.COHERE_API_KEY || "",
   tavilyApiKey: process.env.TAVILY_API_KEY || "",
   ollamaUrl: process.env.OLLAMA_URL || "",
+  gemmaApiKey: process.env.GEMMA_API_KEY || "",
 };
 
-export const ollamaModels = [
-  "smollm2:135m",
-  "llama3.2:3b",
-  "gemma3:1b",
-  "mistral:latest",
-  "deepseek-r1:latest",
-];
+export const ollamaModels = ["llama3.2:3b"];

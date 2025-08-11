@@ -94,3 +94,94 @@ export type TransformedJob = {
   qualifications: string;
   legacyPositionId: number;
 };
+
+// Enrichment-related types
+export interface EnrichmentStats {
+  total: number;
+  pending: number;
+  enriched: number;
+  failed: number;
+  inProgress: number;
+}
+
+export interface JobEnrichmentStatus {
+  id: number;
+  title: string;
+  enrichmentStatus: "pending" | "enriched" | "failed" | "in_progress";
+  enrichmentError?: string | null;
+  enrichedAt?: Date | null;
+  lastAttemptAt?: Date | null;
+  attemptCount: number;
+}
+
+export interface EnrichmentOptions {
+  delayBetweenJobs?: number; // milliseconds between jobs
+  maxJobsPerRun?: number; // maximum jobs to process in one run
+  continueOnError?: boolean; // whether to continue processing if a job fails
+}
+
+// Interface for job data retrieved from database
+export interface JobDataForEnrichment {
+  id: number;
+  title: string;
+  descriptionText: string | null;
+  descriptionHtml: string | null;
+  salaryRange: string | null;
+  instructions: string | null;
+  qualifications: string | null;
+}
+
+// Interface for enriched data structure
+export interface EnrichedData {
+  keywords: {
+    confidence: number;
+    keywords: string[];
+  };
+  jobAttributes: {
+    confidence: number;
+    category?: string | null;
+    workModality?: string | null;
+    contractType?: string | null;
+    durationMonths?: number | null;
+    renewable?: boolean | null;
+    fundingSource?: string | null;
+    visaSponsorship?: boolean | null;
+    interviewProcess?: string | null;
+  };
+  jobDetails: {
+    confidence: number;
+    isSelfFinanced?: boolean | null;
+    isPartTime?: boolean | null;
+    workHoursPerWeek?: number | null;
+    compensationType?: string | null;
+  };
+  applicationReqs: {
+    confidence: number;
+    documentTypes: string[];
+    referenceLettersRequired?: number | null;
+    platform?: string | null;
+  };
+  languageReqs: {
+    confidence: number;
+    languages: string[];
+  };
+  suitableBackgrounds: {
+    confidence: number;
+    backgrounds: string[];
+  };
+  geoLocation: {
+    confidence: number;
+    lat: number | null;
+    lon: number | null;
+  };
+  contact: {
+    confidence: number;
+    name?: string | null;
+    email?: string | null;
+    title?: string | null;
+  };
+  researchAreas: {
+    confidence: number;
+    researchAreas: string[];
+  };
+}

@@ -5,7 +5,7 @@ import type {
   Keyword,
 } from "@/generated/prisma";
 import { config } from "@/config";
-import type { JobPosting, TransformedJob } from "./types";
+import type { JobPosting, TransformedJob, EnrichedData } from "./types";
 import {
   parseDate,
   cleanHtml,
@@ -51,7 +51,10 @@ const fallbackKeywordExtraction = (job: JobPosting): string[] => {
 /**
  * Process a single job with enrichment
  */
-const processJob = async (job: JobPosting) => {
+const processJob = async (
+  job: JobPosting,
+  options: Required<TransformOptions>
+) => {
   // Validate required fields
   if (!job.univ || !job.name || !job.url) {
     console.warn(`Skipping job with missing required fields:`, {
@@ -102,9 +105,13 @@ const processJob = async (job: JobPosting) => {
     parentId: null,
   };
 
-  // Extract keywords using LLM if available, otherwise fall back to manual extraction
+  // Extract keywords using LLM if available and enabled, otherwise fall back to manual extraction
   let keywords: string[] = [];
-  if (jobEnrichmentService && job.description) {
+  if (
+    options.enableKeywordExtraction &&
+    jobEnrichmentService &&
+    job.description
+  ) {
     try {
       // Check service health before attempting extraction
       const isHealthy = await jobEnrichmentService.isHealthy();
@@ -146,7 +153,7 @@ const processJob = async (job: JobPosting) => {
       keywords = fallbackKeywordExtraction(job);
     }
   } else {
-    // Manual extraction when LLM is not available
+    // Manual extraction when LLM is not available or disabled
     keywords = fallbackKeywordExtraction(job);
   }
 
@@ -263,162 +270,244 @@ const processJob = async (job: JobPosting) => {
     try {
       console.log(`🤖 Enriching job: ${job.name}`);
 
-      // Extract job attributes (existing enrichment)
-      const enrichedAttributes =
-        await jobEnrichmentService.extractJobAttributes(
+      // Extract job attributes (existing enrichment) - ONLY if enabled
+      if (options.enableJobAttributes) {
+        const enrichedAttributes =
+          await jobEnrichmentService.extractJobAttributes(
+            job.name,
+            job.description,
+            job.salary || ""
+          );
+
+        if (enrichedAttributes.confidence > 0.5) {
+          enrichedData = {
+            category: enrichedAttributes.category || null,
+            workModality: enrichedAttributes.workModality || null,
+            contractType: enrichedAttributes.contractType || null,
+            durationMonths: enrichedAttributes.durationMonths || null,
+            renewable: enrichedAttributes.renewable || null,
+            fundingSource: enrichedAttributes.fundingSource || null,
+            visaSponsorship: enrichedAttributes.visaSponsorship || null,
+            interviewProcess: enrichedAttributes.interviewProcess || null,
+          };
+          console.log(
+            `✅ Enriched job attributes with confidence: ${enrichedAttributes.confidence}`
+          );
+        } else {
+          console.log(
+            `⚠️  Low confidence job attributes enrichment (${enrichedAttributes.confidence}), skipping`
+          );
+        }
+      }
+
+      // Extract job details (Phase 1: new fields) - ONLY if enabled
+      if (options.enableJobDetails) {
+        const jobDetails = await jobEnrichmentService.extractJobDetails(
           job.name,
           job.description,
-          job.salary || ""
+          job.salary || "",
+          job.instructions || "",
+          job.qualifications || ""
         );
 
-      if (enrichedAttributes.confidence > 0.5) {
-        enrichedData = {
-          category: enrichedAttributes.category || null,
-          workModality: enrichedAttributes.workModality || null,
-          contractType: enrichedAttributes.contractType || null,
-          durationMonths: enrichedAttributes.durationMonths || null,
-          renewable: enrichedAttributes.renewable || null,
-          fundingSource: enrichedAttributes.fundingSource || null,
-          visaSponsorship: enrichedAttributes.visaSponsorship || null,
-          interviewProcess: enrichedAttributes.interviewProcess || null,
-        };
-        console.log(
-          `✅ Enriched job attributes with confidence: ${enrichedAttributes.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence job attributes enrichment (${enrichedAttributes.confidence}), skipping`
-        );
+        if (jobDetails.confidence > 0.3) {
+          jobDetailsData = {
+            isSelfFinanced: jobDetails.isSelfFinanced,
+            isPartTime: jobDetails.isPartTime,
+            workHoursPerWeek: jobDetails.workHoursPerWeek,
+            compensationType: jobDetails.compensationType,
+          };
+          console.log(
+            `✅ Extracted job details with confidence: ${jobDetails.confidence}`
+          );
+        } else {
+          console.log(
+            `⚠️  Low confidence job details extraction (${jobDetails.confidence}), skipping`
+          );
+        }
       }
 
-      // Extract job details (Phase 1: new fields)
-      const jobDetails = await jobEnrichmentService.extractJobDetails(
-        job.name,
-        job.description,
-        job.salary || "",
-        job.instructions || "",
-        job.qualifications || ""
-      );
+      // Extract Phase 2 data - ONLY if enabled
+      if (
+        options.enableApplicationRequirements ||
+        options.enableLanguageRequirements ||
+        options.enableSuitableBackgrounds
+      ) {
+        const promises: Promise<
+          | EnrichedData["applicationReqs"]
+          | EnrichedData["languageReqs"]
+          | EnrichedData["suitableBackgrounds"]
+        >[] = [];
 
-      if (jobDetails.confidence > 0.3) {
-        jobDetailsData = {
-          isSelfFinanced: jobDetails.isSelfFinanced,
-          isPartTime: jobDetails.isPartTime,
-          workHoursPerWeek: jobDetails.workHoursPerWeek,
-          compensationType: jobDetails.compensationType,
-        };
-        console.log(
-          `✅ Extracted job details with confidence: ${jobDetails.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence job details extraction (${jobDetails.confidence}), skipping`
-        );
+        if (options.enableApplicationRequirements) {
+          promises.push(
+            jobEnrichmentService.extractApplicationRequirements(job.description)
+          );
+        }
+        if (options.enableLanguageRequirements) {
+          promises.push(
+            jobEnrichmentService.extractLanguageRequirements(job.description)
+          );
+        }
+        if (options.enableSuitableBackgrounds) {
+          promises.push(
+            jobEnrichmentService.extractSuitableBackgrounds(job.description)
+          );
+        }
+
+        const results = await Promise.all(promises);
+        let resultIndex = 0;
+
+        if (options.enableApplicationRequirements) {
+          const applicationReqs = results[
+            resultIndex++
+          ] as EnrichedData["applicationReqs"];
+          if (applicationReqs.confidence > 0.3) {
+            phase2Data.applicationRequirements = {
+              documentTypes: applicationReqs.documentTypes,
+              referenceLettersRequired:
+                applicationReqs.referenceLettersRequired ?? null,
+              platform: applicationReqs.platform ?? null,
+            };
+            console.log(
+              `✅ Extracted application requirements with confidence: ${applicationReqs.confidence}`
+            );
+          } else {
+            console.log(
+              `⚠️  Low confidence application requirements extraction (${applicationReqs.confidence}), skipping`
+            );
+          }
+        }
+
+        if (options.enableLanguageRequirements) {
+          const languageReqs = results[
+            resultIndex++
+          ] as EnrichedData["languageReqs"];
+          if (languageReqs.confidence > 0.3) {
+            phase2Data.languageRequirements = {
+              languages: languageReqs.languages,
+            };
+            console.log(
+              `✅ Extracted language requirements with confidence: ${languageReqs.confidence}`
+            );
+          } else {
+            console.log(
+              `⚠️  Low confidence language requirements extraction (${languageReqs.confidence}), skipping`
+            );
+          }
+        }
+
+        if (options.enableSuitableBackgrounds) {
+          const suitableBackgrounds = results[
+            resultIndex++
+          ] as EnrichedData["suitableBackgrounds"];
+          if (suitableBackgrounds.confidence > 0.3) {
+            phase2Data.suitableBackgrounds = {
+              backgrounds: suitableBackgrounds.backgrounds,
+            };
+            console.log(
+              `✅ Extracted suitable backgrounds with confidence: ${suitableBackgrounds.confidence}`
+            );
+          } else {
+            console.log(
+              `⚠️  Low confidence suitable backgrounds extraction (${suitableBackgrounds.confidence}), skipping`
+            );
+          }
+        }
       }
 
-      // Extract Phase 2 data (application requirements, language requirements, suitable backgrounds)
-      const [applicationReqs, languageReqs, suitableBackgrounds] =
-        await Promise.all([
-          jobEnrichmentService.extractApplicationRequirements(job.description),
-          jobEnrichmentService.extractLanguageRequirements(job.description),
-          jobEnrichmentService.extractSuitableBackgrounds(job.description),
-        ]);
+      // Extract Phase 3 data - ONLY if enabled
+      if (
+        options.enableGeoLocation ||
+        options.enableContact ||
+        options.enableResearchAreas
+      ) {
+        const promises: Promise<
+          | EnrichedData["geoLocation"]
+          | EnrichedData["contact"]
+          | EnrichedData["researchAreas"]
+        >[] = [];
 
-      if (applicationReqs.confidence > 0.3) {
-        phase2Data.applicationRequirements = {
-          documentTypes: applicationReqs.documentTypes,
-          referenceLettersRequired: applicationReqs.referenceLettersRequired,
-          platform: applicationReqs.platform,
-        };
-        console.log(
-          `✅ Extracted application requirements with confidence: ${applicationReqs.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence application requirements extraction (${applicationReqs.confidence}), skipping`
-        );
-      }
+        if (options.enableGeoLocation) {
+          promises.push(
+            jobEnrichmentService.extractGeoLocation(
+              job.name,
+              job.description,
+              job.location
+            )
+          );
+        }
+        if (options.enableContact) {
+          promises.push(
+            jobEnrichmentService.extractContact(
+              job.description,
+              job.instructions || ""
+            )
+          );
+        }
+        if (options.enableResearchAreas) {
+          promises.push(
+            jobEnrichmentService.extractResearchAreas(job.name, job.description)
+          );
+        }
 
-      if (languageReqs.confidence > 0.3) {
-        phase2Data.languageRequirements = {
-          languages: languageReqs.languages,
-        };
-        console.log(
-          `✅ Extracted language requirements with confidence: ${languageReqs.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence language requirements extraction (${languageReqs.confidence}), skipping`
-        );
-      }
+        const results = await Promise.all(promises);
+        let resultIndex = 0;
 
-      if (suitableBackgrounds.confidence > 0.3) {
-        phase2Data.suitableBackgrounds = {
-          backgrounds: suitableBackgrounds.backgrounds,
-        };
-        console.log(
-          `✅ Extracted suitable backgrounds with confidence: ${suitableBackgrounds.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence suitable backgrounds extraction (${suitableBackgrounds.confidence}), skipping`
-        );
-      }
+        if (options.enableGeoLocation) {
+          const geoLocation = results[
+            resultIndex++
+          ] as EnrichedData["geoLocation"];
+          if (geoLocation.confidence > 0.3) {
+            phase3Data.geoLocation = {
+              lat: geoLocation.lat,
+              lon: geoLocation.lon,
+            };
+            console.log(
+              `✅ Extracted geolocation with confidence: ${geoLocation.confidence}`
+            );
+          } else {
+            console.log(
+              `⚠️  Low confidence geolocation extraction (${geoLocation.confidence}), skipping`
+            );
+          }
+        }
 
-      // Extract Phase 3 data (geolocation, contact, research areas)
-      const [geoLocation, contact, researchAreas] = await Promise.all([
-        jobEnrichmentService.extractGeoLocation(
-          job.name,
-          job.description,
-          job.location
-        ),
-        jobEnrichmentService.extractContact(
-          job.description,
-          job.instructions || ""
-        ),
-        jobEnrichmentService.extractResearchAreas(job.name, job.description),
-      ]);
+        if (options.enableContact) {
+          const contact = results[resultIndex++] as EnrichedData["contact"];
+          if (contact.confidence > 0.3) {
+            phase3Data.contact = {
+              name: contact.name ?? null,
+              email: contact.email ?? null,
+              title: contact.title ?? null,
+            };
+            console.log(
+              `✅ Extracted contact information with confidence: ${contact.confidence}`
+            );
+          } else {
+            console.log(
+              `⚠️  Low confidence contact extraction (${contact.confidence}), skipping`
+            );
+          }
+        }
 
-      if (geoLocation.confidence > 0.3) {
-        phase3Data.geoLocation = {
-          lat: geoLocation.lat,
-          lon: geoLocation.lon,
-        };
-        console.log(
-          `✅ Extracted geolocation with confidence: ${geoLocation.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence geolocation extraction (${geoLocation.confidence}), skipping`
-        );
-      }
-
-      if (contact.confidence > 0.3) {
-        phase3Data.contact = {
-          name: contact.name,
-          email: contact.email,
-          title: contact.title,
-        };
-        console.log(
-          `✅ Extracted contact information with confidence: ${contact.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence contact extraction (${contact.confidence}), skipping`
-        );
-      }
-
-      if (researchAreas.confidence > 0.3) {
-        phase3Data.researchAreas = {
-          researchAreas: researchAreas.researchAreas,
-        };
-        console.log(
-          `✅ Extracted research areas with confidence: ${researchAreas.confidence}`
-        );
-      } else {
-        console.log(
-          `⚠️  Low confidence research areas extraction (${researchAreas.confidence}), skipping`
-        );
+        if (options.enableResearchAreas) {
+          const researchAreas = results[
+            resultIndex++
+          ] as EnrichedData["researchAreas"];
+          if (researchAreas.confidence > 0.3) {
+            phase3Data.researchAreas = {
+              researchAreas: researchAreas.researchAreas,
+            };
+            console.log(
+              `✅ Extracted research areas with confidence: ${researchAreas.confidence}`
+            );
+          } else {
+            console.log(
+              `⚠️  Low confidence research areas extraction (${researchAreas.confidence}), skipping`
+            );
+          }
+        }
       }
     } catch (error) {
       console.warn(`❌ Failed to enrich job ${job.name}:`, error);
@@ -443,12 +532,15 @@ const processJob = async (job: JobPosting) => {
 };
 
 /**
- * Process jobs in parallel with controlled concurrency
+ * Process jobs sequentially to avoid overwhelming the LLM API
  */
-const processJobsInParallel = async (jobs: JobPosting[]) => {
+const processJobsSequentially = async (
+  jobs: JobPosting[],
+  options: Required<TransformOptions>
+) => {
   const results: Array<Awaited<ReturnType<typeof processJob>>> = [];
 
-  // Process jobs in batches to control memory usage
+  // Process jobs sequentially to avoid overwhelming the LLM API
   for (let i = 0; i < jobs.length; i += BATCH_SIZE) {
     const batch = jobs.slice(i, i + BATCH_SIZE);
     console.log(
@@ -457,28 +549,124 @@ const processJobsInParallel = async (jobs: JobPosting[]) => {
       )} (${batch.length} jobs)`
     );
 
-    // Process batch with controlled concurrency
-    const batchPromises = batch.map(async (job, index) => {
-      // Add small delay to avoid overwhelming the LLM API
-      if (index > 0) {
-        await new Promise((resolve) => setTimeout(resolve, 200));
+    // Process batch sequentially (no more parallel processing)
+    for (const job of batch) {
+      const result = await processJob(job, options);
+      if (result) {
+        results.push(result);
       }
-      return processJob(job);
-    });
-
-    const batchResults = await Promise.all(batchPromises);
-    results.push(...batchResults);
+    }
   }
 
   return results.filter((result) => result !== null);
 };
 
-export const transformJobs = async (jobs: JobPosting[]) => {
-  console.log(`🚀 Starting parallel transformation of ${jobs.length} jobs...`);
+export interface TransformOptions {
+  // LLM-based extractions (can be disabled for deterministic-only processing)
+  enableKeywordExtraction?: boolean;
+  enableJobAttributes?: boolean;
+  enableJobDetails?: boolean;
+  enableApplicationRequirements?: boolean;
+  enableLanguageRequirements?: boolean;
+  enableSuitableBackgrounds?: boolean;
+  enableGeoLocation?: boolean;
+  enableContact?: boolean;
+  enableResearchAreas?: boolean;
+
+  // Deterministic transformations (always enabled)
+  enableBasicTransformation?: boolean;
+  enableDateParsing?: boolean;
+  enableSalaryParsing?: boolean;
+  enableLocationParsing?: boolean;
+  enableInstitutionParsing?: boolean;
+  enableDeadlineParsing?: boolean;
+}
+
+export const transformJobs = async (
+  jobs: JobPosting[],
+  options: TransformOptions = {}
+): Promise<{
+  institutions: Map<string, Omit<Institution, "id">>;
+  departments: Map<string, Omit<Department, "id"> & { institutionKey: string }>;
+  disciplines: Map<string, Omit<Discipline, "id">>;
+  jobPostings: Array<
+    Omit<
+      TransformedJob,
+      | "departmentId"
+      | "disciplineId"
+      | "status"
+      | "lastSyncedAt"
+      | "expiresAt"
+      | "isActive"
+    > & {
+      departmentKey: string;
+      disciplineKey: string;
+      keywords: string[];
+      instructions: string;
+      qualifications: string;
+      legacyPositionId: number;
+      category?: string | null;
+      workModality?: string | null;
+      contractType?: string | null;
+      durationMonths?: number | null;
+      renewable?: boolean | null;
+      fundingSource?: string | null;
+      visaSponsorship?: boolean | null;
+      interviewProcess?: string | null;
+    }
+  >;
+  keywords: Map<string, Omit<Keyword, "id">>;
+}> => {
+  // Set default options
+  const transformOptions: Required<TransformOptions> = {
+    // LLM-based extractions
+    enableKeywordExtraction: options.enableKeywordExtraction ?? true,
+    enableJobAttributes: options.enableJobAttributes ?? true,
+    enableJobDetails: options.enableJobDetails ?? true,
+    enableApplicationRequirements:
+      options.enableApplicationRequirements ?? true,
+    enableLanguageRequirements: options.enableLanguageRequirements ?? true,
+    enableSuitableBackgrounds: options.enableSuitableBackgrounds ?? true,
+    enableGeoLocation: options.enableGeoLocation ?? true,
+    enableContact: options.enableContact ?? true,
+    enableResearchAreas: options.enableResearchAreas ?? true,
+
+    // Deterministic transformations
+    enableBasicTransformation: options.enableBasicTransformation ?? true,
+    enableDateParsing: options.enableDateParsing ?? true,
+    enableSalaryParsing: options.enableSalaryParsing ?? true,
+    enableLocationParsing: options.enableLocationParsing ?? true,
+    enableInstitutionParsing: options.enableInstitutionParsing ?? true,
+    enableDeadlineParsing: options.enableDeadlineParsing ?? true,
+  };
+
+  console.log(`🚀 Starting transformation of ${jobs.length} jobs...`);
+  console.log(`⚙️  Configuration:`, {
+    llmExtractions: {
+      keywords: transformOptions.enableKeywordExtraction,
+      jobAttributes: transformOptions.enableJobAttributes,
+      jobDetails: transformOptions.enableJobDetails,
+      applicationRequirements: transformOptions.enableApplicationRequirements,
+      languageRequirements: transformOptions.enableLanguageRequirements,
+      suitableBackgrounds: transformOptions.enableSuitableBackgrounds,
+      geoLocation: transformOptions.enableGeoLocation,
+      contact: transformOptions.enableContact,
+      researchAreas: transformOptions.enableResearchAreas,
+    },
+    deterministicTransformations: {
+      basic: transformOptions.enableBasicTransformation,
+      dateParsing: transformOptions.enableDateParsing,
+      salaryParsing: transformOptions.enableSalaryParsing,
+      locationParsing: transformOptions.enableLocationParsing,
+      institutionParsing: transformOptions.enableInstitutionParsing,
+      deadlineParsing: transformOptions.enableDeadlineParsing,
+    },
+  });
+
   const startTime = Date.now();
 
-  // Process all jobs in parallel
-  const processedJobs = await processJobsInParallel(jobs);
+  // Process all jobs sequentially
+  const processedJobs = await processJobsSequentially(jobs, transformOptions);
 
   // Consolidate results
   const transformedData = {
@@ -558,7 +746,7 @@ export const transformJobs = async (jobs: JobPosting[]) => {
 
   const endTime = Date.now();
   console.log(
-    `✅ Parallel transformation completed in ${endTime - startTime}ms`
+    `✅ Sequential transformation completed in ${endTime - startTime}ms`
   );
 
   return transformedData;

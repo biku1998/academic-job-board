@@ -1,35 +1,40 @@
-# Job Attributes Extraction Prompt
+# Job Attributes Extraction
 
-Analyze this academic job posting and extract key attributes. Return ONLY a valid JSON object with the following structure:
-
-## Required Fields
-
-- **category**: Academic discipline (e.g., "Physics", "Computer Science", "Biology") or null
-- **workModality**: "On-site", "Remote", "Hybrid", or null
-- **contractType**: "Full-time", "Part-time", "Temporary", "Permanent", or null
-- **durationMonths**: Number of months if temporary, null if permanent
-- **renewable**: true/false if mentioned, null if unclear
-- **fundingSource**: Source of funding (e.g., "University", "Grant", "NSF") or null
-- **visaSponsorship**: true/false if mentioned, null if unclear
-- **interviewProcess**: Brief description of interview process or null
-- **confidence**: Number between 0 and 1
+Extract key job attributes from this academic job posting.
 
 ## Output Format
 
-Return only the JSON object, no other text.
-
-Example:
+Return ONLY a valid JSON object with this exact structure:
 
 ```json
 {
-  "category": "Computer Science",
-  "workModality": "On-site",
-  "contractType": "Full-time",
-  "durationMonths": null,
-  "renewable": null,
-  "fundingSource": "University",
-  "visaSponsorship": true,
-  "interviewProcess": "Research presentation and teaching demonstration",
+  "category": "string or null",
+  "workModality": "string or null",
+  "contractType": "string or null",
+  "durationMonths": "number or null",
+  "renewable": "boolean or null",
+  "fundingSource": "string or null",
+  "visaSponsorship": "boolean or null",
+  "interviewProcess": "string or null",
   "confidence": 0.85
 }
 ```
+
+## Field Requirements
+
+- **category**: Academic discipline (e.g., "Physics", "Computer Science", "Biology")
+- **workModality**: "On-site", "Remote", "Hybrid"
+- **contractType**: "Full-time", "Part-time", "Temporary", "Permanent"
+- **durationMonths**: Number of months if temporary
+- **renewable**: true/false if mentioned
+- **fundingSource**: Source (e.g., "University", "Grant", "NSF")
+- **visaSponsorship**: true/false if mentioned
+- **interviewProcess**: Brief description or null
+- **confidence**: Number between 0.0 and 1.0
+
+## Rules
+
+- Return null for unclear fields
+- Use exact values from the posting
+- No explanation text - JSON only
+- If uncertain, use lower confidence score
