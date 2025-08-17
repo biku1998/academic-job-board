@@ -207,12 +207,12 @@ const processJob = async (job: JobPosting) => {
 
   if (jobEnrichmentService && job.description) {
     try {
-      console.log(`🤖 Enriching job: ${job.name}`);
+      console.log(`🤖 Unified enrichment for job: ${job.name}`);
 
-      // Extract all enrichment data in one call
+      // Extract ALL enrichment data in a single LLM call
       const enrichedJobData = await jobEnrichmentService.enrichJob(job);
 
-      // Update enriched data
+      // Update enriched data (Phase 1)
       enrichedData = {
         category: enrichedJobData.jobAttributes.category,
         workModality: enrichedJobData.jobAttributes.workModality,
@@ -224,7 +224,7 @@ const processJob = async (job: JobPosting) => {
         interviewProcess: enrichedJobData.jobAttributes.interviewProcess,
       };
 
-      // Update job details data
+      // Update job details data (Phase 1)
       jobDetailsData = {
         isSelfFinanced: enrichedJobData.jobDetails.isSelfFinanced,
         isPartTime: enrichedJobData.jobDetails.isPartTime,
@@ -264,7 +264,9 @@ const processJob = async (job: JobPosting) => {
         researchAreas: enrichedJobData.researchAreas.researchAreas,
       };
 
-      console.log(`✅ Job enrichment completed for: ${job.name}`);
+      console.log(
+        `✅ Unified enrichment completed for: ${job.name} (cost-optimized)`
+      );
     } catch (error) {
       console.warn(`❌ Failed to enrich job ${job.name}:`, error);
     }

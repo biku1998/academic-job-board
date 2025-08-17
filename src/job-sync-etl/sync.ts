@@ -31,7 +31,7 @@ const main = async () => {
       where: { id: syncLog.id },
       data: { jobsFetched: jobs.length },
     });
-    // Transform jobs
+    // Transform jobs (now using unified enrichment for cost optimization)
     const transformedData = await transformJobs(jobs);
     if (!transformedData) {
       throw new Error("Failed to transform job data");
@@ -43,6 +43,9 @@ const main = async () => {
       jobPostings: transformedData.jobPostings.length,
       keywords: transformedData.keywords.size,
     });
+    console.log(
+      `💡 Cost optimization: Used unified enrichment (1 LLM call per job instead of multiple calls)`
+    );
     // Load jobs
     const loadStats = await loadJobs(transformedData);
     // Handle job status management

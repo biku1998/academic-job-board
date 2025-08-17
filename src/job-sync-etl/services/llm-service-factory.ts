@@ -2,6 +2,7 @@ import { config } from "@/config";
 import type { LLMEnrichmentService } from "./llm-enrichment.interface";
 import { OpenAIEnrichmentService } from "./openai-enrichment";
 import { CohereEnrichmentService } from "./cohere-enrichment";
+import { UnifiedEnrichmentService } from "./unified-enrichment";
 
 export class LLMServiceFactory {
   private static instance: LLMServiceFactory;
@@ -20,11 +21,18 @@ export class LLMServiceFactory {
   }
 
   private initializeServices(): void {
-    // Initialize OpenAI service
+    // Initialize Unified OpenAI service (preferred for cost optimization)
+    if (config.openAiApiKey) {
+      const unifiedService = new UnifiedEnrichmentService();
+      this.services.set("unified", unifiedService);
+      console.log("✅ Unified OpenAI service registered (cost-optimized)");
+    }
+
+    // Initialize legacy OpenAI service (fallback)
     if (config.openAiApiKey) {
       const openaiService = new OpenAIEnrichmentService();
       this.services.set("openai", openaiService);
-      console.log("✅ OpenAI service registered");
+      console.log("✅ Legacy OpenAI service registered");
     }
 
     // Initialize Cohere service
@@ -34,14 +42,20 @@ export class LLMServiceFactory {
       console.log("✅ Cohere service registered");
     }
 
-    // Set preferred service (OpenAI first, then Cohere)
-    if (this.services.has("openai")) {
+    // Set preferred service (Unified OpenAI first, then legacy OpenAI, then Cohere)
+    if (this.services.has("unified")) {
+      this.preferredService = "unified";
+    } else if (this.services.has("openai")) {
       this.preferredService = "openai";
     } else if (this.services.has("cohere")) {
       this.preferredService = "cohere";
     }
 
-    console.log(`🎯 Preferred LLM service: ${this.preferredService || "None"}`);
+    console.log(
+      `🎯 Preferred LLM service: ${
+        this.preferredService || "None"
+      } (unified service prioritized for cost optimization)`
+    );
   }
 
   /**
@@ -117,8 +131,8 @@ export class LLMServiceFactory {
    * Get the best available service based on priority
    */
   getBestAvailableService(): LLMEnrichmentService | null {
-    // Priority order: OpenAI > Cohere
-    const priorityOrder = ["openai", "cohere"];
+    // Priority order: Unified OpenAI > Legacy OpenAI > Cohere
+    const priorityOrder = ["unified", "openai", "cohere"];
 
     for (const serviceName of priorityOrder) {
       const service = this.services.get(serviceName);
