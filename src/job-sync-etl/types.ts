@@ -93,4 +93,47 @@ export type TransformedJob = {
   instructions: string;
   qualifications: string;
   legacyPositionId: number;
+  // Enriched data from LLM
+  enrichedData?: {
+    keywords: string[];
+    jobAttributes: {
+      category: string | null;
+      workModality: string | null;
+      contractType: string | null;
+      durationMonths: number | null;
+      renewable: boolean | null;
+      fundingSource: string | null;
+      visaSponsorship: boolean | null;
+      interviewProcess: string | null;
+    };
+    jobDetails: {
+      isSelfFinanced: boolean | null;
+      isPartTime: boolean | null;
+      workHoursPerWeek: number | null;
+      compensationType: string | null;
+    };
+    applicationRequirements: {
+      documentTypes: string[];
+      referenceLettersRequired: number | null;
+      platform: string | null;
+    };
+    languageRequirements: {
+      languages: string[];
+    };
+    suitableBackgrounds: {
+      backgrounds: string[];
+    };
+    geoLocation: {
+      lat: number | null;
+      lon: number | null;
+    };
+    contact: {
+      name: string | null;
+      email: string | null;
+      title: string | null;
+    };
+    researchAreas: {
+      researchAreas: string[];
+    };
+  };
 };

@@ -78,16 +78,25 @@ const processJob = async (job: JobPosting) => {
     parentId: null,
   };
 
-  // Extract keywords using LLM enrichment service
+  // Extract enriched data using LLM enrichment service
   let keywords: string[] = [];
+  let llmEnrichedData:
+    | import("./services/llm-enrichment.interface").EnrichedJobData
+    | null = null;
+
   if (jobEnrichmentService && job.description) {
     try {
-      console.log(`🔍 Extracting keywords for job: ${job.name}`);
-      const enrichedData = await jobEnrichmentService.enrichJob(job);
-      keywords = enrichedData.keywords;
-      console.log(`✅ Extracted ${keywords.length} keywords`);
+      console.log(`🔍 Extracting enriched data for job: ${job.name}`);
+      llmEnrichedData = await jobEnrichmentService.enrichJob(job);
+      keywords = llmEnrichedData.keywords;
+      console.log(
+        `✅ Extracted ${keywords.length} keywords and comprehensive job data`
+      );
     } catch (error) {
-      console.warn(`❌ Failed to extract keywords for job ${job.name}:`, error);
+      console.warn(
+        `❌ Failed to extract enriched data for job ${job.name}:`,
+        error
+      );
       // Fallback to empty keywords array
       keywords = [];
     }
@@ -158,119 +167,101 @@ const processJob = async (job: JobPosting) => {
     legacyPositionId: job.legacy_position_id,
   };
 
-  let enrichedData = {
-    category: null as string | null,
-    workModality: null as string | null,
-    contractType: null as string | null,
-    durationMonths: null as number | null,
-    renewable: null as boolean | null,
-    fundingSource: null as string | null,
-    visaSponsorship: null as boolean | null,
-    interviewProcess: null as string | null,
-  };
-
-  let jobDetailsData = {
-    isSelfFinanced: null as boolean | null,
-    isPartTime: null as boolean | null,
-    workHoursPerWeek: null as number | null,
-    compensationType: null as string | null,
-  };
-
-  const phase2Data = {
-    applicationRequirements: {
-      documentTypes: [] as string[],
-      referenceLettersRequired: null as number | null,
-      platform: null as string | null,
-    },
-    languageRequirements: {
-      languages: [] as string[],
-    },
-    suitableBackgrounds: {
-      backgrounds: [] as string[],
-    },
-  };
-
-  const phase3Data = {
-    geoLocation: {
-      lat: null as number | null,
-      lon: null as number | null,
-    },
-    contact: {
-      name: null as string | null,
-      email: null as string | null,
-      title: null as string | null,
-    },
-    researchAreas: {
-      researchAreas: [] as string[],
-    },
-  };
-
-  if (jobEnrichmentService && job.description) {
-    try {
-      console.log(`🤖 Unified enrichment for job: ${job.name}`);
-
-      // Extract ALL enrichment data in a single LLM call
-      const enrichedJobData = await jobEnrichmentService.enrichJob(job);
-
-      // Update enriched data (Phase 1)
-      enrichedData = {
-        category: enrichedJobData.jobAttributes.category,
-        workModality: enrichedJobData.jobAttributes.workModality,
-        contractType: enrichedJobData.jobAttributes.contractType,
-        durationMonths: enrichedJobData.jobAttributes.durationMonths,
-        renewable: enrichedJobData.jobAttributes.renewable,
-        fundingSource: enrichedJobData.jobAttributes.fundingSource,
-        visaSponsorship: enrichedJobData.jobAttributes.visaSponsorship,
-        interviewProcess: enrichedJobData.jobAttributes.interviewProcess,
+  // Use LLM enriched data if available, otherwise use defaults
+  const enrichedData = llmEnrichedData
+    ? {
+        category: llmEnrichedData.jobAttributes.category,
+        workModality: llmEnrichedData.jobAttributes.workModality,
+        contractType: llmEnrichedData.jobAttributes.contractType,
+        durationMonths: llmEnrichedData.jobAttributes.durationMonths,
+        renewable: llmEnrichedData.jobAttributes.renewable,
+        fundingSource: llmEnrichedData.jobAttributes.fundingSource,
+        visaSponsorship: llmEnrichedData.jobAttributes.visaSponsorship,
+        interviewProcess: llmEnrichedData.jobAttributes.interviewProcess,
+      }
+    : {
+        category: null as string | null,
+        workModality: null as string | null,
+        contractType: null as string | null,
+        durationMonths: null as number | null,
+        renewable: null as boolean | null,
+        fundingSource: null as string | null,
+        visaSponsorship: null as boolean | null,
+        interviewProcess: null as string | null,
       };
 
-      // Update job details data (Phase 1)
-      jobDetailsData = {
-        isSelfFinanced: enrichedJobData.jobDetails.isSelfFinanced,
-        isPartTime: enrichedJobData.jobDetails.isPartTime,
-        workHoursPerWeek: enrichedJobData.jobDetails.workHoursPerWeek,
-        compensationType: enrichedJobData.jobDetails.compensationType,
+  const jobDetailsData = llmEnrichedData
+    ? {
+        isSelfFinanced: llmEnrichedData.jobDetails.isSelfFinanced,
+        isPartTime: llmEnrichedData.jobDetails.isPartTime,
+        workHoursPerWeek: llmEnrichedData.jobDetails.workHoursPerWeek,
+        compensationType: llmEnrichedData.jobDetails.compensationType,
+      }
+    : {
+        isSelfFinanced: null as boolean | null,
+        isPartTime: null as boolean | null,
+        workHoursPerWeek: null as number | null,
+        compensationType: null as string | null,
       };
 
-      // Update Phase 2 data
-      phase2Data.applicationRequirements = {
-        documentTypes: enrichedJobData.applicationRequirements.documentTypes,
-        referenceLettersRequired:
-          enrichedJobData.applicationRequirements.referenceLettersRequired,
-        platform: enrichedJobData.applicationRequirements.platform,
+  const phase2Data = llmEnrichedData
+    ? {
+        applicationRequirements: {
+          documentTypes: llmEnrichedData.applicationRequirements.documentTypes,
+          referenceLettersRequired:
+            llmEnrichedData.applicationRequirements.referenceLettersRequired,
+          platform: llmEnrichedData.applicationRequirements.platform,
+        },
+        languageRequirements: {
+          languages: llmEnrichedData.languageRequirements.languages,
+        },
+        suitableBackgrounds: {
+          backgrounds: llmEnrichedData.suitableBackgrounds.backgrounds,
+        },
+      }
+    : {
+        applicationRequirements: {
+          documentTypes: [] as string[],
+          referenceLettersRequired: null as number | null,
+          platform: null as string | null,
+        },
+        languageRequirements: {
+          languages: [] as string[],
+        },
+        suitableBackgrounds: {
+          backgrounds: [] as string[],
+        },
       };
 
-      phase2Data.languageRequirements = {
-        languages: enrichedJobData.languageRequirements.languages,
+  const phase3Data = llmEnrichedData
+    ? {
+        geoLocation: {
+          lat: llmEnrichedData.geoLocation.lat,
+          lon: llmEnrichedData.geoLocation.lon,
+        },
+        contact: {
+          name: llmEnrichedData.contact.name,
+          email: llmEnrichedData.contact.email,
+          title: llmEnrichedData.contact.title,
+        },
+        researchAreas: {
+          researchAreas: llmEnrichedData.researchAreas.researchAreas,
+        },
+      }
+    : {
+        geoLocation: {
+          lat: null as number | null,
+          lon: null as number | null,
+        },
+        contact: {
+          name: null as string | null,
+          email: null as string | null,
+          title: null as string | null,
+        },
+        researchAreas: {
+          researchAreas: [] as string[],
+        },
       };
-
-      phase2Data.suitableBackgrounds = {
-        backgrounds: enrichedJobData.suitableBackgrounds.backgrounds,
-      };
-
-      // Update Phase 3 data
-      phase3Data.geoLocation = {
-        lat: enrichedJobData.geoLocation.lat,
-        lon: enrichedJobData.geoLocation.lon,
-      };
-
-      phase3Data.contact = {
-        name: enrichedJobData.contact.name,
-        email: enrichedJobData.contact.email,
-        title: enrichedJobData.contact.title,
-      };
-
-      phase3Data.researchAreas = {
-        researchAreas: enrichedJobData.researchAreas.researchAreas,
-      };
-
-      console.log(
-        `✅ Unified enrichment completed for: ${job.name} (cost-optimized)`
-      );
-    } catch (error) {
-      console.warn(`❌ Failed to enrich job ${job.name}:`, error);
-    }
-  }
 
   const transformedJob = {
     ...baseJob,
@@ -286,6 +277,17 @@ const processJob = async (job: JobPosting) => {
     discipline: { key: disciplineKey, data: disciplineData },
     jobPosting: transformedJob,
     keywords: keywords.map((keyword) => ({ name: keyword })),
+    // Add enriched data for database population
+    enrichedData: llmEnrichedData
+      ? {
+          applicationRequirements: phase2Data.applicationRequirements,
+          languageRequirements: phase2Data.languageRequirements,
+          suitableBackgrounds: phase2Data.suitableBackgrounds,
+          geoLocation: phase3Data.geoLocation,
+          contact: phase3Data.contact,
+          researchAreas: phase3Data.researchAreas,
+        }
+      : null,
   };
 };
 
@@ -362,6 +364,32 @@ export const transformJobs = async (jobs: JobPosting[]) => {
       }
     >,
     keywords: new Map<string, Omit<Keyword, "id">>(),
+    // Add enriched data for database population
+    enrichedData: [] as Array<{
+      applicationRequirements: {
+        documentTypes: string[];
+        referenceLettersRequired: number | null;
+        platform: string | null;
+      };
+      languageRequirements: {
+        languages: string[];
+      };
+      suitableBackgrounds: {
+        backgrounds: string[];
+      };
+      geoLocation: {
+        lat: number | null;
+        lon: number | null;
+      };
+      contact: {
+        name: string | null;
+        email: string | null;
+        title: string | null;
+      };
+      researchAreas: {
+        researchAreas: string[];
+      };
+    } | null>,
   };
 
   // Consolidate all processed data
@@ -401,6 +429,9 @@ export const transformJobs = async (jobs: JobPosting[]) => {
         transformedData.keywords.set(keyword.name, keyword);
       }
     }
+
+    // Add enriched data
+    transformedData.enrichedData.push(result.enrichedData);
   }
 
   const endTime = Date.now();

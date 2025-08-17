@@ -253,6 +253,31 @@ const batchUpsertKeywords = async (
  */
 const batchUpsertJobPostings = async (
   jobPostings: Array<TransformedJob>,
+  enrichedData: Array<{
+    applicationRequirements: {
+      documentTypes: string[];
+      referenceLettersRequired: number | null;
+      platform: string | null;
+    };
+    languageRequirements: {
+      languages: string[];
+    };
+    suitableBackgrounds: {
+      backgrounds: string[];
+    };
+    geoLocation: {
+      lat: number | null;
+      lon: number | null;
+    };
+    contact: {
+      name: string | null;
+      email: string | null;
+      title: string | null;
+    };
+    researchAreas: {
+      researchAreas: string[];
+    };
+  } | null>,
   departmentMap: Map<string, number>,
   disciplineMap: Map<string, number>,
   keywordMap: Map<string, number>
@@ -264,6 +289,10 @@ const batchUpsertJobPostings = async (
     jobsUpdated: 0,
     jobKeywords: 0,
     errors: [] as string[],
+    pendingResearchAreas: [] as Array<{
+      jobPostingId: number;
+      researchAreaName: string;
+    }>,
   };
 
   // Get existing jobs by source URL
@@ -285,7 +314,9 @@ const batchUpsertJobPostings = async (
       )}`
     );
 
-    const batchPromises = batch.map(async (jobData) => {
+    const batchPromises = batch.map(async (jobData, index) => {
+      const jobIndex = i + index;
+      const jobEnrichedData = enrichedData[jobIndex];
       try {
         const departmentId = departmentMap.get(jobData.departmentKey);
         const disciplineId = disciplineMap.get(jobData.disciplineKey);
@@ -366,129 +397,112 @@ const batchUpsertJobPostings = async (
             stats.jobKeywords += keywordRelations.length;
           }
 
-          // Create Phase 2 relationships (only for new jobs)
-          // Application Requirements
-          if (
-            jobData.applicationRequirements.documentTypes.length > 0 ||
-            jobData.applicationRequirements.referenceLettersRequired !== null ||
-            jobData.applicationRequirements.platform !== null
-          ) {
-            await prisma.applicationRequirement.create({
-              data: {
-                jobPostingId: jobPosting.id,
-                documentType:
-                  jobData.applicationRequirements.documentTypes.join(", "),
-                referenceLettersRequired:
-                  jobData.applicationRequirements.referenceLettersRequired,
-                platform: jobData.applicationRequirements.platform,
-                description: `Documents: ${jobData.applicationRequirements.documentTypes.join(
-                  ", "
-                )}`,
-              },
-            });
-          }
-
-          // Language Requirements
-          if (jobData.languageRequirements.languages.length > 0) {
-            const languageRelations =
-              jobData.languageRequirements.languages.map((language) => ({
-                jobPostingId: jobPosting.id,
-                language: language,
-              }));
-
-            await prisma.languageRequirement.createMany({
-              data: languageRelations,
-              skipDuplicates: true,
-            });
-          }
-
-          // Suitable Backgrounds
-          if (jobData.suitableBackgrounds.backgrounds.length > 0) {
-            const backgroundRelations =
-              jobData.suitableBackgrounds.backgrounds.map((background) => ({
-                jobPostingId: jobPosting.id,
-                background: background,
-              }));
-
-            await prisma.suitableBackground.createMany({
-              data: backgroundRelations,
-              skipDuplicates: true,
-            });
-          }
-
-          // Phase 3: Create GeoLocation, Contact, and ResearchArea relationships
-          // GeoLocation
-          if (
-            jobData.geoLocation.lat !== null &&
-            jobData.geoLocation.lon !== null
-          ) {
-            await prisma.geoLocation.create({
-              data: {
-                jobPostingId: jobPosting.id,
-                lat: jobData.geoLocation.lat,
-                lon: jobData.geoLocation.lon,
-              },
-            });
-          }
-
-          // Contact
-          if (
-            jobData.contact.name !== null ||
-            jobData.contact.email !== null ||
-            jobData.contact.title !== null
-          ) {
-            await prisma.contact.create({
-              data: {
-                jobPostingId: jobPosting.id,
-                name: jobData.contact.name,
-                email: jobData.contact.email,
-                title: jobData.contact.title,
-              },
-            });
-          }
-
-          // Research Areas
-          if (jobData.researchAreas.researchAreas.length > 0) {
-            // First, upsert research areas to get their IDs
-            const researchAreaMap = new Map<string, number>();
-
-            // Get existing research areas
-            const existingResearchAreas = await prisma.researchArea.findMany({
-              where: {
-                name: {
-                  in: jobData.researchAreas.researchAreas,
+          // Create enriched data relationships using LLM data (only for new jobs)
+          if (jobEnrichedData) {
+            // Application Requirements
+            if (
+              jobEnrichedData.applicationRequirements.documentTypes.length >
+                0 ||
+              jobEnrichedData.applicationRequirements
+                .referenceLettersRequired !== null ||
+              jobEnrichedData.applicationRequirements.platform !== null
+            ) {
+              await prisma.applicationRequirement.create({
+                data: {
+                  jobPostingId: jobPosting.id,
+                  documentType:
+                    jobEnrichedData.applicationRequirements.documentTypes.join(
+                      ", "
+                    ),
+                  referenceLettersRequired:
+                    jobEnrichedData.applicationRequirements
+                      .referenceLettersRequired,
+                  platform: jobEnrichedData.applicationRequirements.platform,
+                  description: `Documents: ${jobEnrichedData.applicationRequirements.documentTypes.join(
+                    ", "
+                  )}`,
                 },
-              },
-            });
-
-            existingResearchAreas.forEach((area) => {
-              researchAreaMap.set(area.name, area.id);
-            });
-
-            // Create new research areas
-            for (const areaName of jobData.researchAreas.researchAreas) {
-              if (!researchAreaMap.has(areaName)) {
-                const newArea = await prisma.researchArea.create({
-                  data: { name: areaName },
-                });
-                researchAreaMap.set(areaName, newArea.id);
-              }
+              });
             }
 
-            // Create job-research area relationships
-            const researchAreaRelations = jobData.researchAreas.researchAreas
-              .map((areaName) => researchAreaMap.get(areaName))
-              .filter(Boolean)
-              .map((areaId) => ({
-                jobPostingId: jobPosting.id,
-                researchAreaId: areaId!,
-              }));
+            // Language Requirements
+            if (jobEnrichedData.languageRequirements.languages.length > 0) {
+              const languageRelations =
+                jobEnrichedData.languageRequirements.languages.map(
+                  (language) => ({
+                    jobPostingId: jobPosting.id,
+                    language: language,
+                  })
+                );
 
-            if (researchAreaRelations.length > 0) {
-              await prisma.jobResearchArea.createMany({
-                data: researchAreaRelations,
+              await prisma.languageRequirement.createMany({
+                data: languageRelations,
                 skipDuplicates: true,
               });
+            }
+
+            // Suitable Backgrounds
+            if (jobEnrichedData.suitableBackgrounds.backgrounds.length > 0) {
+              const backgroundRelations =
+                jobEnrichedData.suitableBackgrounds.backgrounds.map(
+                  (background) => ({
+                    jobPostingId: jobPosting.id,
+                    background: background,
+                  })
+                );
+
+              await prisma.suitableBackground.createMany({
+                data: backgroundRelations,
+                skipDuplicates: true,
+              });
+            }
+
+            // GeoLocation
+            if (
+              jobEnrichedData.geoLocation.lat !== null &&
+              jobEnrichedData.geoLocation.lon !== null
+            ) {
+              await prisma.geoLocation.create({
+                data: {
+                  jobPostingId: jobPosting.id,
+                  lat: jobEnrichedData.geoLocation.lat,
+                  lon: jobEnrichedData.geoLocation.lon,
+                },
+              });
+            }
+
+            // Contact
+            if (
+              jobEnrichedData.contact.name !== null ||
+              jobEnrichedData.contact.email !== null ||
+              jobEnrichedData.contact.title !== null
+            ) {
+              await prisma.contact.create({
+                data: {
+                  jobPostingId: jobPosting.id,
+                  name: jobEnrichedData.contact.name,
+                  email: jobEnrichedData.contact.email,
+                  title: jobEnrichedData.contact.title,
+                },
+              });
+            }
+
+            // Research Areas
+            if (jobEnrichedData.researchAreas.researchAreas.length > 0) {
+              // Create job-research area relationships
+              const researchAreaRelations =
+                jobEnrichedData.researchAreas.researchAreas.map((areaName) => ({
+                  jobPostingId: jobPosting.id,
+                  researchAreaName: areaName,
+                }));
+
+              if (researchAreaRelations.length > 0) {
+                // Store for batch processing later
+                if (!stats.pendingResearchAreas) {
+                  stats.pendingResearchAreas = [];
+                }
+                stats.pendingResearchAreas.push(...researchAreaRelations);
+              }
             }
           }
         }
@@ -505,6 +519,89 @@ const batchUpsertJobPostings = async (
     await Promise.all(batchPromises);
   }
 
+  // Batch process research areas to avoid unique constraint violations
+  if (stats.pendingResearchAreas.length > 0) {
+    console.log(
+      `🔬 Batch processing ${stats.pendingResearchAreas.length} research area relationships...`
+    );
+
+    try {
+      // Get all unique research area names
+      const uniqueResearchAreaNames = Array.from(
+        new Set(stats.pendingResearchAreas.map((ra) => ra.researchAreaName))
+      );
+
+      // Get existing research areas
+      const existingResearchAreas = await prisma.researchArea.findMany({
+        where: {
+          name: { in: uniqueResearchAreaNames },
+        },
+      });
+
+      const existingMap = new Map(
+        existingResearchAreas.map((area) => [area.name, area])
+      );
+
+      // Create new research areas for missing ones
+      const newResearchAreas = [];
+      for (const areaName of uniqueResearchAreaNames) {
+        if (!existingMap.has(areaName)) {
+          try {
+            const newArea = await prisma.researchArea.create({
+              data: { name: areaName },
+            });
+            existingMap.set(areaName, newArea);
+            newResearchAreas.push(newArea);
+          } catch (error) {
+            if (
+              error instanceof Error &&
+              error.message.includes("Unique constraint failed")
+            ) {
+              // Research area was created by another concurrent process, fetch it
+              const fetchedArea = await prisma.researchArea.findUnique({
+                where: { name: areaName },
+              });
+              if (fetchedArea) {
+                existingMap.set(areaName, fetchedArea);
+              }
+            } else {
+              throw error;
+            }
+          }
+        }
+      }
+
+      // Create job-research area relationships
+      const researchAreaRelations = stats.pendingResearchAreas
+        .map((ra) => {
+          const area = existingMap.get(ra.researchAreaName);
+          return area
+            ? {
+                jobPostingId: ra.jobPostingId,
+                researchAreaId: area.id,
+              }
+            : null;
+        })
+        .filter(
+          (ra): ra is { jobPostingId: number; researchAreaId: number } =>
+            ra !== null
+        );
+
+      if (researchAreaRelations.length > 0) {
+        await prisma.jobResearchArea.createMany({
+          data: researchAreaRelations,
+          skipDuplicates: true,
+        });
+        console.log(
+          `✅ Created ${researchAreaRelations.length} research area relationships`
+        );
+      }
+    } catch (error) {
+      console.error("❌ Error processing research areas:", error);
+      stats.errors.push(`Research area processing failed: ${error}`);
+    }
+  }
+
   return stats;
 };
 
@@ -514,6 +611,31 @@ export const loadJobs = async (transformedData: {
   disciplines: Map<string, Omit<Discipline, "id">>;
   jobPostings: Array<TransformedJob>;
   keywords: Map<string, Omit<Keyword, "id">>;
+  enrichedData: Array<{
+    applicationRequirements: {
+      documentTypes: string[];
+      referenceLettersRequired: number | null;
+      platform: string | null;
+    };
+    languageRequirements: {
+      languages: string[];
+    };
+    suitableBackgrounds: {
+      backgrounds: string[];
+    };
+    geoLocation: {
+      lat: number | null;
+      lon: number | null;
+    };
+    contact: {
+      name: string | null;
+      email: string | null;
+      title: string | null;
+    };
+    researchAreas: {
+      researchAreas: string[];
+    };
+  } | null>;
 }) => {
   console.log("🚀 Starting batch database operations...");
   const startTime = Date.now();
@@ -561,6 +683,7 @@ export const loadJobs = async (transformedData: {
     // 5. Batch load job postings and their relationships
     const jobStats = await batchUpsertJobPostings(
       transformedData.jobPostings,
+      transformedData.enrichedData,
       departmentMap,
       disciplineMap,
       keywordMap
