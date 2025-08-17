@@ -1,7 +1,5 @@
 import { config } from "@/config";
 import type { LLMEnrichmentService } from "./llm-enrichment.interface";
-import { OpenAIEnrichmentService } from "./openai-enrichment";
-import { CohereEnrichmentService } from "./cohere-enrichment";
 import { UnifiedEnrichmentService } from "./unified-enrichment";
 
 export class LLMServiceFactory {
@@ -25,30 +23,12 @@ export class LLMServiceFactory {
     if (config.openAiApiKey) {
       const unifiedService = new UnifiedEnrichmentService();
       this.services.set("unified", unifiedService);
-      console.log("✅ Unified OpenAI service registered (cost-optimized)");
-    }
-
-    // Initialize legacy OpenAI service (fallback)
-    if (config.openAiApiKey) {
-      const openaiService = new OpenAIEnrichmentService();
-      this.services.set("openai", openaiService);
-      console.log("✅ Legacy OpenAI service registered");
-    }
-
-    // Initialize Cohere service
-    if (config.cohereApiKey) {
-      const cohereService = new CohereEnrichmentService();
-      this.services.set("cohere", cohereService);
-      console.log("✅ Cohere service registered");
-    }
-
-    // Set preferred service (Unified OpenAI first, then legacy OpenAI, then Cohere)
-    if (this.services.has("unified")) {
       this.preferredService = "unified";
-    } else if (this.services.has("openai")) {
-      this.preferredService = "openai";
-    } else if (this.services.has("cohere")) {
-      this.preferredService = "cohere";
+      console.log("✅ Unified OpenAI service registered (cost-optimized)");
+    } else {
+      console.log(
+        "⚠️  No OpenAI API key found, unified enrichment service unavailable"
+      );
     }
 
     console.log(
@@ -118,12 +98,12 @@ export class LLMServiceFactory {
    * Switch preferred service (useful for testing or manual override)
    */
   setPreferredService(serviceName: string): boolean {
-    if (this.services.has(serviceName)) {
+    if (serviceName === "unified" && this.services.has("unified")) {
       this.preferredService = serviceName;
       console.log(`🎯 Switched preferred LLM service to: ${serviceName}`);
       return true;
     }
-    console.warn(`⚠️  Service '${serviceName}' not available`);
+    console.warn(`⚠️  Service '${serviceName}' not found or not available`);
     return false;
   }
 
@@ -131,16 +111,8 @@ export class LLMServiceFactory {
    * Get the best available service based on priority
    */
   getBestAvailableService(): LLMEnrichmentService | null {
-    // Priority order: Unified OpenAI > Legacy OpenAI > Cohere
-    const priorityOrder = ["unified", "openai", "cohere"];
-
-    for (const serviceName of priorityOrder) {
-      const service = this.services.get(serviceName);
-      if (service && service.isAvailable()) {
-        return service;
-      }
-    }
-
-    return null;
+    // Only unified service is available now
+    const service = this.services.get("unified");
+    return service && service.isAvailable() ? service : null;
   }
 }
